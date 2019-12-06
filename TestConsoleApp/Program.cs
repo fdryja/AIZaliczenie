@@ -14,7 +14,13 @@ namespace TestConsoleApp
             List<float> weight;
             float bias;
 
-            string[] functionNames = { "f1", "f2", "f3" };
+            string[] functionNames = new string[] {
+                "Liniowa",
+                "Dyskretna unipolarna",
+                "Dyskretna bipolarna",
+                "Ciągła unipolarna",
+                "Ciągła bipolarna"
+            };
 
             //Stworzenie neuronu
 

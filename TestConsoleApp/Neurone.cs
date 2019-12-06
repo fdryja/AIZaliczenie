@@ -9,7 +9,7 @@ namespace TestConsoleApp
         {
         }
 
-        public Neurone(List<float> input, List<float> weight, float bias, String function)
+        public int NeuroneFunction(List<float> input, List<float> weight, float bias, string function)
         {
             float result = 0;
             for (int i = 0; i <= input.Count; i++)
@@ -18,19 +18,53 @@ namespace TestConsoleApp
             }
             result += bias;
 
-
             switch (function)
             {
-                case "f1":
-                    //f1 return();
+                case "Dyskretna unipolarna":
+                    if (result >= 0)
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
                     break;
-                case "f2":
-                    //f2 return();
+                case "Dyskretna bipolarna":
+                    if (result > 0)
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        return -1;
+                    }
                     break;
-                case "f3":
-                    //f3 return();
-                    break;
+                    //    case "Ciągła unipolarna":
+
+                    //        break;
+                    //    case "Ciągła bipolarna":
+
+                    //        break;
+                    //    case "Sigmoidalna funkcja unipolarna":
+
+                    //        break;
+                    //    case "Sigmoidalna funkcja bipolarna":
+
+                    //        break;
+
+                    //case "f1":
+                    //    //f1 return();
+                    //    break;
+                    //case "f2":
+                    //    //f2 return();
+                    //    break;
+                    //case "f3":
+                    //    //f3 return();
+                    //    break;
+                    //return 0;
             }
+            return 0;
         }
     }
 }
