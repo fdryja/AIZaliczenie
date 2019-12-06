@@ -9,12 +9,12 @@ namespace TestConsoleApp
         {
         }
 
-        public Neurone(List<float> inputs, List<float> weights, float bias, String function)
+        public Neurone(List<float> input, List<float> weight, float bias, String function)
         {
             float result = 0;
-            for (int i = 0; i <= inputs.Count; i++)
+            for (int i = 0; i <= input.Count; i++)
             {
-                result += inputs[i] * weights[i];
+                result += input[i] * weight[i];
             }
             result += bias;
 

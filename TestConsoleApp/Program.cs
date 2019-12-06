@@ -10,21 +10,21 @@ namespace TestConsoleApp
         {
             // ListaList/TablicaTablic NetStucture =
 
-            List<float> inputs;
-            List<float> weights;
+            List<float> input;
+            List<float> weight;
             float bias;
 
             string[] functionNames = { "f1", "f2", "f3" };
 
             //Stworzenie neuronu
 
-            for (i)
-            {
-                for (j)
-                {
-                    //Wynik[i][j] = Neurone(inputs, weights, bias, functionNames[ NetStructure[i][j] ])
-                }
-            }
+            //for (i)
+            //{
+            //    for (j)
+            //    {
+            //        //Wynik[i][j] = Neurone(input, weight, bias, functionNames[ NetStructure[i][j] ])
+            //    }
+            //}
 
         }
     }
