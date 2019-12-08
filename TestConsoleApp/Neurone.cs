@@ -26,7 +26,7 @@ namespace TestConsoleApp
                     break;
                 case "Dyskretna bipolarna":
                     if (result > 0) return 1;
-                    else return - 1;
+                    else return -1;
                     break;
                 case "Ciągła unipolarna":
                     return 1 / (1 + Math.Pow(Math.E,result));
