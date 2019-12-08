@@ -9,7 +9,7 @@ namespace TestConsoleApp
         {
         }
 
-        public int NeuroneFunction(List<float> input, List<float> weight, float bias, string function)
+        public double NeuroneFunction(List<float> input, List<float> weight, float bias, string function)
         {
             float result = 0;
             for (int i = 0; i <= input.Count; i++)
@@ -21,48 +21,19 @@ namespace TestConsoleApp
             switch (function)
             {
                 case "Dyskretna unipolarna":
-                    if (result >= 0)
-                    {
-                        return 1;
-                    }
-                    else
-                    {
-                        return 0;
-                    }
+                    if (result >= 0) return 1;
+                    else return 0;
                     break;
                 case "Dyskretna bipolarna":
-                    if (result > 0)
-                    {
-                        return 1;
-                    }
-                    else
-                    {
-                        return -1;
-                    }
+                    if (result > 0) return 1;
+                    else return - 1;
                     break;
-                    //    case "Ciągła unipolarna":
-
-                    //        break;
-                    //    case "Ciągła bipolarna":
-
-                    //        break;
-                    //    case "Sigmoidalna funkcja unipolarna":
-
-                    //        break;
-                    //    case "Sigmoidalna funkcja bipolarna":
-
-                    //        break;
-
-                    //case "f1":
-                    //    //f1 return();
-                    //    break;
-                    //case "f2":
-                    //    //f2 return();
-                    //    break;
-                    //case "f3":
-                    //    //f3 return();
-                    //    break;
-                    //return 0;
+                case "Ciągła unipolarna":
+                    return 1 / (1 + Math.Pow(Math.E,result));
+                    break;
+                case "Ciągła bipolarna":
+                    return (2 / (1 + Math.Pow(Math.E, result))-1);
+                    break;
             }
             return 0;
         }
