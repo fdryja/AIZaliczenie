@@ -8,11 +8,12 @@ namespace TestConsoleApp
     {
         static void Main(string[] args)
         {
-            // ListaList/TablicaTablic NetStucture =
+            List<List<int>> netStructure = new List<List<int>>();
+            List<List<float>> xses = new List<List<float>>();
+            //List<List<float>> weights = new List<List<float>>();
 
-            List<float> input;
-            List<float> weight;
-            float bias;
+            List<float> weight = new List<float>();
+            float bias = 0;
 
             string[] functionNames = new string[] {
                 "Liniowa",
@@ -22,18 +23,18 @@ namespace TestConsoleApp
                 "Ciągła bipolarna"
             };
 
-            //Stworzenie neuronu
+            Neurone neurone = new Neurone();
 
-            //for (i)
-            //{
-            //    for (j)
-            //    {
-            //        //Wynik[i][j] = Neurone(input, weight, bias, functionNames[ NetStructure[i][j] ])
-            //    }
-            //}
+            for (int i = 0; i < netStructure.Count; i++)
+            {
+                for (int j = 0; i < netStructure[i].Count; j++)
+                {
+                    xses[i + 1].Add(neurone.NeuroneFunction(xses[i], weight, bias, functionNames[netStructure[i][j]]));
+                }
+            }
+
+            Console.WriteLine(xses[netStructure.Count - 1]);
 
         }
     }
 }
-
-//test
