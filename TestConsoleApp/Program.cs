@@ -8,15 +8,19 @@ namespace TestConsoleApp
     {
         static void Main(string[] args)
         {
-            // ListaList/TablicaTablic NetStucture =
+            List<List<int>> netStructure = new List<List<int>>();
+            List<List<float>> xses = new List<List<float>>();
+            //List<List<float>> weights = new List<List<float>>();
 
-            List<float> weight = new List<float>();
+            List<List<float>> weight = new List<List<float>>();
 
             Random rnd = new Random();
-            for (int r = 0; r < netStructure.Count; r++)
+
+            foreach (var i in weight)
             {
-                weight.Add(rnd.Next(1, 11));
+                i.Add(rnd.Next(1, 11));
             }
+
             float bias = 0;
 
             string[] functionNames = new string[] {
@@ -33,20 +37,12 @@ namespace TestConsoleApp
             {
                 for (int j = 0; i < netStructure[i].Count; j++)
                 {
-                    xses[i + 1].Add(neurone.NeuroneFunction(xses[i], weight, bias, functionNames[netStructure[i][j]]));
+                    xses[i + 1].Add(neurone.NeuroneFunction(xses[i], weight[i], bias, functionNames[netStructure[i][j]]));
                 }
             }
 
-            //for (i)
-            //{
-            //    for (j)
-            //    {
-            //        //Wynik[i][j] = Neurone(input, weight, bias, functionNames[ NetStructure[i][j] ])
-            //    }
-            //}
+            Console.WriteLine(xses[netStructure.Count - 1]);
 
         }
     }
 }
-
-//test
