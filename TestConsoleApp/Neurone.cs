@@ -29,13 +29,10 @@ namespace TestConsoleApp
                     else return -1;
                     break;
                 case "Ciągła unipolarna":
-                    double cuni = 1 / (1 + Math.Pow(Math.E, result));
-
-                    return (float)cuni;
+                    return 1 / (1 + Math.Pow(Math.E,result));
                     break;
                 case "Ciągła bipolarna":
-                    double cbi = 2 / (1 + Math.Pow(Math.E, result)) - 1;
-                    return (float)cbi;
+                    return (2 / (1 + Math.Pow(Math.E, result))-1);
                     break;
             }
             return 0;
