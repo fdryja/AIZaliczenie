@@ -23,20 +23,15 @@ namespace TestConsoleApp
                 case "Dyskretna unipolarna":
                     if (result >= 0) return 1;
                     else return 0;
-                    break;
                 case "Dyskretna bipolarna":
                     if (result > 0) return 1;
                     else return -1;
-                    break;
                 case "Ciągła unipolarna":
                     double cuni = 1 / (1 + Math.Pow(Math.E, result));
-
                     return (float)cuni;
-                    break;
                 case "Ciągła bipolarna":
                     double cbi = 2 / (1 + Math.Pow(Math.E, result)) - 1;
                     return (float)cbi;
-                    break;
             }
             return 0;
         }
