@@ -14,13 +14,13 @@ namespace TestConsoleApp
 
             List<List<float>> weight = new List<List<float>>();
 
+            
+
             Random rnd = new Random();
-
-            foreach (var i in weight)
+            for (int r = 0; r < netStructure.Count; r++)
             {
-                i.Add(rnd.Next(1, 11));
+                weight[r].Add(rnd.Next(1, 11));
             }
-
             float bias = 0;
 
             string[] functionNames = new string[] {
