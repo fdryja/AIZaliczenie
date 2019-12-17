@@ -12,15 +12,13 @@ namespace TestConsoleApp
             List<List<float>> xses = new List<List<float>>();
             //List<List<float>> weights = new List<List<float>>();
 
-            List<List<float>> weight = new List<List<float>>();
+            List<float> weight = new List<float>();
 
             Random rnd = new Random();
-
-            foreach (var i in weight)
+            for (int r = 0; r < netStructure.Count; r++)
             {
-                i.Add(rnd.Next(1, 11));
+                weight.Add(rnd.Next(1, 11));
             }
-
             float bias = 0;
 
             string[] functionNames = new string[] {
@@ -37,7 +35,7 @@ namespace TestConsoleApp
             {
                 for (int j = 0; i < netStructure[i].Count; j++)
                 {
-                    xses[i + 1].Add(neurone.NeuroneFunction(xses[i], weight[i], bias, functionNames[netStructure[i][j]]));
+                    xses[i + 1].Add(neurone.NeuroneFunction(xses[i], weight, bias, functionNames[netStructure[i][j]]));
                 }
             }
 
