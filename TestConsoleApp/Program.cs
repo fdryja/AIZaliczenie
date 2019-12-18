@@ -13,7 +13,8 @@ namespace TestConsoleApp
             //List<List<float>> weight = new List<List<float>>();
             int layersCount = 4;
             int xsesCount = 3;
-            
+            int bias = 1;
+
             //PIERWSZY: WARSTWA; DRUGI: NEURON
             int[][] netStructure = new int[layersCount][];
 
@@ -53,38 +54,33 @@ namespace TestConsoleApp
                 }
             }
 
-            List<int> temp = new List<int>();
-            List<float> temp2 = new List<float>();
-            List<float> temp3 = new List<float>();
-
             Random rnd = new Random();
 
-            float bias = 1;
-
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < layersCount; i++)
             {
-                for (int j = 0; i < 4; j++)
+                for (int j = 0; j < netStructure[i].Length; j++)
                 {
-                    temp.Add(rnd.Next(1, 3));
+                    netStructure[i][j] = rnd.Next(1, 4);
                 }
-                netStructure.Add(temp);
-                temp.Clear();
             }
 
-            for (int i = 0; i < netStructure.Count; i++)
+            for (int i = 0; i < layersCount; i++)
             {
-                for (int j = 0; i < netStructure[i].Count; j++)
+                for (int j = 0; j < weight[i].Length; j++)
                 {
-                    temp2.Add(rnd.Next(1, 11));
+                    for (int k = 0; k < weight[i][j].Length; k++)
+                    {
+                        weight[i][j][k] = rnd.Next(1, 11);
+                    }
                 }
-                weight.Add(temp2);
-                temp2.Clear();
             }
 
-
+            for (int i = 0; i < xses[0].Length; i++)
+            {
+                xses[0][i] = rnd.Next(1,34);
+            }
 
             string[] functionNames = new string[] {
-                "Liniowa",
                 "Dyskretna unipolarna",
                 "Dyskretna bipolarna",
                 "Ciągła unipolarna",

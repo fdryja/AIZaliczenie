@@ -10,7 +10,7 @@ namespace TestConsoleApp
         {
         }
 
-        public float NeuroneFunction(List<float> input, List<float> weight, float bias, string function)
+        public float NeuroneFunction(List<float> input, List<float> weight, int bias, string function)
         {
             float result = 0;
             for (int i = 0; i <= input.Count; i++)
