@@ -8,9 +8,21 @@ namespace TestConsoleApp
     {
         static void Main(string[] args)
         {
-            List<List<int>> netStructure = new List<List<int>>();
-            List<List<float>> xses = new List<List<float>>();
-            List<List<float>> weight = new List<List<float>>();
+            //List<List<int>> netStructure = new List<List<int>>();
+            //List<List<float>> xses = new List<List<float>>();
+            //List<List<float>> weight = new List<List<float>>();
+            int layersCount = 4;
+            float[][] netStructure = new float[layersCount][];
+
+            for (int i = 0; i < layersCount; i++)
+            {
+                int currentLayerNeuroneCount;
+                Console.WriteLine("Podaj liczbę neuronów w warstwie " + i + 1);
+                currentLayerNeuroneCount = Convert.ToInt32(Console.Read());                
+                netStructure[i] = new float[currentLayerNeuroneCount];
+            }
+
+
 
             List<int> temp = new List<int>();
             List<float> temp2 = new List<float>();
