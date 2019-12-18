@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace TestConsoleApp
 {
+    //Trzeba pozmieniać nazwy
     public class Neurone
     {
         public Neurone()
@@ -34,6 +35,25 @@ namespace TestConsoleApp
                     return (float)cbi;
             }
             return 0;
+        }
+
+        public float DeltaWeight(List<float> input, List<float> weight, int derivativeNumber)
+        {
+            float weightedSum = 0;
+            for (int i = 0; i <= input.Count; i++)
+            {
+                weightedSum += input[i] * weight[i];
+            }
+
+
+            float derivative = 0;
+            switch (derivativeNumber)
+            {
+                case 1:
+                    //derivative = ;
+                    break;
+            }
+            return /* eta */ derivative * weightedSum;
         }
     }
 }
