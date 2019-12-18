@@ -20,9 +20,9 @@ namespace TestConsoleApp
 
             float bias = 1;
 
-            for (int i = 0; i < netStructure.Count; i++)
+            for (int i = 0; i < 4; i++)
             {
-                for (int j = 0; i < netStructure[i].Count; j++)
+                for (int j = 0; i < 4; j++)
                 {
                     temp.Add(rnd.Next(1, 3));
                 }
@@ -62,11 +62,14 @@ namespace TestConsoleApp
                 temp3.Clear();
             }
 
+            
+            Console.WriteLine(netStructure[0][0]);
 
-           // for (int n = 0; n < netStructure[netStructure.Count].Count; n++) 
-          //  {
-          //      Console.WriteLine(xses[netStructure.Count][n]);
-          //  }
+            Console.ReadKey();
+            //for (int n = 0; n < netStructure[netStructure.Count].Count; n++)
+            //{
+            //    Console.WriteLine(xses[netStructure.Count][n]);
+            //}
 
         }
     }
