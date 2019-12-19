@@ -12,28 +12,31 @@ namespace TestConsoleApp
 
         public float NeuroneFunction(float[] input, float[] weight, int bias, string function)
         {
-            float result = 0;
-            for (int i = 0; i <= input.Length; i++)
-            {
-                result += input[i] * weight[i];
-            }
-            result += bias;
+            Console.WriteLine(input.Length);
+            Console.WriteLine(weight.Length);
 
-            switch (function)
-            {
-                case "Dyskretna unipolarna":
-                    if (result >= 0) return 1;
-                    else return 0;
-                case "Dyskretna bipolarna":
-                    if (result > 0) return 1;
-                    else return -1;
-                case "Ciągła unipolarna":
-                    double cuni = 1 / (1 + Math.Pow(Math.E, result));
-                    return (float)cuni;
-                case "Ciągła bipolarna":
-                    double cbi = 2 / (1 + Math.Pow(Math.E, result)) - 1;
-                    return (float)cbi;
-            }
+            //float result = 0;
+            //for (int i = 0; i <= input.Length; i++)
+            //{
+            //    result += input[i] * weight[i];
+            //}
+            //result += bias;
+
+            //switch (function)
+            //{
+            //    case "Dyskretna unipolarna":
+            //        if (result >= 0) return 1;
+            //        else return 0;
+            //    case "Dyskretna bipolarna":
+            //        if (result > 0) return 1;
+            //        else return -1;
+            //    case "Ciągła unipolarna":
+            //        double cuni = 1 / (1 + Math.Pow(Math.E, result));
+            //        return (float)cuni;
+            //    case "Ciągła bipolarna":
+            //        double cbi = 2 / (1 + Math.Pow(Math.E, result)) - 1;
+            //        return (float)cbi;
+            //}
             return 0;
         }
 
