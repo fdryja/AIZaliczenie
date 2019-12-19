@@ -30,7 +30,7 @@ namespace TestConsoleApp
                     if (result > 0) return 1;
                     else return -1;
                 case "Ciągła unipolarna":
-                    double cuni = 1 / (1 + Math.Pow(Math.E, result));
+                    double cuni = 1 / (1 + Math.Pow(Math.E, -result));
                     return (float)cuni;
                 case "Ciągła bipolarna":
                     double cbi = 2 / (1 + Math.Pow(Math.E, result)) - 1;
@@ -39,23 +39,28 @@ namespace TestConsoleApp
             return 0;
         }
 
-        public float DeltaWeight(List<float> input, List<float> weight, int derivativeNumber)
-        {
-            float weightedSum = 0;
-            for (int i = 0; i <= input.Count; i++)
-            {
-                weightedSum += input[i] * weight[i];
-            }
+        //public float DeltaWeight(float [] input, float [] weight, int derivativeNumber)
+        //{
+        //    float weightedSum = 0;
+        //    for (int i = 0; i <= input.Count; i++)
+        //    {
+        //        weightedSum += input[i] * weight[i];
+        //    }
 
 
-            float derivative = 0;
-            switch (derivativeNumber)
-            {
-                case 1:
-                    //derivative = ;
-                    break;
-            }
-            return /* eta */ derivative * weightedSum;
-        }
+            //float derivative = 0;
+            //switch (derivativeNumber)
+            //{
+            //    case 3:
+            //        double cuni = 1 / (1 + Math.Pow(Math.E, result));
+            //        derivative = cuni * (1 - cuni);
+            //        break;
+            //    case 4:
+            //        break;
+
+                
+            //}
+            //return /* eta */ derivative * weightedSum;
+        //}
     }
 }
