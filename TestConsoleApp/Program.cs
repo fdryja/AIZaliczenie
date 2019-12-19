@@ -11,26 +11,28 @@ namespace TestConsoleApp
             //List<List<int>> netStructure = new List<List<int>>();
             //List<List<float>> xses = new List<List<float>>();
             //List<List<float>> weight = new List<List<float>>();
-            int layersCount = 4;
+
+            int[] layers = new int[4] { 6, 3, 2, 1 };
+
             int xsesCount = 3;
             int bias = 1;
 
             //PIERWSZY: WARSTWA; DRUGI: NEURON
-            int[][] netStructure = new int[layersCount][];
+            int[][] netStructure = new int[layers.Length][];
 
             //PIERWSZY: WARSTWA; DRUGI: NEURON; TRZECI: WAGA
-            float[][][] weight = new float[layersCount][][];
+            float[][][] weight = new float[layers.Length][][];
 
             //PIERWSZY: WARSTWA; DRUGI: NEURON Z POPRZEDNIEJ WARSTWY
-            float[][] xses = new float[layersCount][];
+            float[][] xses = new float[layers.Length][];
 
-            for (int i = 0; i < layersCount; i++)
+            for (int i = 0; i < layers.Length; i++)
             {
-                int currentLayerNeuroneCount;
-                Console.WriteLine("Podaj liczbę neuronów w warstwie " + (i + 1));
-                currentLayerNeuroneCount = Convert.ToInt32(Console.Read());
-                netStructure[i] = new int[currentLayerNeuroneCount];
-                weight[i] = new float[currentLayerNeuroneCount][];
+                //int currentLayerNeuroneCount;
+                //Console.WriteLine("Podaj liczbę neuronów w warstwie " + (i + 1));
+                //currentLayerNeuroneCount = Convert.ToInt32(Console.Read());
+                netStructure[i] = new int[layers[i]];
+                weight[i] = new float[layers[i]][];
 
                 if (i == 0)
                 {
@@ -40,8 +42,8 @@ namespace TestConsoleApp
                 {
                     xses[i] = new float[netStructure[i - 1].Length];
                 }
-
-                for (int j = 0; j <currentLayerNeuroneCount ; j++)
+                //layers[i] or layers[j]? V V V
+                for (int j = 0; j <layers[i] ; j++)
                 {
                     if (i==0)
                     {
@@ -57,16 +59,18 @@ namespace TestConsoleApp
 
 
             Random rnd = new Random();
-
-            for (int i = 0; i < layersCount; i++)
+            Console.WriteLine("Struktura sieci. (funkcje)");
+            for (int i = 0; i < layers.Length; i++)
             {
                 for (int j = 0; j < netStructure[i].Length; j++)
                 {
                     netStructure[i][j] = rnd.Next(1, 4);
+                    Console.Write(netStructure[i][j]+", ");
                 }
+                Console.WriteLine();
             }
 
-            for (int i = 0; i < layersCount; i++)
+            for (int i = 0; i < layers.Length; i++)
             {
                 for (int j = 0; j < weight[i].Length; j++)
                 {
@@ -76,11 +80,13 @@ namespace TestConsoleApp
                     }
                 }
             }
-
+            Console.WriteLine("Input (X):");
             for (int i = 0; i < xses[0].Length; i++)
             {
                 xses[0][i] = rnd.Next(1,34);
+                Console.Write(xses[0][i]+", ");
             }
+            Console.WriteLine();
 
             foreach (var item in netStructure)
             {
@@ -100,8 +106,8 @@ namespace TestConsoleApp
             {
                 for (int j = 0; i < netStructure[i].Length; j++)
                 {
-                    Console.WriteLine(xses[i].Length + " / " + weight[i][j].Length);
-                    xses[i][j] = neurone.NeuroneFunction(xses[i], weight[i][j], bias, functionNames[netStructure[i][j]]);
+                    //Console.WriteLine(xses[i].Length + " / " + weight[i][j].Length);
+                    //xses[i][j] = neurone.NeuroneFunction(xses[i], weight[i][j], bias, functionNames[netStructure[i][j]]);
                 }
             }
 
