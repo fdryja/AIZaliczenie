@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace TestConsoleApp
 {
-    //Trzeba pozmieniać nazwy
-    public class Neurone
+    //Trzeba pozmieniać nazwy (zrobione?)
+    public class NeuralNet
     {
-        public Neurone()
+        public NeuralNet()
         {
         }
 
-        public float NeuroneFunction(float[] input, float[] weight, int bias, string function)
+        public float Neurone(float[] input, float[] weight, int bias, string function)
         {
             Console.WriteLine(input.Length+"//"+weight.Length);
 

@@ -97,7 +97,7 @@ namespace TestConsoleApp
                 "Ciągła bipolarna"
             };
 
-            Neurone neurone = new Neurone();
+            NeuralNet net = new NeuralNet();
             //Pętla wwykonująca pracę sieci neuronowej:
             Console.WriteLine(xses.Length);
             for (int i = 0; i < netStructure.Length; i++)
@@ -105,7 +105,7 @@ namespace TestConsoleApp
                 for (int j = 0; j < netStructure[i].Length; j++)
                 {
                      Console.WriteLine(xses[i].Length + " / " + weight[i][j].Length);
-                    xses[i+1][j] = neurone.NeuroneFunction(xses[i], weight[i][j], bias, functionNames[netStructure[i][j]]);
+                    xses[i+1][j] = net.Neurone(xses[i], weight[i][j], bias, functionNames[netStructure[i][j]]);
                 }
             }
             //Wypisanie wyniku:
