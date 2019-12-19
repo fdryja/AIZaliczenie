@@ -33,34 +33,41 @@ namespace TestConsoleApp
                     double cuni = 1 / (1 + Math.Pow(Math.E, -result));
                     return (float)cuni;
                 case "Ciągła bipolarna":
-                    double cbi = 2 / (1 + Math.Pow(Math.E, result)) - 1;
+                    double cbi = (Math.Pow(Math.E, result) - Math.Pow(Math.E, -result)) / 
+                        (Math.Pow(Math.E, result) + Math.Pow(Math.E, -result));
                     return (float)cbi;
             }
             return 0;
         }
 
-        //public float DeltaWeight(float [] input, float [] weight, int derivativeNumber)
-        //{
-        //    float weightedSum = 0;
-        //    for (int i = 0; i <= input.Count; i++)
-        //    {
-        //        weightedSum += input[i] * weight[i];
-        //    }
+        public float DeltaWeight(float[] input, float[] weight, int derivativeNumber)
+        {
+            float weightedSum = 0;
+            for (int i = 0; i <= input.Length; i++)
+            {
+                weightedSum += input[i] * weight[i];
+            }
 
 
-            //float derivative = 0;
-            //switch (derivativeNumber)
-            //{
-            //    case 3:
-            //        double cuni = 1 / (1 + Math.Pow(Math.E, result));
-            //        derivative = cuni * (1 - cuni);
-            //        break;
-            //    case 4:
-            //        break;
+            float derivative = 0;
+            switch (derivativeNumber)
+            {
+                //funkcji skoku nie da się zrobić
 
-                
-            //}
-            //return /* eta */ derivative * weightedSum;
-        //}
+                //sigmoidalna pochodna działa
+                case 3:
+                    double cuni = 1 / (1 + Math.Pow(Math.E, weightedSum));
+                    derivative =  (float)cuni * (1 - (float)cuni);
+                    break;
+                //tangens hiperboliczny działa
+                case 4:
+                    derivative =(float)(1 -Math.Pow((Math.Pow(Math.E, weightedSum) - Math.Pow(Math.E, -weightedSum)) / 
+                        (Math.Pow(Math.E, weightedSum) + Math.Pow(Math.E, -weightedSum)), 2));
+                    break;
+
+
+            }
+            return /* eta */ derivative * weightedSum;
+        }
     }
 }
