@@ -8,11 +8,11 @@ namespace TestConsoleApp
     {
         static void Main(string[] args)
         {
-            /*double cbi = 2 / (1 + Math.Pow(Math.E,-3)) - 1;
-            double cuni = 1 / (1 + Math.Pow(Math.E, -3));
-            double sigmoid = Math.Tanh(3);
-            double sigm = Math.Sinh(3*(Math.PI/180));
-            Console.WriteLine(cbi+"\n"+sigmoid);*/
+            //double cbi = 2 / (1 + Math.Pow(Math.E,-3)) - 1;
+            //double cuni = 1 / (1 + Math.Pow(Math.E, -3));
+            //double sigmoid = Math.Tanh(3);
+            //double sigm = Math.Sinh(3*(Math.PI/180));
+            //Console.WriteLine(cbi+"\n"+sigmoid);
             int[] layers = new int[4] { 6, 3, 2, 1 };
 
             int xsesCount = 3;
