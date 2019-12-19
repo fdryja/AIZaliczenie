@@ -24,7 +24,7 @@ namespace TestConsoleApp
             float[][][] weight = new float[layers.Length][][];
 
             //PIERWSZY: WARSTWA; DRUGI: NEURON Z POPRZEDNIEJ WARSTWY
-            float[][] xses = new float[layers.Length][];
+            float[][] xses = new float[layers.Length + 1][];
 
             for (int i = 0; i < layers.Length; i++)
             {
@@ -34,14 +34,7 @@ namespace TestConsoleApp
                 netStructure[i] = new int[layers[i]];
                 weight[i] = new float[layers[i]][];
 
-                if (i == 0)
-                {
-                    xses[i] = new float[xsesCount];
-                }
-                else
-                {
-                    xses[i] = new float[netStructure[i - 1].Length];
-                }
+
                 //layers[i] or layers[j]? V V V
                 for (int j = 0; j <layers[i] ; j++)
                 {
@@ -53,6 +46,18 @@ namespace TestConsoleApp
                     {
                         weight[i][j] = new float[netStructure[i-1].Length];
                     }
+                }
+            }
+
+            for (int i = 0; i < xses.Length; i++)
+            {
+                if (i == 0)
+                {
+                    xses[i] = new float[xsesCount];
+                }
+                else
+                {
+                    xses[i] = new float[netStructure[i - 1].Length];
                 }
             }
 
@@ -110,8 +115,8 @@ namespace TestConsoleApp
             {
                 for (int j = 0; j < netStructure[i].Length; j++)
                 {
-                     //Console.WriteLine(xses[i].Length + " / " + weight[i][j].Length);
-                    xses[i][j] = neurone.NeuroneFunction(xses[i], weight[i][j], bias, functionNames[netStructure[i][j]]);
+                     Console.WriteLine(xses[i].Length + " / " + weight[i][j].Length);
+                    //xses[i][j] = neurone.NeuroneFunction(xses[i], weight[i][j], bias, functionNames[netStructure[i][j]]);
                 }
             }
 
