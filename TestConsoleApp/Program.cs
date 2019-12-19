@@ -22,6 +22,8 @@ namespace TestConsoleApp
             //PIERWSZY: WARSTWA; DRUGI: NEURON Z POPRZEDNIEJ WARSTWY
             float[][] xses = new float[layers.Length + 1][];
 
+
+            //Deklaracja tablic niestandardowych:
             for (int i = 0; i < layers.Length; i++)
             {
                 netStructure[i] = new int[layers[i]];
@@ -39,7 +41,6 @@ namespace TestConsoleApp
                     }
                 }
             }
-
             for (int i = 0; i < xses.Length; i++)
             {
                 if (i == 0)
@@ -53,7 +54,7 @@ namespace TestConsoleApp
             }
 
 
-
+            //Wypełnienie tablic niestandardowych:
             Random rnd = new Random();
             Console.WriteLine("Struktura sieci. (funkcje)");
             for (int i = 0; i < layers.Length; i++)
@@ -87,10 +88,7 @@ namespace TestConsoleApp
             }
             Console.WriteLine();
 
-            foreach (var item in netStructure)
-            {
-                Console.WriteLine(item);
-            }
+
 
             string[] functionNames = new string[] {
                 "Dyskretna unipolarna",
@@ -100,7 +98,7 @@ namespace TestConsoleApp
             };
 
             Neurone neurone = new Neurone();
-
+            //Pętla wwykonująca pracę sieci neuronowej:
             Console.WriteLine(xses.Length);
             for (int i = 0; i < netStructure.Length; i++)
             {
@@ -110,6 +108,7 @@ namespace TestConsoleApp
                     xses[i+1][j] = neurone.NeuroneFunction(xses[i], weight[i][j], bias, functionNames[netStructure[i][j]]);
                 }
             }
+            //Wypisanie wyniku:
             Console.WriteLine(xses[4][0]);
             Console.ReadKey();
         }

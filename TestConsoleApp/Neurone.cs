@@ -13,7 +13,6 @@ namespace TestConsoleApp
         public float NeuroneFunction(float[] input, float[] weight, int bias, string function)
         {
             Console.WriteLine(input.Length+"//"+weight.Length);
-            //Console.WriteLine(weight.Length);
 
             float result = 0;
             for (int i = 0; i < input.Length; i++)
