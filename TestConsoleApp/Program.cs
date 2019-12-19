@@ -86,8 +86,6 @@ namespace TestConsoleApp
             }
             Console.WriteLine();
 
-
-
             string[] functionNames = new string[] {
                 "Dyskretna unipolarna",
                 "Dyskretna bipolarna",
