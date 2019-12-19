@@ -8,10 +8,6 @@ namespace TestConsoleApp
     {
         static void Main(string[] args)
         {
-            //List<List<int>> netStructure = new List<List<int>>();
-            //List<List<float>> xses = new List<List<float>>();
-            //List<List<float>> weight = new List<List<float>>();
-
             int[] layers = new int[4] { 6, 3, 2, 1 };
 
             int xsesCount = 3;
@@ -28,14 +24,9 @@ namespace TestConsoleApp
 
             for (int i = 0; i < layers.Length; i++)
             {
-                //int currentLayerNeuroneCount;
-                //Console.WriteLine("Podaj liczbę neuronów w warstwie " + (i + 1));
-                //currentLayerNeuroneCount = Convert.ToInt32(Console.Read());
                 netStructure[i] = new int[layers[i]];
                 weight[i] = new float[layers[i]][];
 
-
-                //layers[i] or layers[j]? V V V
                 for (int j = 0; j <layers[i] ; j++)
                 {
                     if (i==0)
@@ -110,30 +101,17 @@ namespace TestConsoleApp
 
             Neurone neurone = new Neurone();
 
-
+            Console.WriteLine(xses.Length);
             for (int i = 0; i < netStructure.Length; i++)
             {
                 for (int j = 0; j < netStructure[i].Length; j++)
                 {
                      Console.WriteLine(xses[i].Length + " / " + weight[i][j].Length);
-                    //xses[i][j] = neurone.NeuroneFunction(xses[i], weight[i][j], bias, functionNames[netStructure[i][j]]);
+                    xses[i+1][j] = neurone.NeuroneFunction(xses[i], weight[i][j], bias, functionNames[netStructure[i][j]]);
                 }
             }
-
-
-            //for (int i = 0; i < xses[xses.Length].Length; i++)
-            //{
-            //    Console.WriteLine(xses[xses.Length][i]);
-            //}
-
-
-
+            Console.WriteLine(xses[4][0]);
             Console.ReadKey();
-            //for (int n = 0; n < netStructure[netStructure.Count].Count; n++)
-            //{
-            //    Console.WriteLine(xses[netStructure.Count][n]);
-            //}
-
         }
     }
 }
