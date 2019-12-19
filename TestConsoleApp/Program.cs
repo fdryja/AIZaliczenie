@@ -69,15 +69,18 @@ namespace TestConsoleApp
                 }
                 Console.WriteLine();
             }
-
+            Console.WriteLine("Weights:");
             for (int i = 0; i < layers.Length; i++)
             {
                 for (int j = 0; j < weight[i].Length; j++)
                 {
+                    Console.WriteLine("Wagi neuronu "+ j + " z warstwy " + i);
                     for (int k = 0; k < weight[i][j].Length; k++)
                     {
                         weight[i][j][k] = rnd.Next(1, 11);
+                        Console.Write(weight[i][j][k] + ", ");
                     }
+                    Console.WriteLine();
                 }
             }
             Console.WriteLine("Input (X):");
