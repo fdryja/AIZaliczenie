@@ -106,12 +106,15 @@ namespace TestConsoleApp
             Neurone neurone = new Neurone();
 
 
+            //Console.WriteLine(xses.Length);
+            //Console.WriteLine(weight[0][0].Length);
+
             for (int i = 0; i < netStructure.Length; i++)
             {
                 for (int j = 0; j < netStructure[i].Length; j++)
                 {
-                     //Console.WriteLine(xses[i].Length + " / " + weight[i][j].Length);
-                    xses[i][j] = neurone.NeuroneFunction(xses[i], weight[i][j], bias, functionNames[netStructure[i][j]]);
+                    //Console.WriteLine(xses[i].Length + " / " + weight[i][j].Length);
+                    xses[i+1][j] = neurone.NeuroneFunction(xses[i], weight[i][j], bias, functionNames[netStructure[i][j]]);
                 }
             }
 
