@@ -9,9 +9,10 @@ namespace TestConsoleApp
         static void Main(string[] args)
         {
             int[] layers = new int[4] { 6, 3, 2, 1 };
-
             int xsesCount = 3;
-            int bias = 1;
+
+            float bias = 1;
+            float eta = 0.2;
 
             //PIERWSZY: WARSTWA; DRUGI: NEURON
             int[][] netStructure = new int[layers.Length][];
@@ -104,9 +105,23 @@ namespace TestConsoleApp
                     xses[i+1][j] = net.Neurone(xses[i], weight[i][j], bias, functionNames[netStructure[i][j]]);
                 }
             }
+
             //Wypisanie wyniku:
             Console.WriteLine(xses[4][0]);
             Console.ReadKey();
+
+            //Pętla wykonująca uczenie się sieci neuronowej
+            for (int i = weight.Length; i == 0; i--)
+			{
+                for (int j = 0; j < weight[i].Length; j++)
+			    {
+                    for (int k = 0; k < weight[i][j].Length; k++)
+			        {
+                        //weight[i][j][k] += net.DeltaWeight(xses[i+1], weight[i+1][j], eta, netStructure[i][j]);
+			        }
+			    }
+			}
+
         }
     }
 }

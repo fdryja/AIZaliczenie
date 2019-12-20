@@ -9,7 +9,7 @@ namespace TestConsoleApp
         public NeuralNet()
         {
         }
-        public float Neurone(float[] input, float[] weight, int bias, string function)
+        public float Neurone(float[] input, float[] weight, float bias, string functionNumber)
         {
             Console.WriteLine(input.Length+"//"+weight.Length);
 
@@ -20,7 +20,7 @@ namespace TestConsoleApp
             }
             result += bias;
 
-            switch (function)
+            switch (functionNumber)
             {
                 //skokowa unipolarna
                 case "Dyskretna unipolarna":
@@ -40,15 +40,24 @@ namespace TestConsoleApp
                         (Math.Pow(Math.E, result) + Math.Pow(Math.E, -result));
                     return (float)cbi;
             }
-            return 0;
+
         }
 
-        public float DeltaWeight(float[] input, float[] weight, int derivativeNumber)
+        public float DeltaWeight(float[] input, float[] weight, float eta, int derivativeNumber)
         {
+
+            float result = 0;
+            for (int i = 0; i < input.Length; i++)
+            {
+                result += input[i] * weight[i];
+            }
+            result += bias;
+
+            //DO CAŁKOWITEJ EDYCJI
             float weightedSum = 0;
             for (int i = 0; i <= input.Length; i++)
             {
-                weightedSum += input[i] * weight[i];
+                weightedSum += /* delta z poprzedniej warstwy */ * weight[i];
             }
 
 
@@ -59,16 +68,16 @@ namespace TestConsoleApp
 
                 //sigmoidalna pochodna działa
                 case 3:
-                    double cuni = 1 / (1 + Math.Pow(Math.E, weightedSum));
+                    double cuni = 1 / (1 + Math.Pow(Math.E, result));
                     derivative =  (float)cuni * (1 - (float)cuni);
                     break;
                 //tangens hiperboliczny działa
                 case 4:
-                    derivative =(float)(1 -Math.Pow((Math.Pow(Math.E, weightedSum) - Math.Pow(Math.E, -weightedSum)) / 
-                        (Math.Pow(Math.E, weightedSum) + Math.Pow(Math.E, -weightedSum)), 2));
+                    derivative =(float)(1 -Math.Pow((Math.Pow(Math.E, result) - Math.Pow(Math.E, - result)) / 
+                        (Math.Pow(Math.E, result) + Math.Pow(Math.E, -result)), 2));
                     break;
             }
-            return /* eta */ derivative * weightedSum;
+            return eta * derivative * weightedSum /* *x */ ; //to jest deltaW
         }
     }
 }
