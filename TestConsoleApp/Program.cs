@@ -124,7 +124,7 @@ namespace TestConsoleApp
                     weightToSum.Add();
                     for (int k = 0; k < weight[i][j].Length; k++)
 			        {
-                        weight[i][j][k] += net.DeltaWeight(eta, net.Delta((xses[i+1], weight[i+1][j], netStructure[i][j], weightedDeltaSum)), xses[i][j]);
+                        weight[i][j][k] += net.DeltaWeight(eta, deltaToSum[deltaToSum.Count-1], xses[i][j]);
 			        }
 			    }
 
@@ -132,7 +132,8 @@ namespace TestConsoleApp
                 {
                     weightedDeltaSum += deltaToSum[l] * weightToSum[l];
                 }
-
+                deltaToSum.Clear;
+                weightToSum.Clear;
 			}
 
         }
