@@ -111,15 +111,28 @@ namespace TestConsoleApp
             Console.ReadKey();
 
             //Pętla wykonująca uczenie się sieci neuronowej
+            List<float> deltaToSum = new List<float>();
+            List<float> weightToSum = new List<float>();
+            float weightedDeltaSum;
+            weightedDeltaSum = /* o - y*/;
             for (int i = weight.Length; i == 0; i--)
 			{
+
                 for (int j = 0; j < weight[i].Length; j++)
 			    {
+                    deltaToSum.Add(net.Delta(xses[i+1], weight[i+1][j], netStructure[i][j], weightedDeltaSum));
+                    weightToSum.Add();
                     for (int k = 0; k < weight[i][j].Length; k++)
 			        {
-                        //weight[i][j][k] += net.DeltaWeight(xses[i+1], weight[i+1][j], eta, netStructure[i][j]);
+                        weight[i][j][k] += net.DeltaWeight(eta, net.Delta((xses[i+1], weight[i+1][j], netStructure[i][j], weightedDeltaSum)), xses[i][j]);
 			        }
 			    }
+
+                for (int l = 0; l <= deltaList.Length; l++)
+                {
+                    weightedDeltaSum += deltaToSum[l] * weightToSum[l];
+                }
+
 			}
 
         }

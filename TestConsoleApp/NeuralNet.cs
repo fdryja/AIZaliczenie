@@ -43,23 +43,14 @@ namespace TestConsoleApp
 
         }
 
-        public float DeltaWeight(float[] input, float[] weight, float eta, int derivativeNumber)
+        public float Delta(float[] input, float[] weight, int derivativeNumber, float secondFactor)
         {
-
             float result = 0;
             for (int i = 0; i < input.Length; i++)
             {
                 result += input[i] * weight[i];
             }
             result += bias;
-
-            //DO CAŁKOWITEJ EDYCJI
-            float weightedSum = 0;
-            for (int i = 0; i <= input.Length; i++)
-            {
-                weightedSum += /* delta z poprzedniej warstwy */ * weight[i];
-            }
-
 
             float derivative = 0;
             switch (derivativeNumber)
@@ -77,7 +68,14 @@ namespace TestConsoleApp
                         (Math.Pow(Math.E, result) + Math.Pow(Math.E, -result)), 2));
                     break;
             }
-            return eta * derivative * weightedSum /* *x */ ; //to jest deltaW
+
+            return derivative * secondFactor;
         }
+
+        public float DeltaWeight(float eta, float delta, float currentX)
+        {
+            return eta * delta * currentX ;
+        }
+
     }
 }
