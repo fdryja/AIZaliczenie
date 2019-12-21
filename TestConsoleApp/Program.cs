@@ -27,6 +27,7 @@ namespace TestConsoleApp
             List<float> deltaToSumNext = new List<float>();
             float weightedDeltaSum;
 
+            float expected = 0;
 
             //Deklaracja tablic niestandardowych:
             for (int i = 0; i < layers.Length; i++)
@@ -99,69 +100,84 @@ namespace TestConsoleApp
             };
 
             NeuralNet net = new NeuralNet();
-
-
-
-
-
-
-            //Pętla wykonująca pracę sieci neuronowej:
-            Console.WriteLine(xses.Length);
-            for (int i = 0; i < netStructure.Length; i++)
+            Beginning:
+            Console.WriteLine("1 - wykonuj\n2 - ucz");
+            int wybor;
+            wybor = Convert.ToInt32(Console.ReadLine());
+            switch (wybor)
             {
-                for (int j = 0; j < netStructure[i].Length; j++)
-                {
-                    Console.WriteLine(xses[i].Length + " / " + weight[i][j].Length);
-                    xses[i + 1][j] = net.Neurone(xses[i], weight[i][j], bias, functionNames[netStructure[i][j]]);
-                }
-            }
-            //Wypisanie wyniku:
-            Console.WriteLine(xses[xses.Length - 1][0]);
-            Console.ReadKey();
+                case 1:
+                    //pobranie X od użytkownika, xses[0]
 
-
-
-            for (int q = 0; q < ZbiorUczacy.Length; q++)
-            {
-
-                //Pętla wykonująca pracę sieci neuronowej:
-                Console.WriteLine(xses.Length);
-                for (int i = 0; i < netStructure.Length; i++)
-                {
-                    for (int j = 0; j < netStructure[i].Length; j++)
+                    //Pętla wykonująca pracę sieci neuronowej:
+                    Console.WriteLine(xses.Length);
+                    for (int i = 0; i < netStructure.Length; i++)
                     {
-                        Console.WriteLine(xses[i].Length + " / " + weight[i][j].Length);
-                        xses[i + 1][j] = net.Neurone(xses[i], weight[i][j], bias, functionNames[netStructure[i][j]]);
-                    }
-                }
-                //Wypisanie wyniku:
-                Console.WriteLine(xses[xses.Length - 1][0]);
-
-                //Pętla wykonująca uczenie się sieci neuronowej:
-                weightedDeltaSum = /* o */ -xses[xses.Length - 1][0];
-                for (int i = weight.Length; i == 0; i--)
-                {
-
-                    for (int j = 0; j < weight[i].Length; j++)
-                    {
-                        deltaToSumNext.Add(net.Delta(xses[i + 1], weight[i + 1][j], bias, netStructure[i][j], weightedDeltaSum));
-
-                        for (int l = 0; l <= deltaToSumCurrent.Count; l++)
+                        for (int j = 0; j < netStructure[i].Length; j++)
                         {
-                            weightedDeltaSum += deltaToSumCurrent[l] * weight[i + 1][l][j];
-                        }
-
-                        for (int k = 0; k < weight[i][j].Length; k++)
-                        {
-                            weight[i][j][k] += net.DeltaWeight(eta, deltaToSumCurrent[deltaToSumCurrent.Count - 1], xses[i][j]);
+                            Console.WriteLine(xses[i].Length + " / " + weight[i][j].Length);
+                            xses[i + 1][j] = net.Neurone(xses[i], weight[i][j], bias, functionNames[netStructure[i][j]]);
                         }
                     }
+                    //Wypisanie wyniku:
+                    Console.WriteLine(xses[xses.Length - 1][0]);
+                    Console.ReadKey();
+                    break;
+                case 2:
+                    //pobranie listy xses[0] i expected -> Zbiór uczący
 
-                    deltaToSumCurrent = deltaToSumNext;
-                    deltaToSumNext.Clear();
-                }
+                    for (int q = 0; q < ZbiorUczacy.Length; q++)
+                    {
 
+                        //Pętla wykonująca pracę sieci neuronowej:
+                        Console.WriteLine(xses.Length);
+                        for (int i = 0; i < netStructure.Length; i++)
+                        {
+                            for (int j = 0; j < netStructure[i].Length; j++)
+                            {
+                                Console.WriteLine(xses[i].Length + " / " + weight[i][j].Length);
+                                xses[i + 1][j] = net.Neurone(xses[i], weight[i][j], bias, functionNames[netStructure[i][j]]);
+                            }
+                        }
+                        //Wypisanie wyniku:
+                        Console.WriteLine(xses[xses.Length - 1][0]);
+
+                        //Pętla wykonująca uczenie się sieci neuronowej:
+                        weightedDeltaSum = expected -xses[xses.Length - 1][0];
+                        for (int i = weight.Length; i == 0; i--)
+                        {
+
+                            for (int j = 0; j < weight[i].Length; j++)
+                            {
+                                deltaToSumNext.Add(net.Delta(xses[i + 1], weight[i + 1][j], bias, netStructure[i][j], weightedDeltaSum));
+
+                                for (int l = 0; l <= deltaToSumCurrent.Count; l++)
+                                {
+                                    weightedDeltaSum += deltaToSumCurrent[l] * weight[i + 1][l][j];
+                                }
+
+                                for (int k = 0; k < weight[i][j].Length; k++)
+                                {
+                                    weight[i][j][k] += net.DeltaWeight(eta, deltaToSumCurrent[deltaToSumCurrent.Count - 1], xses[i][j]);
+                                }
+                            }
+
+                            deltaToSumCurrent = deltaToSumNext;
+                            deltaToSumNext.Clear();
+                        }
+
+                    }
+                    break;
+                default:
+                    goto Beginning;
+                    break;
             }
+
+            
+
+
+
+            
         }
     }
 }
