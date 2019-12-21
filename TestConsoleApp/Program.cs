@@ -110,7 +110,7 @@ namespace TestConsoleApp
             Console.WriteLine(xses[xses.Length-1][0]);
             Console.ReadKey();
 
-            //Pętla wykonująca uczenie się sieci neuronowej
+            //Pętla wykonująca uczenie się sieci neuronowej:
             List<float> deltaToSumCurrent = new List<float>();
             List<float> deltaToSumNext = new List<float>();
             float weightedDeltaSum;
