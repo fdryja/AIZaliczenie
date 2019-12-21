@@ -12,7 +12,7 @@ namespace TestConsoleApp
             int xsesCount = 3;
 
             float bias = 1;
-            float eta = 0.2;
+            float eta = 0.2f;
 
             //PIERWSZY: WARSTWA; DRUGI: NEURON
             int[][] netStructure = new int[layers.Length][];
@@ -120,7 +120,7 @@ namespace TestConsoleApp
 
                 for (int j = 0; j < weight[i].Length; j++)
 			    {
-                    deltaToSum.Add(net.Delta(xses[i+1], weight[i+1][j], netStructure[i][j], weightedDeltaSum));
+                    deltaToSum.Add(net.Delta(xses[i+1], weight[i+1][j], bias, netStructure[i][j], weightedDeltaSum));
                     weightToSum.Add();
                     for (int k = 0; k < weight[i][j].Length; k++)
 			        {
@@ -128,12 +128,12 @@ namespace TestConsoleApp
 			        }
 			    }
 
-                for (int l = 0; l <= deltaList.Length; l++)
+                for (int l = 0; l <= deltaToSum.Count; l++)
                 {
                     weightedDeltaSum += deltaToSum[l] * weightToSum[l];
                 }
-                deltaToSum.Clear;
-                weightToSum.Clear;
+                deltaToSum.Clear();
+                weightToSum.Clear();
 			}
 
         }

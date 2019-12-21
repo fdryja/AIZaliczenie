@@ -40,10 +40,10 @@ namespace TestConsoleApp
                         (Math.Pow(Math.E, result) + Math.Pow(Math.E, -result));
                     return (float)cbi;
             }
-
+            return 0;
         }
 
-        public float Delta(float[] input, float[] weight, int derivativeNumber, float secondFactor)
+        public float Delta(float[] input, float[] weight, float bias, int derivativeNumber, float secondFactor)
         {
             float result = 0;
             for (int i = 0; i < input.Length; i++)
