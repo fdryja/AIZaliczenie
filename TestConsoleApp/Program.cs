@@ -101,39 +101,40 @@ namespace TestConsoleApp
             {
                 for (int j = 0; j < netStructure[i].Length; j++)
                 {
-                     Console.WriteLine(xses[i].Length + " / " + weight[i][j].Length);
+                    Console.WriteLine(xses[i].Length + " / " + weight[i][j].Length);
                     xses[i+1][j] = net.Neurone(xses[i], weight[i][j], bias, functionNames[netStructure[i][j]]);
                 }
             }
 
             //Wypisanie wyniku:
-            Console.WriteLine(xses[4][0]);
+            Console.WriteLine(xses[xses.Length-1][0]);
             Console.ReadKey();
 
             //Pętla wykonująca uczenie się sieci neuronowej
-            List<float> deltaToSum = new List<float>();
-            List<float> weightToSum = new List<float>();
+            List<float> deltaToSumCurrent = new List<float>();
+            List<float> deltaToSumNext = new List<float>();
             float weightedDeltaSum;
-            weightedDeltaSum = /* o - y*/;
+            weightedDeltaSum = /* o */ - xses[xses.Length - 1][0];
             for (int i = weight.Length; i == 0; i--)
 			{
 
                 for (int j = 0; j < weight[i].Length; j++)
 			    {
-                    deltaToSum.Add(net.Delta(xses[i+1], weight[i+1][j], bias, netStructure[i][j], weightedDeltaSum));
-                    weightToSum.Add();
+                    deltaToSumNext.Add(net.Delta(xses[i+1], weight[i+1][j], bias, netStructure[i][j], weightedDeltaSum));
+
+                    for (int l = 0; l <= deltaToSumCurrent.Count; l++)
+                    {
+                        weightedDeltaSum += deltaToSumCurrent[l] * weight[i + 1][l][j];
+                    }
+
                     for (int k = 0; k < weight[i][j].Length; k++)
 			        {
-                        weight[i][j][k] += net.DeltaWeight(eta, deltaToSum[deltaToSum.Count-1], xses[i][j]);
+                        weight[i][j][k] += net.DeltaWeight(eta, deltaToSumCurrent[deltaToSumCurrent.Count-1], xses[i][j]);
 			        }
 			    }
 
-                for (int l = 0; l <= deltaToSum.Count; l++)
-                {
-                    weightedDeltaSum += deltaToSum[l] * weightToSum[l];
-                }
-                deltaToSum.Clear();
-                weightToSum.Clear();
+                deltaToSumCurrent = deltaToSumNext;
+                deltaToSumNext.Clear();
 			}
 
         }
