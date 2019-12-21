@@ -143,19 +143,21 @@ namespace TestConsoleApp
                         Console.WriteLine(xses[xses.Length - 1][0]);
 
                         //Pętla wykonująca uczenie się sieci neuronowej:
-                        weightedDeltaSum = expected -xses[xses.Length - 1][0];
-                        for (int i = weight.Length; i == 0; i--)
+                        weightedDeltaSum = expected -xses[xses.Length - 1][0]; //oczekiwana - wynik
+                        for (int i = weight.Length - 1; i == 0; i--)
                         {
 
                             for (int j = 0; j < weight[i].Length; j++)
                             {
                                 deltaToSumNext.Add(net.Delta(xses[i + 1], weight[i + 1][j], bias, netStructure[i][j], weightedDeltaSum));
 
-                                for (int l = 0; l <= deltaToSumCurrent.Count; l++)
+                                if (i != weight.Length - 1)
                                 {
-                                    weightedDeltaSum += deltaToSumCurrent[l] * weight[i + 1][l][j];
+                                    for (int l = 0; l <= deltaToSumCurrent.Count; l++)
+                                    {
+                                        weightedDeltaSum += deltaToSumCurrent[l] * weight[i + 1][l][j];
+                                    }
                                 }
-
                                 for (int k = 0; k < weight[i][j].Length; k++)
                                 {
                                     weight[i][j][k] += net.DeltaWeight(eta, deltaToSumCurrent[deltaToSumCurrent.Count - 1], xses[i][j]);
