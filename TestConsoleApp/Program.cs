@@ -1,6 +1,10 @@
 ﻿using System;
 using TestConsoleApp;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
 
 namespace TestConsoleApp
 {
@@ -8,6 +12,101 @@ namespace TestConsoleApp
     {
         static void Main(string[] args)
         {
+            String firstLine, secondLine, thirdLine;
+
+            try
+            {
+
+
+                using (StreamReader sr = new StreamReader("text.txt"))
+                {
+                    firstLine = sr.ReadLine();
+                    secondLine = sr.ReadLine();
+                    thirdLine = File.ReadLines("text.txt").Last();
+
+                    //int layersCount = int.Parse(firstLine);
+                    firstLine.Trim();
+                    secondLine.Trim();
+                    thirdLine.Trim();
+                    int layersCount = 0;
+                    //int xsesCount = 0;
+
+                    //DODANIE WARSTW UŻYTWKOWNIKA
+                    for (int i = 0; i < firstLine.Length; i++)
+                    {
+                        char ch = firstLine[i];
+                        if (ch == ' ')
+                        {
+                            layersCount++;
+                        }
+                    }
+                    layersCount += 1;
+                    if (firstLine.Length == 0)
+                    {
+                        layersCount = 0;
+                    }
+                    String layerCh = "";
+                    List<int> warstwy = new List<int>();
+                    for (int i = 0; i < firstLine.Length; i++)
+                    {
+                        char ch = firstLine[i];
+                        if (ch != ' ')
+                        {
+                            layerCh += ch;
+                            if (ch == ' ')
+                            {
+                                int tabElem = int.Parse(layerCh);
+                                warstwy.Add(tabElem);
+                                layerCh = "";
+                            }
+                        }
+                    }
+
+
+
+                    for (int i = 0; i < secondLine.Length; i++)
+                    {
+                        char ch = secondLine[i];
+                        if (ch == ' ')
+                        {
+                            //xsesCount++;
+                        }
+                    }
+                    //xsesCount += 1;
+                    if (secondLine.Length == 0)
+                    {
+                        //xsesCount = 0;
+                    }
+
+
+                    //expected = float.Parse(thirdLine, System.Globalization.CultureInfo.InvariantCulture);
+
+                    Console.WriteLine(layersCount);
+                    Console.WriteLine(firstLine);
+                    Console.WriteLine(secondLine);
+                    Console.WriteLine(thirdLine);
+
+                    //WARSTWY
+                    //int[] layers = new int[layersCount];
+
+                    //XSES
+                    //float[][] xses = new float[layers.Length + 1][];
+
+                    for (int i = 0; i < warstwy.Count; i++)
+                    {
+                        //layers[i] = warstwy[i];
+                    }
+                }
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine("Nie można odczytać");
+                Console.WriteLine(e.Message);
+            }
+
+            Console.ReadKey();
+        
+
             int[] layers = new int[4] { 6, 3, 2, 1 };
             int xsesCount = 3;
 
