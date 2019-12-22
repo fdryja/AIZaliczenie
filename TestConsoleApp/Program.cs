@@ -316,10 +316,43 @@ namespace TestConsoleApp
                     {
                         layers[i] = warstwy[i];
                     }
+                    String xsesLine, expectedString;
+                    expectedString = "";
+                    List<float> listLearnXses = new List<float>();
+
+                    for (int i = 0; i < linesCount - 1; i++)
+                    {
+                        xsesLine = sr.ReadLine();
+                        xsesLine.Trim();
+                        xsesLine += ' ';
+                        for (int j = 0; j < xsesLine.Length; j++)
+                        {
+                            if (xsesLine[j] != 'e' && xsesLine[j] != ' ')
+                            {
+                                expectedString += xsesLine[j];
+                            }
+                            else if (xsesLine[j] == 'e')
+                            {
+                                expected[i] = float.Parse(expectedString, System.Globalization.CultureInfo.InvariantCulture);
+                                expectedString = "";
+                            }
+                            else if (xsesLine[j] == ' ')
+                            {
+                                listLearnXses.Add(float.Parse(expectedString, System.Globalization.CultureInfo.InvariantCulture));
+                                expectedString = "";
+                            }
+                        }
+                        learnXses[i] = new float[listLearnXses.Count];
+                        for (int l = 0; l < listLearnXses.Count; l++)
+                        {
+                            learnXses[i][l] = listLearnXses[l];
+                        }
+                        listLearnXses.Clear();
+                    }
 
                     for (int i = 0; i < layers.Length; i++)
                     {
-                        Console.WriteLine(layers[i]);
+                        //Console.WriteLine(layers[i]);
                     }
 
                     //Console.WriteLine(warstwy.Count);
