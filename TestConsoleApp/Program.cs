@@ -12,30 +12,39 @@ namespace TestConsoleApp
     {
         static void Main(string[] args)
         {
+            int linesCount = 0;
+            //float expected = 0;
             String firstLine, secondLine, thirdLine;
-
             try
             {
-
-
                 using (StreamReader sr = new StreamReader("text.txt"))
                 {
+                    //policzenie linii w tekście
+
+                    linesCount = File.ReadAllLines("text.txt").Count();
+
+
+
+
                     firstLine = sr.ReadLine();
-                    secondLine = sr.ReadLine();
-                    thirdLine = File.ReadLines("text.txt").Last();
+                    //secondLine = sr.ReadLine();
+
+
+
 
                     //int layersCount = int.Parse(firstLine);
                     firstLine.Trim();
-                    secondLine.Trim();
-                    thirdLine.Trim();
+                    //secondLine.Trim();
+
                     int layersCount = 0;
-                    //int xsesCount = 0;
+                    int xsesCount = 0;
 
                     //DODANIE WARSTW UŻYTWKOWNIKA
+                    char ch1;
                     for (int i = 0; i < firstLine.Length; i++)
                     {
-                        char ch = firstLine[i];
-                        if (ch == ' ')
+                        ch1 = firstLine[i];
+                        if (ch1 == ' ')
                         {
                             layersCount++;
                         }
@@ -47,55 +56,80 @@ namespace TestConsoleApp
                     }
                     String layerCh = "";
                     List<int> warstwy = new List<int>();
+                    //Console.WriteLine(firstLine.Length);
+                    firstLine += ' ';
                     for (int i = 0; i < firstLine.Length; i++)
                     {
-                        char ch = firstLine[i];
-                        if (ch != ' ')
+
+                        if (firstLine[i] != ' ')
                         {
-                            layerCh += ch;
-                            if (ch == ' ')
-                            {
-                                int tabElem = int.Parse(layerCh);
-                                warstwy.Add(tabElem);
-                                layerCh = "";
-                            }
+                            layerCh += firstLine[i];
+                            //Console.WriteLine(layerCh);
+
+                        }
+                        else if (firstLine[i] == ' ')
+                        {
+                            //Console.WriteLine(layerCh);
+                            int tabElem = int.Parse(layerCh);
+                            //Console.WriteLine(tabElem);
+                            warstwy.Add(tabElem);
+
+                            layerCh = "";
                         }
                     }
 
 
 
-                    for (int i = 0; i < secondLine.Length; i++)
-                    {
-                        char ch = secondLine[i];
-                        if (ch == ' ')
-                        {
-                            //xsesCount++;
-                        }
-                    }
+                    //for (int i = 0; i < secondLine.Length; i++)
+                    //{
+                    //    char ch = secondLine[i];
+                    //    if (ch == ' ')
+                    //    {
+                    //        xsesCount++;
+                    //    }
+                    //}
                     //xsesCount += 1;
-                    if (secondLine.Length == 0)
-                    {
-                        //xsesCount = 0;
-                    }
+                    //if (secondLine.Length == 0)
+                    //{
+                    //    xsesCount = 0;
+                    //}
 
 
                     //expected = float.Parse(thirdLine, System.Globalization.CultureInfo.InvariantCulture);
 
-                    Console.WriteLine(layersCount);
-                    Console.WriteLine(firstLine);
-                    Console.WriteLine(secondLine);
-                    Console.WriteLine(thirdLine);
+                    //Console.WriteLine(layersCount);
+                    //Console.WriteLine(firstLine);
+                    //Console.WriteLine(secondLine);
+                    //Console.WriteLine(thirdLine);
+
+
 
                     //WARSTWY
-                    //int[] layers = new int[layersCount];
+                    int[] layers = new int[layersCount];
+
+
 
                     //XSES
-                    //float[][] xses = new float[layers.Length + 1][];
+                    float[][] xses = new float[linesCount - 1][];
+
+                    float[] expected = new float[linesCount - 1];
 
                     for (int i = 0; i < warstwy.Count; i++)
                     {
-                        //layers[i] = warstwy[i];
+                        layers[i] = warstwy[i];
                     }
+
+                    for (int i = 0; i < layers.Length; i++)
+                    {
+                        Console.WriteLine(layers[i]);
+                    }
+
+                    //Console.WriteLine(warstwy.Count);
+
+                    //for (int i = 0; i < warstwy.Count; i++)
+                    //{
+                    //    Console.WriteLine(warstwy[i]);
+                    //}
                 }
             }
             catch (IOException e)
@@ -105,7 +139,7 @@ namespace TestConsoleApp
             }
 
             Console.ReadKey();
-        
+
 
             int[] layers = new int[4] { 6, 3, 2, 1 };
             int xsesCount = 3;
