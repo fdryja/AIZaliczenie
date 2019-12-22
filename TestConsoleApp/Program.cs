@@ -59,6 +59,10 @@ namespace TestConsoleApp
                 case 1:
                     //pobranie X od użytkownika, xses[0]
 
+                    ReadToWork();
+                    GenerateArrays();
+                    Fill();
+
                     //Pętla wykonująca pracę sieci neuronowej:
                     Console.WriteLine(xses.Length);
                     for (int i = 0; i < netStructure.Length; i++)
@@ -75,6 +79,10 @@ namespace TestConsoleApp
                     break;
                 case 2:
                     //pobranie listy xses[0] i expected -> Zbiór uczący
+
+                    ReadToLearn();
+                    GenerateArrays();
+                    Fill();
 
                     for (int q = 0; q < ZbiorUczacy.Length; q++)
                     {
@@ -128,6 +136,39 @@ namespace TestConsoleApp
             Console.ReadKey();
         }
 
+        public static void GenerateArrays()
+        {
+            //Deklaracja tablic niestandardowych:
+            for (int i = 0; i < layers.Length; i++)
+            {
+                netStructure[i] = new int[layers[i]];
+                weight[i] = new float[layers[i]][];
+
+                for (int j = 0; j < layers[i]; j++)
+                {
+                    if (i == 0)
+                    {
+                        weight[i][j] = new float[xsesCount];
+                    }
+                    else
+                    {
+                        weight[i][j] = new float[netStructure[i - 1].Length];
+                    }
+                }
+            }
+            for (int i = 0; i < xses.Length; i++)
+            {
+                if (i == 0)
+                {
+                    xses[i] = new float[xsesCount];
+                }
+                else
+                {
+                    xses[i] = new float[netStructure[i - 1].Length];
+                }
+            }
+        }
+
         public static void Fill()
         {
             //Wypełnienie tablic niestandardowych:
@@ -165,40 +206,7 @@ namespace TestConsoleApp
             Console.WriteLine();
         }
 
-        public static void GenerateArrays()
-        {
-            //Deklaracja tablic niestandardowych:
-            for (int i = 0; i < layers.Length; i++)
-            {
-                netStructure[i] = new int[layers[i]];
-                weight[i] = new float[layers[i]][];
-
-                for (int j = 0; j < layers[i]; j++)
-                {
-                    if (i == 0)
-                    {
-                        weight[i][j] = new float[xsesCount];
-                    }
-                    else
-                    {
-                        weight[i][j] = new float[netStructure[i - 1].Length];
-                    }
-                }
-            }
-            for (int i = 0; i < xses.Length; i++)
-            {
-                if (i == 0)
-                {
-                    xses[i] = new float[xsesCount];
-                }
-                else
-                {
-                    xses[i] = new float[netStructure[i - 1].Length];
-                }
-            }
-        }
-
-        public static void Read()
+        public static void ReadToLearn()
         {
             int linesCount = 0;
             //float expected = 0;
@@ -325,6 +333,13 @@ namespace TestConsoleApp
                 Console.WriteLine("Nie można odczytać");
                 Console.WriteLine(e.Message);
             }
+
         }
+
+            public static void ReadToWork() 
+            {
+            
+            }
+        
     }
 }
