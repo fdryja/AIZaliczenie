@@ -19,13 +19,13 @@ namespace TestConsoleApp
         public static float eta = 0.2f;
 
         //PIERWSZY: WARSTWA; DRUGI: NEURON
-        public static int[][] netStructure = new int[layers.Length][];
+        public static int[][] netStructure;
 
         //PIERWSZY: WARSTWA; DRUGI: NEURON; TRZECI: WAGA
-        public static float[][][] weight = new float[layers.Length][][];
+        public static float[][][] weight;
 
         //PIERWSZY: WARSTWA; DRUGI: NEURON Z POPRZEDNIEJ WARSTWY
-        public static float[][] xses = new float[layers.Length + 1][];
+        public static float[][] xses;
 
 
 
@@ -50,7 +50,7 @@ namespace TestConsoleApp
             };
 
             NeuralNet net = new NeuralNet();
-            Beginning:
+            //Beginning:
             Console.WriteLine("1 - wykonuj\n2 - ucz");
             int wybor;
             wybor = Convert.ToInt32(Console.ReadLine());
@@ -60,7 +60,7 @@ namespace TestConsoleApp
                     //pobranie X od użytkownika, xses[0]
 
                     ReadToWork();
-                    GenerateArrays();
+                    //GenerateArrays();
                     Fill();
 
                     //Pętla wykonująca pracę sieci neuronowej:
@@ -131,7 +131,8 @@ namespace TestConsoleApp
                     }
                     break;
                 default:
-                    goto Beginning;
+                    //goto Beginning;
+                    break;
                     
             }
 
