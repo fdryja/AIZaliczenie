@@ -143,7 +143,7 @@ namespace TestConsoleApp
             //Deklaracja tablic niestandardowych:
             for (int i = 0; i < layers.Length; i++)
             {
-                netStructure[i] = new int[layers[i]];
+                //netStructure[i] = new int[layers[i]];
                 weight[i] = new float[layers[i]][];
 
                 for (int j = 0; j < layers[i]; j++)
@@ -212,30 +212,23 @@ namespace TestConsoleApp
         {
             int linesCount = 0;
             //float expected = 0;
-            String firstLine, secondLine, thirdLine;
+            String firstLine;
             try
             {
                 using (StreamReader sr = new StreamReader("text.txt"))
                 {
                     //policzenie linii w tekście
-
                     linesCount = File.ReadAllLines("text.txt").Count();
-
-
-
 
                     firstLine = sr.ReadLine();
                     //secondLine = sr.ReadLine();
-
-
-
 
                     //int layersCount = int.Parse(firstLine);
                     firstLine.Trim();
                     //secondLine.Trim();
 
                     int layersCount = 0;
-                    int xsesCount = 0;
+                    
 
                     //DODANIE WARSTW UŻYTWKOWNIKA
                     char ch1;
@@ -316,6 +309,7 @@ namespace TestConsoleApp
                     {
                         layers[i] = warstwy[i];
                     }
+
                     String xsesLine, expectedString;
                     expectedString = "";
                     List<float> listLearnXses = new List<float>();
