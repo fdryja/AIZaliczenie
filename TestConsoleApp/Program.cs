@@ -11,7 +11,7 @@ namespace TestConsoleApp
     class Program
     {
         //public static int[] layers = new int[4] { 6, 3, 2, 1 };
-        public static int[] layers;
+        //public static int[] layers;
 
         //public static int xsesCount = 3;
         public static float[][] learnXses;
@@ -142,12 +142,12 @@ namespace TestConsoleApp
         public static void GenerateArrays(int xsesCount)
         {
             //Deklaracja tablic niestandardowych:
-            for (int i = 0; i < layers.Length; i++)
+            for (int i = 0; i < netStructure.Length; i++)
             {
                 //netStructure[i] = new int[layers[i]];
-                weight[i] = new float[layers[i]][];
+                weight[i] = new float[netStructure[i].Length][];
 
-                for (int j = 0; j < layers[i]; j++)
+                for (int j = 0; j < netStructure[i].Length; j++)
                 {
                     if (i == 0)
                     {
@@ -187,7 +187,7 @@ namespace TestConsoleApp
             //    Console.WriteLine();
             //}
             Console.WriteLine("Weights:");
-            for (int i = 0; i < layers.Length; i++)
+            for (int i = 0; i < netStructure.Length; i++)
             {
                 for (int j = 0; j < weight[i].Length; j++)
                 {
