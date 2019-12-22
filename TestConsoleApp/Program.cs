@@ -212,62 +212,75 @@ namespace TestConsoleApp
         {
             int linesCount = 0;
             //float expected = 0;
-            String firstLine;
+            String netStructureLine, xsesLine, expectedString;
+            expectedString = "";
+            netStructureLine = "";
             try
             {
                 using (StreamReader sr = new StreamReader("text.txt"))
                 {
                     //policzenie linii w tekście
+
                     linesCount = File.ReadAllLines("text.txt").Count();
 
-                    firstLine = sr.ReadLine();
-                    //secondLine = sr.ReadLine();
-
-                    //int layersCount = int.Parse(firstLine);
-                    firstLine.Trim();
-                    //secondLine.Trim();
+                    //netStructureLine = sr.ReadLine();
+                    //netStructureLine.Trim();
 
                     int layersCount = 0;
-                    
 
-                    //DODANIE WARSTW UŻYTWKOWNIKA
-                    char ch1;
-                    for (int i = 0; i < firstLine.Length; i++)
+                    int ileWarstw = 0;
+                    String useless = "";
+
+                    for (int i = 0; i < linesCount; i++)
                     {
-                        ch1 = firstLine[i];
-                        if (ch1 == ' ')
-                        {
-                            layersCount++;
-                        }
-                    }
-                    layersCount += 1;
-                    if (firstLine.Length == 0)
-                    {
-                        layersCount = 0;
-                    }
-                    String layerCh = "";
-                    List<int> warstwy = new List<int>();
-                    //Console.WriteLine(firstLine.Length);
-                    firstLine += ' ';
-                    for (int i = 0; i < firstLine.Length; i++)
-                    {
+                        useless = sr.ReadLine();
+                        if (useless.Equals("/") == false) { ileWarstw++; } else { break; }
 
-                        if (firstLine[i] != ' ')
-                        {
-                            layerCh += firstLine[i];
-                            //Console.WriteLine(layerCh);
-
-                        }
-                        else if (firstLine[i] == ' ')
-                        {
-                            //Console.WriteLine(layerCh);
-                            int tabElem = int.Parse(layerCh);
-                            //Console.WriteLine(tabElem);
-                            warstwy.Add(tabElem);
-
-                            layerCh = "";
-                        }
                     }
+                    sr.DiscardBufferedData();
+                    //sr.BaseStream.Seek(0, System.IO.SeekOrigin.Begin);
+                    StreamReader sr1 = new StreamReader("text.txt");
+                    //Console.WriteLine(ileWarstw);
+
+                    //Console.ReadKey();
+
+                    ////DODANIE WARSTW UŻYTWKOWNIKA
+                    //char ch1;
+                    //for (int i = 0; i < firstLine.Length; i++)
+                    //{
+                    //    ch1 = firstLine[i];
+                    //    if (ch1 == ' ')
+                    //    {
+                    //        layersCount++;
+                    //    }
+                    //}
+                    //layersCount += 1;
+                    //if (firstLine.Length == 0)
+                    //{
+                    //    layersCount = 0;
+                    //}
+                    //String layerCh = "";
+                    //List<int> warstwy = new List<int>();
+                    ////Console.WriteLine(firstLine.Length);
+                    //firstLine += ' ';
+                    //for (int i = 0; i < firstLine.Length; i++)
+                    //{
+
+                    //    if (firstLine[i] != ' ')
+                    //    {
+                    //        layerCh += firstLine[i];
+                    //        //Console.WriteLine(layerCh);
+
+                    //    } else if (firstLine[i]==' ')
+                    //    {
+                    //        //Console.WriteLine(layerCh);
+                    //        int tabElem = int.Parse(layerCh);
+                    //        //Console.WriteLine(tabElem);
+                    //        warstwy.Add(tabElem);
+
+                    //        layerCh = "";
+                    //    }
+                    //}
 
 
 
@@ -298,24 +311,59 @@ namespace TestConsoleApp
                     //WARSTWY
                     int[] layers = new int[layersCount];
 
-
+                    int[][] netStructure = new int[ileWarstw][];
 
                     //XSES
-                    float[][] learnXses = new float[linesCount - 1][];
+                    float[][] learnXses = new float[linesCount - ileWarstw - 1][];
 
                     float[] expected = new float[linesCount - 1];
 
-                    for (int i = 0; i < warstwy.Count; i++)
-                    {
-                        layers[i] = warstwy[i];
-                    }
 
-                    String xsesLine, expectedString;
-                    expectedString = "";
+
                     List<float> listLearnXses = new List<float>();
-                    for (int i = 0; i < linesCount - 1; i++)
+                    List<int> listNetStructure = new List<int>();
+
+                    for (int i = 0; i < ileWarstw; i++)
                     {
-                        xsesLine = sr.ReadLine();
+                        netStructureLine = sr1.ReadLine();
+                        //Console.WriteLine(netStructureLine);
+                        //if (netStructureLine == null)
+                        //{
+                        //    netStructureLine = "";
+                        //}
+                        netStructureLine.Trim();
+
+                        netStructureLine += ' ';
+                        for (int j = 0; j < netStructureLine.Length; j++)
+                        {
+                            if (netStructureLine[j] != ' ')
+                            {
+                                expectedString += netStructureLine[j];
+                            }
+                            else if (netStructureLine[j] == ' ')
+                            {
+                                //Console.WriteLine(expectedString);
+                                if (expectedString == "/") { break; }
+                                listNetStructure.Add(int.Parse(expectedString));
+                                expectedString = "";
+                            }
+                        }
+                        netStructure[i] = new int[listNetStructure.Count];
+                        //Console.WriteLine(listNetStructure.Count);
+                        //Console.WriteLine("i: " +i);
+
+                        for (int l = 0; l < netStructure[i].Length; l++)
+                        {
+                            netStructure[i][l] = listNetStructure[l];
+                        }
+                        listNetStructure.Clear();
+                    }
+                    Console.WriteLine(linesCount - ileWarstw);
+
+                    for (int i = 0; i < linesCount - ileWarstw; i++)
+                    {
+                        xsesLine = sr1.ReadLine();
+                        Console.WriteLine(xsesLine);
                         xsesLine.Trim();
                         xsesLine += ' ';
                         for (int j = 0; j < xsesLine.Length; j++)
@@ -331,17 +379,64 @@ namespace TestConsoleApp
                             }
                             else if (xsesLine[j] == ' ')
                             {
-                                listLearnXses.Add(float.Parse(expectedString, System.Globalization.CultureInfo.InvariantCulture));
+                                if (expectedString != "/")
+                                {
+                                    listLearnXses.Add(float.Parse(expectedString, System.Globalization.CultureInfo.InvariantCulture));
+                                }
                                 expectedString = "";
                             }
                         }
                         learnXses[i] = new float[listLearnXses.Count];
+                        Console.WriteLine(listLearnXses.Count);
                         for (int l = 0; l < listLearnXses.Count; l++)
                         {
                             learnXses[i][l] = listLearnXses[l];
                         }
                         listLearnXses.Clear();
                     }
+
+
+
+                    //if (i > ileWarstw)
+                    //{
+
+                    //    int index = 0;
+                    //    while (index < linesCount - i)
+                    //    { 
+                    //        
+
+                    //        index++;
+                    //    }
+                    //}
+
+
+                    for (int i = 0; i < learnXses.Length; i++)
+                    {
+                        for (int j = 0; j < learnXses[i].Length; j++)
+                        {
+                            Console.Write(learnXses[i][j] + ", ");
+                        }
+                        Console.WriteLine("");
+                    }
+
+                    for (int i = 0; i < netStructure.Length; i++)
+                    {
+                        for (int j = 0; j < netStructure[i].Length; j++)
+                        {
+                            Console.Write(netStructure[i][j] + ", ");
+                        }
+                        Console.WriteLine("");
+                    }
+
+                    for (int i = 0; i < expected.Length; i++)
+                    {
+                        //Console.WriteLine(expected[i]);
+                    }
+
+                    //for (int i = 0; i < warstwy.Count; i++)
+                    //{
+                    //    layers[i] = warstwy[i];
+                    //}
 
                     for (int i = 0; i < layers.Length; i++)
                     {
