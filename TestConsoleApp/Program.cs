@@ -80,10 +80,188 @@ namespace TestConsoleApp
                 case 2:
                     //pobranie listy xses[0] i expected -> Zbiór uczący
 
-                    ReadToLearn();
-                    GenerateArrays(learnXses[0].Length);
-                    Fill();
-                    
+                    int linesCount = 0;
+                    String netStructureLine, xsesLine, expectedString;
+                    expectedString = "";
+                    netStructureLine = "";
+                    try
+                    {
+                        using (StreamReader sr = new StreamReader("text.txt"))
+                        {
+                            //policzenie linii w tekście
+
+                            linesCount = File.ReadAllLines("text.txt").Count();
+
+                            int ileWarstw = 0;
+                            String useless = "";
+
+                            for (int i = 0; i < linesCount; i++)
+                            {
+                                useless = sr.ReadLine();
+                                if (useless.Equals("/") == false) { ileWarstw++; } else { break; }
+
+                            }
+                            sr.DiscardBufferedData();
+
+                            StreamReader sr1 = new StreamReader("text.txt");
+
+
+                            netStructure = new int[ileWarstw][];
+
+                            //XSES
+                            learnXses = new float[linesCount - ileWarstw - 1][];
+
+                            expected = new float[linesCount - 1];
+
+
+
+                            List<float> listLearnXses = new List<float>();
+                            List<int> listNetStructure = new List<int>();
+
+                            for (int i = 0; i < ileWarstw; i++)
+                            {
+                                netStructureLine = sr1.ReadLine();
+
+                                netStructureLine.Trim();
+
+                                netStructureLine += ' ';
+                                for (int j = 0; j < netStructureLine.Length; j++)
+                                {
+                                    if (netStructureLine[j] != ' ')
+                                    {
+                                        expectedString += netStructureLine[j];
+                                    }
+                                    else if (netStructureLine[j] == ' ')
+                                    {
+                                        if (expectedString == "/") { break; }
+                                        listNetStructure.Add(int.Parse(expectedString));
+                                        expectedString = "";
+                                    }
+                                }
+                                netStructure[i] = new int[listNetStructure.Count];
+
+
+                                for (int l = 0; l < netStructure[i].Length; l++)
+                                {
+                                    netStructure[i][l] = listNetStructure[l];
+                                }
+                                listNetStructure.Clear();
+                            }
+                            Console.WriteLine(linesCount - ileWarstw);
+
+                            for (int i = 0; i < linesCount - ileWarstw - 1; i++)
+                            {
+                                xsesLine = sr1.ReadLine();
+                                Console.WriteLine(xsesLine);
+                                xsesLine.Trim();
+                                xsesLine += ' ';
+                                for (int j = 0; j < xsesLine.Length; j++)
+                                {
+                                    if (xsesLine[j] != 'e' && xsesLine[j] != ' ')
+                                    {
+                                        expectedString += xsesLine[j];
+                                    }
+                                    else if (xsesLine[j] == 'e')
+                                    {
+                                        expected[i] = float.Parse(expectedString, System.Globalization.CultureInfo.InvariantCulture);
+                                        expectedString = "";
+                                    }
+                                    else if (xsesLine[j] == ' ')
+                                    {
+                                        if (expectedString != "/")
+                                        {
+                                            listLearnXses.Add(float.Parse(expectedString, System.Globalization.CultureInfo.InvariantCulture));
+                                        }
+                                        expectedString = "";
+                                    }
+                                }
+                                learnXses[i] = new float[listLearnXses.Count];
+                                Console.WriteLine(listLearnXses.Count);
+                                for (int l = 0; l < listLearnXses.Count; l++)
+                                {
+                                    learnXses[i][l] = listLearnXses[l];
+                                }
+                                listLearnXses.Clear();
+                            }
+
+
+
+
+                            for (int i = 0; i < learnXses.Length; i++)
+                            {
+                                for (int j = 0; j < learnXses[i].Length; j++)
+                                {
+                                    Console.Write(learnXses[i][j] + ", ");
+                                }
+                                Console.WriteLine("");
+                            }
+                            Console.WriteLine("");
+                            for (int i = 0; i < netStructure.Length; i++)
+                            {
+                                for (int j = 0; j < netStructure[i].Length; j++)
+                                {
+                                    Console.Write(netStructure[i][j] + ", ");
+                                }
+                                Console.WriteLine("");
+                            }
+
+
+                        }
+                    }
+                    catch (IOException e)
+                    {
+                        Console.WriteLine("Nie można odczytać");
+                        Console.WriteLine(e.Message);
+                    }
+
+                    Console.WriteLine(netStructure[0].Length);
+
+                    //Deklaracja tablic niestandardowych:
+                    for (int i = 0; i < netStructure.Length; i++)
+                    {
+                        //netStructure[i] = new int[layers[i]];
+                        weight[i] = new float[netStructure[i].Length][];
+
+                        for (int j = 0; j < netStructure[i].Length; j++)
+                        {
+                            if (i == 0)
+                            {
+                                weight[i][j] = new float[learnXses[0].Length];
+                            }
+                            else
+                            {
+                                weight[i][j] = new float[netStructure[i - 1].Length];
+                            }
+                        }
+                    }
+                    for (int i = 0; i < xses.Length; i++)
+                    {
+                        if (i == 0)
+                        {
+                            xses[i] = new float[learnXses[0].Length];
+                        }
+                        else
+                        {
+                            xses[i] = new float[netStructure[i - 1].Length];
+                        }
+                    }
+                    Random rnd = new Random();
+
+                    Console.WriteLine("Weights:");
+                    for (int i = 0; i < netStructure.Length; i++)
+                    {
+                        for (int j = 0; j < weight[i].Length; j++)
+                        {
+                            Console.WriteLine("Wagi neuronu " + j + " z warstwy " + i);
+                            for (int k = 0; k < weight[i][j].Length; k++)
+                            {
+                                weight[i][j][k] = rnd.Next(1, 11);
+                                Console.Write(weight[i][j][k] + ", ");
+                            }
+                            Console.WriteLine();
+                        }
+                    }
+
                     for (int q = 0; q < learnXses.Length; q++)
                     {
 
@@ -151,7 +329,7 @@ namespace TestConsoleApp
                 {
                     if (i == 0)
                     {
-                        weight[i][j] = new float[xsesCount];
+                        weight[i][j] = new float[learnXses[0].Length];
                     }
                     else
                     {
@@ -197,7 +375,6 @@ namespace TestConsoleApp
         public static void ReadToLearn()
         {
             int linesCount = 0;
-        
             String netStructureLine, xsesLine, expectedString;
             expectedString = "";
             netStructureLine = "";
