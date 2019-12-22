@@ -310,14 +310,14 @@ namespace TestConsoleApp
 
 
                     //WARSTWY
-                    int[] layers = new int[layersCount];
+                    //int[] layers = new int[layersCount];
 
-                    int[][] netStructure = new int[ileWarstw][];
+                    netStructure = new int[ileWarstw][];
 
                     //XSES
-                    float[][] learnXses = new float[linesCount - ileWarstw - 1][];
+                    learnXses = new float[linesCount - ileWarstw - 1][];
 
-                    float[] expected = new float[linesCount - 1];
+                    expected = new float[linesCount - 1];
 
 
 
@@ -439,10 +439,10 @@ namespace TestConsoleApp
                     //    layers[i] = warstwy[i];
                     //}
 
-                    for (int i = 0; i < layers.Length; i++)
-                    {
-                        //Console.WriteLine(layers[i]);
-                    }
+                    //for (int i = 0; i < layers.Length; i++)
+                    //{
+                    //    //Console.WriteLine(layers[i]);
+                    //}
 
                     //Console.WriteLine(warstwy.Count);
 
