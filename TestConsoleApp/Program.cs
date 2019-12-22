@@ -106,12 +106,12 @@ namespace TestConsoleApp
                             StreamReader sr1 = new StreamReader("text.txt");
 
 
-                            netStructure = new int[ileWarstw][];
+                            int[][] netStructure = new int[ileWarstw][];
 
                             //XSES
-                            learnXses = new float[linesCount - ileWarstw - 1][];
+                            float[][] learnXses = new float[linesCount - ileWarstw - 1][];
 
-                            expected = new float[linesCount - 1];
+                            float [] expected = new float[linesCount - 1];
 
 
 
