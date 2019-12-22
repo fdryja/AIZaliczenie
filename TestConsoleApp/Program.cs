@@ -13,7 +13,7 @@ namespace TestConsoleApp
         //public static int[] layers = new int[4] { 6, 3, 2, 1 };
         public static int[] layers;
 
-        public static int xsesCount = 3;
+        //public static int xsesCount = 3;
         public static float[][] learnXses;
         public static float bias = 1;
         public static float eta = 0.2f;
@@ -81,11 +81,13 @@ namespace TestConsoleApp
                     //pobranie listy xses[0] i expected -> Zbiór uczący
 
                     ReadToLearn();
-                    GenerateArrays();
+                    GenerateArrays(learnXses[0].Length);
                     Fill();
                     
                     for (int q = 0; q < learnXses.Length; q++)
                     {
+
+                        xses[0] = learnXses[q];
 
                         //Pętla wykonująca pracę sieci neuronowej:
                         Console.WriteLine(xses.Length);
@@ -136,7 +138,7 @@ namespace TestConsoleApp
             Console.ReadKey();
         }
 
-        public static void GenerateArrays()
+        public static void GenerateArrays(int xsesCount)
         {
             //Deklaracja tablic niestandardowych:
             for (int i = 0; i < layers.Length; i++)
@@ -173,16 +175,16 @@ namespace TestConsoleApp
         {
             //Wypełnienie tablic niestandardowych:
             Random rnd = new Random();
-            Console.WriteLine("Struktura sieci. (funkcje)");
-            for (int i = 0; i < layers.Length; i++)
-            {
-                for (int j = 0; j < netStructure[i].Length; j++)
-                {
-                    netStructure[i][j] = rnd.Next(1, 4);
-                    Console.Write(netStructure[i][j] + ", ");
-                }
-                Console.WriteLine();
-            }
+            //Console.WriteLine("Struktura sieci. (funkcje)");
+            //for (int i = 0; i < layers.Length; i++)
+            //{
+            //    for (int j = 0; j < netStructure[i].Length; j++)
+            //    {
+            //        netStructure[i][j] = rnd.Next(1, 4);
+            //        Console.Write(netStructure[i][j] + ", ");
+            //    }
+            //    Console.WriteLine();
+            //}
             Console.WriteLine("Weights:");
             for (int i = 0; i < layers.Length; i++)
             {
@@ -197,13 +199,13 @@ namespace TestConsoleApp
                     Console.WriteLine();
                 }
             }
-            Console.WriteLine("Input (X):");
-            for (int i = 0; i < xses[0].Length; i++)
-            {
-                xses[0][i] = rnd.Next(1, 34);
-                Console.Write(xses[0][i] + ", ");
-            }
-            Console.WriteLine();
+            //Console.WriteLine("Input (X):");
+            //for (int i = 0; i < xses[0].Length; i++)
+            //{
+                //xses[0][i] = rnd.Next(1, 34);
+                //Console.Write(xses[0][i] + ", ");
+            //}
+            //Console.WriteLine();
         }
 
         public static void ReadToLearn()
