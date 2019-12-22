@@ -360,7 +360,7 @@ namespace TestConsoleApp
                     }
                     Console.WriteLine(linesCount - ileWarstw);
 
-                    for (int i = 0; i < linesCount - ileWarstw; i++)
+                    for (int i = 0; i < linesCount - ileWarstw - 1; i++)
                     {
                         xsesLine = sr1.ReadLine();
                         Console.WriteLine(xsesLine);
@@ -418,7 +418,7 @@ namespace TestConsoleApp
                         }
                         Console.WriteLine("");
                     }
-
+                    Console.WriteLine("");
                     for (int i = 0; i < netStructure.Length; i++)
                     {
                         for (int j = 0; j < netStructure[i].Length; j++)
@@ -457,9 +457,10 @@ namespace TestConsoleApp
                 Console.WriteLine(e.Message);
             }
 
+
         }
 
-            public static void ReadToWork() 
+        public static void ReadToWork() 
             {
             
             }
