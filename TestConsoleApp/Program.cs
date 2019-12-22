@@ -14,7 +14,7 @@ namespace TestConsoleApp
         public static int[] layers;
 
         public static int xsesCount = 3;
-
+        public static float[][] learnXses;
         public static float bias = 1;
         public static float eta = 0.2f;
 
@@ -40,7 +40,7 @@ namespace TestConsoleApp
             float weightedDeltaSum;
 
 
-            Fill();
+            
 
             string[] functionNames = new string[] {
                 "Dyskretna unipolarna",
@@ -83,8 +83,8 @@ namespace TestConsoleApp
                     ReadToLearn();
                     GenerateArrays();
                     Fill();
-
-                    for (int q = 0; q < ZbiorUczacy.Length; q++)
+                    
+                    for (int q = 0; q < learnXses.Length; q++)
                     {
 
                         //Pętla wykonująca pracę sieci neuronowej:
@@ -306,7 +306,7 @@ namespace TestConsoleApp
 
 
                     //XSES
-                    float[][] xses = new float[linesCount - 1][];
+                    float[][] learnXses = new float[linesCount - 1][];
 
                     float[] expected = new float[linesCount - 1];
 
