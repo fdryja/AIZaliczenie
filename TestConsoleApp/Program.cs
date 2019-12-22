@@ -313,7 +313,6 @@ namespace TestConsoleApp
                     String xsesLine, expectedString;
                     expectedString = "";
                     List<float> listLearnXses = new List<float>();
-
                     for (int i = 0; i < linesCount - 1; i++)
                     {
                         xsesLine = sr.ReadLine();
