@@ -40,7 +40,7 @@ namespace TestConsoleApp
             float weightedDeltaSum;
 
 
-            
+            Fill();
 
             string[] functionNames = new string[] {
                 "Dyskretna unipolarna",
@@ -128,7 +128,7 @@ namespace TestConsoleApp
             Console.ReadKey();
         }
 
-        public void Fill()
+        public static void Fill()
         {
             //Wypełnienie tablic niestandardowych:
             Random rnd = new Random();
@@ -165,7 +165,7 @@ namespace TestConsoleApp
             Console.WriteLine();
         }
 
-        public void GenerateArrays()
+        public static void GenerateArrays()
         {
             //Deklaracja tablic niestandardowych:
             for (int i = 0; i < layers.Length; i++)
@@ -198,7 +198,7 @@ namespace TestConsoleApp
             }
         }
 
-        public void Read()
+        public static void Read()
         {
             int linesCount = 0;
             //float expected = 0;
