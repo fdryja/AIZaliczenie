@@ -23,21 +23,20 @@ namespace TestConsoleApp
             switch (functionNumber)
             {
                 //skokowa unipolarna
-                case 1:
+                case 0:
                     if (result >= 0) return 1;
                     else return 0;
                 //skokowa bipolarna
-                case 2:
+                case 1:
                     if (result > 0) return 1;
                     else return -1;
                 //sigmoidalna
-                case 3:
+                case 2:
                     double cuni = 1 / (1 + Math.Pow(Math.E, -result));
                     return (float)cuni;
                 //tangens hiperboliczny
-                case 4:
-                    double cbi = (Math.Pow(Math.E, result) - Math.Pow(Math.E, -result)) / 
-                        (Math.Pow(Math.E, result) + Math.Pow(Math.E, -result));
+                case 3:
+                    double cbi = (Math.Pow(Math.E, result) - Math.Pow(Math.E, -result))/(Math.Pow(Math.E, result) + Math.Pow(Math.E, -result));
                     return (float)cbi;
             }
             return 0;

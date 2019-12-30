@@ -82,7 +82,7 @@ namespace TestConsoleApp
             {
                 for (int j = 0; j < netStructure[i].Length; j++)
                 {
-                    netStructure[i][j] = 3;
+                    netStructure[i][j] = 2;
                 }
                 Console.WriteLine();
             }
@@ -155,16 +155,25 @@ namespace TestConsoleApp
                 weightedDeltaSum = expected[q] - xses[xses.Length - 1][0];
                 Console.WriteLine("Oczekiwana dla zestawu: " + expected[q] + "Wynik sieci: " + xses[xses.Length - 1][0] + "Różnica: " + weightedDeltaSum);
                 Console.WriteLine();
-                for (int i = weight.Length; i == 0; i--)
+                for (int i = weight.Length-1; i >= 0; i--)
                 {
+                    if (i != weight.Length - 1)
+                    {
+                        for (int z = 0; z < weight[i + 1].Length; z++)
+                        {
+
+                            deltaToSumNext.Add(net.Delta(xses[i + 1], weight[i + 1][z], bias, netStructure[i][z], weightedDeltaSum));
+
+                        }
+                    }
 
                     for (int j = 0; j < weight[i].Length; j++)
                     {
-                        deltaToSumNext.Add(net.Delta(xses[i + 1], weight[i + 1][j], bias, netStructure[i][j], weightedDeltaSum));
+                        
 
                         for (int l = 0; l <= deltaToSumCurrent.Count; l++)
                         {
-                            weightedDeltaSum += deltaToSumCurrent[l] * weight[i + 1][l][j];
+                            weightedDeltaSum += deltaToSumCurrent[l] * weight[i + 1][l][j]; //TU BYŁ BŁĄD
                         }
 
                         Console.WriteLine("Nowe wagi neuronu " + j + " warstwy " + i);
