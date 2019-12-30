@@ -24,7 +24,6 @@ namespace TestConsoleApp
             float[][] xses = new float[layers.Length + 1][];
 
 
-
             //Deklaracja tablic niestandardowych:
             for (int i = 0; i < layers.Length; i++)
             {
@@ -54,6 +53,14 @@ namespace TestConsoleApp
                     xses[i] = new float[netStructure[i - 1].Length];
                 }
             }
+
+            xses[0][0] = ;
+            xses[0][1] = ;
+            xses[0][2] = ;
+            xses[0][3] = ;
+            xses[0][4] = ;
+            xses[0][5] = ;
+
             //Wypełnienie tablic niestandardowych:
             Random rnd = new Random();
             //Console.WriteLine("Struktura sieci. (funkcje)");
