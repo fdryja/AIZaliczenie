@@ -23,6 +23,7 @@ namespace TestConsoleApp
             //PIERWSZY: WARSTWA; DRUGI: NEURON Z POPRZEDNIEJ WARSTWY
             float[][] xses = new float[layers.Length + 1][];
 
+            float[][] learnXses = new float[3][];
 
             //Deklaracja tablic niestandardowych:
             for (int i = 0; i < layers.Length; i++)
@@ -56,12 +57,16 @@ namespace TestConsoleApp
 
 
             //ZESTAWY UCZĄCE:
-            xses[0][0] = ;
-            xses[0][1] = ;
-            xses[0][2] = ;
-            xses[0][3] = ;
-            xses[0][4] = ;
-            xses[0][5] = ;
+            //xses[0][0] = ;
+            //xses[0][1] = ;
+            //xses[0][2] = ;
+            //xses[0][3] = ;
+            //xses[0][4] = ;
+            //xses[0][5] = ;
+
+            learnXses[0] = new float[] {3,2 };
+            learnXses[1] = new float[] { };
+            learnXses[2] = new float[] { };
 
             //Wypełnienie tablic niestandardowych:
             Random rnd = new Random();
