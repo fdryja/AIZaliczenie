@@ -136,8 +136,9 @@ namespace TestConsoleApp
 
             for (int q = 0; q < learnXses.Length; q++)
             {
+                Console.WriteLine(learnXses[q]);
                 xses[0] = learnXses[q];
-
+                Console.WriteLine(xses[0][0]);
                 //Pętla wykonująca pracę sieci neuronowej:
                 Console.WriteLine(xses.Length);
                 for (int i = 0; i < netStructure.Length; i++)
@@ -145,7 +146,8 @@ namespace TestConsoleApp
                     for (int j = 0; j < netStructure[i].Length; j++)
                     {
                         //Console.WriteLine(xses[i].Length + " / " + weight[i][j].Length);
-                        xses[i + 1][j] = net.Neurone(xses[i], weight[i][j], bias, functionNames[netStructure[i][j]]);
+                        Console.WriteLine(xses[i][0] +", "+ weight[i][j][0] + ", " + bias + ", " + functionNames[netStructure[i][j]]);
+                        xses[i + 1][j] = net.Neurone(xses[i], weight[i][j], bias, netStructure[i][j]);
                         Console.WriteLine(xses[i + 1][j]);
                     }
                 }
@@ -192,7 +194,7 @@ namespace TestConsoleApp
                 for (int j = 0; j < netStructure[i].Length; j++)
                 {
                     //Console.WriteLine(xses[i].Length + " / " + weight[i][j].Length);
-                    xses[i + 1][j] = net.Neurone(xses[i], weight[i][j], bias, functionNames[netStructure[i][j]]);
+                    xses[i + 1][j] = net.Neurone(xses[i], weight[i][j], bias, netStructure[i][j]);
                 }
             }
 

@@ -9,7 +9,7 @@ namespace TestConsoleApp
         public NeuralNet()
         {
         }
-        public float Neurone(float[] input, float[] weight, float bias, string functionNumber)
+        public float Neurone(float[] input, float[] weight, float bias, int functionNumber)
         {
             //Console.WriteLine(input.Length+"//"+weight.Length);
 
@@ -23,19 +23,19 @@ namespace TestConsoleApp
             switch (functionNumber)
             {
                 //skokowa unipolarna
-                case "Dyskretna unipolarna":
+                case 1:
                     if (result >= 0) return 1;
                     else return 0;
                 //skokowa bipolarna
-                case "Dyskretna bipolarna":
+                case 2:
                     if (result > 0) return 1;
                     else return -1;
                 //sigmoidalna
-                case "Ciągła unipolarna":
+                case 3:
                     double cuni = 1 / (1 + Math.Pow(Math.E, -result));
                     return (float)cuni;
                 //tangens hiperboliczny
-                case "Ciągła bipolarna":
+                case 4:
                     double cbi = (Math.Pow(Math.E, result) - Math.Pow(Math.E, -result)) / 
                         (Math.Pow(Math.E, result) + Math.Pow(Math.E, -result));
                     return (float)cbi;
