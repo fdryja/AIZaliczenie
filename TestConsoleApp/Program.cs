@@ -23,7 +23,7 @@ namespace TestConsoleApp
             //PIERWSZY: WARSTWA; DRUGI: NEURON Z POPRZEDNIEJ WARSTWY
             float[][] xses = new float[layers.Length + 1][];
 
-            float[][] learnXses = new float[3][];
+            
 
             //Deklaracja tablic niestandardowych:
             for (int i = 0; i < layers.Length; i++)
@@ -64,12 +64,29 @@ namespace TestConsoleApp
             //xses[0][4] = ;
             //xses[0][5] = ;
 
-            learnXses[0] = new float[] {3,2 };
-            learnXses[1] = new float[] { };
-            learnXses[2] = new float[] { };
+
+            float[][] learnXses = new float[3][];
+            learnXses[0] = new float[] {16711680.0f, 255.0f, 52224.0f, 16776960.0f};
+            learnXses[1] = new float[] { 65535.0f, 16737792.0f, 6684876.0f, 16777113.0f};
+            learnXses[2] = new float[] { 16777215.0f, 204.0f, 65280.0f, 16777215.0f};
+
+            float[] expected = new float[3] { 8418112.0f, 10066329.0f, 8437939.0f };
+
+            float[] testXses = new float[4] {16711680.0f, 16776960.0f, 52224.0f, 255.0f};
 
             //Wypełnienie tablic niestandardowych:
             Random rnd = new Random();
+
+            Console.WriteLine("Struktura sieci. (funkcje)");
+            for (int i = 0; i < layers.Length; i++)
+            {
+                for (int j = 0; j < netStructure[i].Length; j++)
+                {
+                    netStructure[i][j] = 3;
+                }
+                Console.WriteLine();
+            }
+
             //Console.WriteLine("Struktura sieci. (funkcje)");
             //for (int i = 0; i < layers.Length; i++)
             //{
@@ -129,11 +146,12 @@ namespace TestConsoleApp
                     {
                         //Console.WriteLine(xses[i].Length + " / " + weight[i][j].Length);
                         xses[i + 1][j] = net.Neurone(xses[i], weight[i][j], bias, functionNames[netStructure[i][j]]);
+                        Console.WriteLine(xses[i + 1][j]);
                     }
                 }
 
                 weightedDeltaSum = expected[q] - xses[xses.Length - 1][0];
-                Console.WriteLine("Oczekiwana dla zestawu: " + expected[q] + "Wynik sieci: " + xses[xses.Length - 1][0] + "Różnica: " weightedDeltaSum);
+                Console.WriteLine("Oczekiwana dla zestawu: " + expected[q] + "Wynik sieci: " + xses[xses.Length - 1][0] + "Różnica: " + weightedDeltaSum);
                 Console.WriteLine();
                 for (int i = weight.Length; i == 0; i--)
                 {
