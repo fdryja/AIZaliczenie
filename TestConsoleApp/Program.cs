@@ -157,33 +157,46 @@ namespace TestConsoleApp
                 Console.WriteLine();
                 for (int i = weight.Length-1; i >= 0; i--)
                 {
-                    if (i != weight.Length - 1)
-                    {
-                        for (int z = 0; z < weight[i + 1].Length; z++)
+  
+                        for (int z = 0; z < weight[i].Length; z++)
                         {
 
-                            deltaToSumNext.Add(net.Delta(xses[i + 1], weight[i + 1][z], bias, netStructure[i][z], weightedDeltaSum));
+                            deltaToSumNext.Add(net.Delta(xses[i], weight[i][z], bias, netStructure[i][z], weightedDeltaSum));
 
                         }
-                    }
+
+
 
                     for (int j = 0; j < weight[i].Length; j++)
                     {
-                        
 
-                        for (int l = 0; l <= deltaToSumCurrent.Count; l++)
+                        if (i != weight.Length - 1)
                         {
-                            weightedDeltaSum += deltaToSumCurrent[l] * weight[i + 1][l][j]; //TU BYŁ BŁĄD
+                            for (int l = 0; l < deltaToSumCurrent.Count; l++)
+                            {
+                                //Zatrzymujemy się w warstwie 2. Ponieważ w następnej warstwie (3.) są dwa neurony deltaToSumCurrent.Count powinno równać się 2, ale równa się 3, poza tym wszystkie elementy listy są równe 0, a nie powinny.
+                                weightedDeltaSum += deltaToSumCurrent[l] * weight[i+1][l][j]; //TU BYŁ BŁĄD
+                            }
+
+
+                            Console.WriteLine("Nowe wagi neuronu " + j + " warstwy " + i);
+
+                            for (int k = 0; k < weight[i][j].Length; k++)
+                            {
+                                weight[i][j][k] += net.DeltaWeight(eta, deltaToSumCurrent[deltaToSumCurrent.Count - 1], xses[i][j]);
+
+                                Console.Write(weight[i][j][k] + ", ");
+
+                            }
                         }
+                        else {
+                            for (int k = 0; k < weight[i][j].Length; k++)
+                            {
+                                weight[i][j][k] += net.DeltaWeight(eta, net.Delta(xses[i], weight[i][j], bias, netStructure[i][j], weightedDeltaSum), xses[i][j]);
 
-                        Console.WriteLine("Nowe wagi neuronu " + j + " warstwy " + i);
+                                Console.Write(weight[i][j][k] + ", ");
 
-                        for (int k = 0; k < weight[i][j].Length; k++)
-                        {
-                            weight[i][j][k] += net.DeltaWeight(eta, deltaToSumCurrent[deltaToSumCurrent.Count - 1], xses[i][j]);
-
-                            Console.Write(weight[i][j][k] + ", ");
-
+                            }
                         }
                     }
 
