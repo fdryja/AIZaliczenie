@@ -80,7 +80,6 @@ namespace TestConsoleApp
             {
                 Console.WriteLine("Element zwróconej tablicy numer "+(i+1)+" "+neuralNet.FeedForward(tab)[i]);
             }
-            //Console.WriteLine(neuralNet.FeedForward(tab));
 
 
             Console.ReadKey();
