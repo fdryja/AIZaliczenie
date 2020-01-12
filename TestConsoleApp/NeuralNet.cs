@@ -20,6 +20,7 @@ namespace TestConsoleApp
             }
             result += bias;
 
+
             switch (functionNumber)
             {
                 //skokowa unipolarna
