@@ -16,9 +16,17 @@ namespace TestConsoleApp
 
             int[] layers = new int[layersCount] ;
             string[] layerActivations = new string[layersCount];
+            float[] expected = new float[] { 801863 };
 
             for (int i = 1; i < layers.Length; i++)
             {
+
+                if (i == layers.Length-1)
+                {
+                    layers[i] = expected.Length;
+                    break;
+                }
+
                 int neurones;
                 Console.WriteLine("Podaj liczbę neuronów dla warstwy " + (i + 1));
                 neurones = Convert.ToInt32(Console.ReadLine());
@@ -82,7 +90,6 @@ namespace TestConsoleApp
                 Console.WriteLine("Element zwróconej tablicy numer "+(i+1)+" "+neuralNet.FeedForward(tab)[i]);
             }
 
-            float[] expected = new float[] { 801863 };
 
             for (int i = 0; i < neuralNet.FeedForward(tab).Length; i++)
             {
