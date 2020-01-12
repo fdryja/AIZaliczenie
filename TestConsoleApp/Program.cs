@@ -67,18 +67,27 @@ namespace TestConsoleApp
             }
 
 
-            float[] tab = new float[4];
+            //float[] tab = new float[4];
 
+            float[]tab = new float[] { 80, 186, 3 };
             layers[0] = tab.Length;
 
-            for (int i = 0; i < tab.Length; i++)
-            {
-                tab[i] =(float) rand.NextDouble() * rand.Next(1, 80);
-            }
+            //for (int i = 0; i < tab.Length; i++)
+            //{
+            //    tab[i] =(float) rand.NextDouble() * rand.Next(1, 80);
+            //}
             NeuralNet neuralNet = new NeuralNet(layers, layerActivations);
             for (int i = 0; i < neuralNet.FeedForward(tab).Length; i++)
             {
                 Console.WriteLine("Element zwróconej tablicy numer "+(i+1)+" "+neuralNet.FeedForward(tab)[i]);
+            }
+
+            float[] expected = new float[] { 801863 };
+
+            for (int i = 0; i < neuralNet.FeedForward(tab).Length; i++)
+            {
+                neuralNet.BackPropagate(tab, expected);
+                Console.WriteLine("Element zwróconej tablicy numer " + (i + 1) + " " + neuralNet.FeedForward(tab)[i]);
             }
 
 
