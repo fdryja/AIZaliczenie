@@ -8,6 +8,9 @@ namespace TestConsoleApp
     public class NeuralNet
     {
         Random rand = new Random();
+
+
+
         //fundamental 
         private int[] layers;//layers
         private float[][] neurons;//neurons
