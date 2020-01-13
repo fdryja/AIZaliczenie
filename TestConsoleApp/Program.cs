@@ -16,7 +16,7 @@ namespace TestConsoleApp
 
             int[] layers = new int[layersCount] ;
             string[] layerActivations = new string[layersCount];
-            float[] expected = new float[] { 801863 };
+            float[] expected = new float[] { 1000 };
 
             for (int i = 1; i < layers.Length; i++)
             {
@@ -40,15 +40,27 @@ namespace TestConsoleApp
             for (int i = 0; i < layersCount; i++)
             {
                 OnceAgain:
-                Console.WriteLine("Podaj funckję aktywacji dla warstwy " + (i + 1)+ "\n1 - sigmoidalna\n2 - tangens hiperboliczny");
+                Console.WriteLine("Podaj funckję aktywacji dla warstwy " + (i + 1)+ "\n1 - sigmoidalna\n2 - tangens hiperboliczny\n3 - ReLU\n4 - Leaky ReLU");
                 int wybor = Convert.ToInt32(Console.ReadLine());
                 if(wybor == 1)
                 {
                     layerActivations[i] = "sigmoid";
+                    Console.WriteLine("Funkcja aktywacji dla warstwy " + (i + 1) + " ustawiona na sigmoidalną!");
 
                 } else if(wybor == 2)
                 {
                     layerActivations[i] = "tanh";
+                    Console.WriteLine("Funkcja aktywacji dla warstwy " + (i + 1) + " ustawiona na tangens hiperboliczny!");
+                }
+                else if(wybor == 3)
+                {
+                    layerActivations[i] = "relu";
+                    Console.WriteLine("Funkcja aktywacji dla warstwy " + (i + 1) + " ustawiona na ReLU!");
+
+                } else if (wybor == 4)
+                {
+                    layerActivations[i] = "leakyrelu";
+                    Console.WriteLine("Funkcja aktywacji dla warstwy " + (i + 1) + " ustawiona na Leaky ReLU!");
                 }
                 else
                 {

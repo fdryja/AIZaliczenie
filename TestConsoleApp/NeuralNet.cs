@@ -171,12 +171,14 @@ namespace TestConsoleApp
 
         public float sigmoid(float x)//activation functions and their corrosponding derivatives
         {
-            float k = (float)Math.Exp(x);
-            return k / (1.0f + k);
+            double cuni = 1 / (1 + Math.Pow(Math.E, -x));
+            return (float)cuni;
         }
         public float tanh(float x)
         {
-            return (float)Math.Tanh(x);
+            double cbi = (Math.Pow(Math.E, x) - Math.Pow(Math.E, -x)) /
+                        (Math.Pow(Math.E, x) + Math.Pow(Math.E, -x));
+            return (float)cbi;
         }
         public float relu(float x)
         {
@@ -188,11 +190,15 @@ namespace TestConsoleApp
         }
         public float sigmoidDer(float x)
         {
-            return x * (1 - x);
+            float derivative;
+            double cuni = 1 / (1 + Math.Pow(Math.E, x));
+            return derivative = (float)cuni * (1 - (float)cuni);
         }
         public float tanhDer(float x)
         {
-            return 1 - (x * x);
+            float derivative = (float)(1 - Math.Pow((Math.Pow(Math.E, x) - Math.Pow(Math.E, -x)) /
+                        (Math.Pow(Math.E, x) + Math.Pow(Math.E, -x)), 2));
+            return derivative;
         }
         public float reluDer(float x)
         {
