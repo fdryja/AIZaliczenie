@@ -1,6 +1,9 @@
 ﻿using System;
 using TestConsoleApp;
 using System.Collections.Generic;
+using System.IO;
+
+
 
 namespace TestConsoleApp
 {
@@ -96,7 +99,9 @@ namespace TestConsoleApp
             //{
             //    tab[i] =(float) rand.NextDouble() * rand.Next(1, 80);
             //}
+            
             NeuralNet neuralNet = new NeuralNet(layers, layerActivations);
+            neuralNet.Load(Path.Combine(Environment.CurrentDirectory, @"Data\text.txt"));
             for (int i = 0; i < neuralNet.FeedForward(tab).Length; i++)
             {
                 Console.WriteLine("Element zwróconej tablicy numer "+(i+1)+" "+neuralNet.FeedForward(tab)[i]);
@@ -109,6 +114,8 @@ namespace TestConsoleApp
                 Console.WriteLine("Element zwróconej tablicy numer " + (i + 1) + " " + neuralNet.FeedForward(tab)[i]);
             }
 
+
+            neuralNet.Save(Path.Combine(Environment.CurrentDirectory,@"Data\text.txt"));
 
             Console.ReadKey();
         }
