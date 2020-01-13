@@ -386,8 +386,8 @@ namespace TestConsoleApp
         public static int[] ReadLayers()
         {
             int[] layers;
-            StreamReader sr = new StreamReader(@"Data\layers.txt");
-            int linesCount = File.ReadAllLines(@"Data\layers.txt").Length;
+            StreamReader sr = new StreamReader(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\layers.txt");
+            int linesCount = File.ReadAllLines(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\layers.txt").Length;
             layers = new int[linesCount+1];
             for (int i = 1; i < layers.Length; i++)
             {
@@ -400,8 +400,8 @@ namespace TestConsoleApp
         public static int[] ReadLayersBack()
         {
             int[] layers;
-            StreamReader sr = new StreamReader(@"Data\layers.txt");
-            int linesCount = File.ReadAllLines(@"Data\layers.txt").Length;
+            StreamReader sr = new StreamReader(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\layers.txt");
+            int linesCount = File.ReadAllLines(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\layers.txt").Length;
             layers = new int[linesCount + 2];
             for (int i = 1; i < layers.Length-1; i++)
             {
@@ -414,8 +414,8 @@ namespace TestConsoleApp
         public static string[] ReadActivation()
         {
             string[] activation;
-            StreamReader sr = new StreamReader(@"Data\activation.txt");
-            int linesCount = File.ReadAllLines(@"Data\activation.txt").Length;
+            StreamReader sr = new StreamReader(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\activation.txt");
+            int linesCount = File.ReadAllLines(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\activation.txt").Length;
             activation = new string[linesCount];
             for (int i = 0; i < activation.Length; i++)
             {
@@ -428,8 +428,8 @@ namespace TestConsoleApp
         public static float[] ReadInputs()
         {
             float[] inputs;
-            StreamReader sr = new StreamReader(@"Data\inputs.txt");
-            int linesCount = File.ReadAllLines(@"Data\inputs.txt").Length;
+            StreamReader sr = new StreamReader(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\inputs.txt");
+            int linesCount = File.ReadAllLines(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\inputs.txt").Length;
             inputs = new float[linesCount];
             for (int i = 0; i < inputs.Length; i++)
             {
@@ -442,8 +442,8 @@ namespace TestConsoleApp
         public static float[] ReadExpected()
         {
             float[] expected;
-            StreamReader sr = new StreamReader(@"Data\expected.txt");
-            int linesCount = File.ReadAllLines(@"Data\expected.txt").Length;
+            StreamReader sr = new StreamReader(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\expected.txt");
+            int linesCount = File.ReadAllLines(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\expected.txt").Length;
             expected = new float[linesCount];
             for (int i = 0; i < expected.Length; i++)
             {

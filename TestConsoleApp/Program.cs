@@ -11,9 +11,6 @@ namespace TestConsoleApp
     {
         static void Main(string[] args)
         {
-            //NeuralNet.ReadLayers();
-            Random rand = new Random();
-
             int wyborMetody;
             float[] expected, tab;
             int[] layers;
@@ -269,6 +266,7 @@ namespace TestConsoleApp
                 }
                 else if (wyborTypu == 2)
                 {
+                    //Sprzężenie zwrotne
                     layers = NeuralNet.ReadLayersBack();
                     layerActivations = NeuralNet.ReadActivation();
                     tab = NeuralNet.ReadInputs();
