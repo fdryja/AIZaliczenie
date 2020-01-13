@@ -123,10 +123,6 @@ namespace TestConsoleApp
                 else if (wyborTypu == 2)
                 {
 
-                    //float[] tab = new float[4];
-                    //expected = new float[] { 1000 };
-                    //float[] tab = new float[] { 80, 186, 3 };
-
                     Console.WriteLine("Podaj liczbę wejść");
                     int inputsCount = Convert.ToInt32(Console.ReadLine());
                     tab = new float[inputsCount];
@@ -172,10 +168,6 @@ namespace TestConsoleApp
                         layers[i] = neurones;
                     }
 
-                    //string[] layerActivations = new string[] { "sigmoid", "tanh", "sigmoid" };
-
-
-
                     for (int i = 0; i < layersCount; i++)
                     {
                     OnceAgain:
@@ -211,12 +203,6 @@ namespace TestConsoleApp
 
                     }
 
-
-
-
-
-
-
                     for (int i = 0; i < layers.Length; i++)
                     {
                         Console.WriteLine("Liczba neuronów, wastwa " + (i + 1) + "||" + layers[i]);
@@ -228,14 +214,8 @@ namespace TestConsoleApp
                     }
 
 
-                    
-
-                    //for (int i = 0; i < tab.Length; i++)
-                    //{
-                    //    tab[i] =(float) rand.NextDouble() * rand.Next(1, 80);
-                    //}
-
                     NeuralNet neuralNet = new NeuralNet(layers, layerActivations);
+                    //Tutaj coś się wywala, ale nie wiem dlaczego ani gdzie używać tego loada.
                     //neuralNet.Load(Path.Combine(Environment.CurrentDirectory, @"Data\weightsAndBiases.txt"));
 
                     for (int i = 0; i < neuralNet.FeedForward(tab).Length; i++)
@@ -260,11 +240,6 @@ namespace TestConsoleApp
             {
                 Console.WriteLine("Nie ma takiego numeru");
             }
-
-
-
-            
-
             Console.ReadKey();
         }
     }
