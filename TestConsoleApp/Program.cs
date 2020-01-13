@@ -233,6 +233,7 @@ namespace TestConsoleApp
                 
             }else if(wyborMetody == 2)
             {
+                //ODCZYT Z PLIKU
                 NeuralNet.ReadToLearn();
                 
             }

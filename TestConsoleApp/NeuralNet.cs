@@ -390,7 +390,10 @@ namespace TestConsoleApp
         }
 
 
-
+        public static int[] netStructure;
+        public static int[] activationFunctions;
+        public static float[][] learnXses;
+        public static float[] expected;
         public static void ReadToLearn()
         {
             int linesCount = 0;
@@ -420,12 +423,12 @@ namespace TestConsoleApp
                     StreamReader sr1 = new StreamReader(@"Data\data.txt");
 
 
-                    int[][] netStructure = new int[ileWarstw][];
+                    netStructure = new int[ileWarstw];
 
                     //XSES
-                    float [][] learnXses = new float[linesCount - ileWarstw - 1][];
+                    learnXses = new float[linesCount - ileWarstw - 1][];
 
-                    float[]expected = new float[linesCount - 1];
+                    expected = new float[linesCount - 1];
 
 
 
