@@ -383,155 +383,220 @@ namespace TestConsoleApp
         }
 
 
-        public int[] ReadNetStructure()
+        public static int[] ReadLayers()
         {
-
-            return null;
+            int[] layers;
+            StreamReader sr = new StreamReader(@"Data\layers.txt");
+            int linesCount = File.ReadAllLines(@"Data\layers.txt").Length;
+            layers = new int[linesCount+1];
+            for (int i = 1; i < layers.Length; i++)
+            {
+                int value = 0;
+                value+= Int32.Parse(sr.ReadLine());
+                layers[i] = value;
+            }
+            return layers;
+        }
+        public static int[] ReadLayersBack()
+        {
+            int[] layers;
+            StreamReader sr = new StreamReader(@"Data\layers.txt");
+            int linesCount = File.ReadAllLines(@"Data\layers.txt").Length;
+            layers = new int[linesCount + 2];
+            for (int i = 1; i < layers.Length-1; i++)
+            {
+                int value = 0;
+                value += Int32.Parse(sr.ReadLine());
+                layers[i] = value;
+            }
+            return layers;
+        }
+        public static string[] ReadActivation()
+        {
+            string[] activation;
+            StreamReader sr = new StreamReader(@"Data\activation.txt");
+            int linesCount = File.ReadAllLines(@"Data\activation.txt").Length;
+            activation = new string[linesCount];
+            for (int i = 0; i < activation.Length; i++)
+            {
+                string value = "";
+                value = sr.ReadLine().Trim();
+                activation[i] = value;
+            }
+            return activation;
+        }
+        public static float[] ReadInputs()
+        {
+            float[] inputs;
+            StreamReader sr = new StreamReader(@"Data\inputs.txt");
+            int linesCount = File.ReadAllLines(@"Data\inputs.txt").Length;
+            inputs = new float[linesCount];
+            for (int i = 0; i < inputs.Length; i++)
+            {
+                float value;
+                value = float.Parse(sr.ReadLine(), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+                inputs[i] = value;
+            }
+            return inputs;
+        }
+        public static float[] ReadExpected()
+        {
+            float[] expected;
+            StreamReader sr = new StreamReader(@"Data\expected.txt");
+            int linesCount = File.ReadAllLines(@"Data\expected.txt").Length;
+            expected = new float[linesCount];
+            for (int i = 0; i < expected.Length; i++)
+            {
+                float value;
+                value = float.Parse(sr.ReadLine(), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+                expected[i] = value;
+            }
+            return expected;
         }
 
 
-        public static int[] netStructure;
-        public static int[] activationFunctions;
-        public static float[][] learnXses;
-        public static float[] expected;
-        public static void ReadToLearn()
-        {
-            int linesCount = 0;
+        //    public static int[] netStructure;
+        //    public static int[] activationFunctions;
+        //    public static float[][] learnXses;
+        //    public static float[] expected;
+        //    public static void ReadToLearn()
+        //    {
+        //        int linesCount = 0;
 
-            String netStructureLine, xsesLine, expectedString;
-            expectedString = "";
-            netStructureLine = "";
-            try
-            {
-                using (StreamReader sr = new StreamReader(@"Data\data.txt"))
-                {
-                    //policzenie linii w tekście
+        //        String netStructureLine, xsesLine, expectedString;
+        //        expectedString = "";
+        //        netStructureLine = "";
+        //        try
+        //        {
+        //            using (StreamReader sr = new StreamReader(@"Data\data.txt"))
+        //            {
+        //                //policzenie linii w tekście
 
-                    linesCount = File.ReadAllLines(@"Data\data.txt").Length;
+        //                linesCount = File.ReadAllLines(@"Data\data.txt").Length;
 
-                    int ileWarstw = 0;
-                    String useless = "";
+        //                int ileWarstw = 0;
+        //                String useless = "";
 
-                    for (int i = 0; i < linesCount; i++)
-                    {
-                        useless = sr.ReadLine();
-                        if (useless.Equals("/") == false) { ileWarstw++; } else { break; }
+        //                for (int i = 0; i < linesCount; i++)
+        //                {
+        //                    useless = sr.ReadLine();
+        //                    if (useless.Equals("/") == false) { ileWarstw++; } else { break; }
 
-                    }
-                    sr.DiscardBufferedData();
+        //                }
+        //                sr.DiscardBufferedData();
 
-                    StreamReader sr1 = new StreamReader(@"Data\data.txt");
-
-
-                    netStructure = new int[ileWarstw];
-
-                    //XSES
-                    learnXses = new float[linesCount - ileWarstw - 1][];
-
-                    expected = new float[linesCount - 1];
+        //                StreamReader sr1 = new StreamReader(@"Data\data.txt");
 
 
+        //                netStructure = new int[ileWarstw];
 
-                    List<float> listLearnXses = new List<float>();
-                    List<int> listNetStructure = new List<int>();
+        //                //XSES
+        //                learnXses = new float[linesCount - ileWarstw - 1][];
 
-                    for (int i = 0; i < ileWarstw; i++)
-                    {
-                        netStructureLine = sr1.ReadLine();
-
-                        netStructureLine.Trim();
-
-                        netStructureLine += ' ';
-                        for (int j = 0; j < netStructureLine.Length; j++)
-                        {
-                            if (netStructureLine[j] != ' ')
-                            {
-                                expectedString += netStructureLine[j];
-                            }
-                            else if (netStructureLine[j] == ' ')
-                            {
-                                if (expectedString == "/") { break; }
-                                listNetStructure.Add(int.Parse(expectedString));
-                                expectedString = "";
-                            }
-                        }
-                        netStructure[i] = new int[listNetStructure.Count];
-
-
-                        for (int l = 0; l < netStructure[i].Length; l++)
-                        {
-                            netStructure[i][l] = listNetStructure[l];
-                        }
-                        listNetStructure.Clear();
-                    }
-                    Console.WriteLine(linesCount - ileWarstw);
-
-                    for (int i = 0; i < linesCount - ileWarstw - 1; i++)
-                    {
-                        xsesLine = sr1.ReadLine();
-                        Console.WriteLine(xsesLine);
-                        xsesLine.Trim();
-                        xsesLine += ' ';
-                        for (int j = 0; j < xsesLine.Length; j++)
-                        {
-                            if (xsesLine[j] != 'e' && xsesLine[j] != ' ')
-                            {
-                                expectedString += xsesLine[j];
-                            }
-                            else if (xsesLine[j] == 'e')
-                            {
-                                expected[i] = float.Parse(expectedString, System.Globalization.CultureInfo.InvariantCulture);
-                                expectedString = "";
-                            }
-                            else if (xsesLine[j] == ' ')
-                            {
-                                if (expectedString != "/")
-                                {
-                                    listLearnXses.Add(float.Parse(expectedString, System.Globalization.CultureInfo.InvariantCulture));
-                                }
-                                expectedString = "";
-                            }
-                        }
-                        learnXses[i] = new float[listLearnXses.Count];
-                        Console.WriteLine(listLearnXses.Count);
-                        for (int l = 0; l < listLearnXses.Count; l++)
-                        {
-                            learnXses[i][l] = listLearnXses[l];
-                        }
-                        listLearnXses.Clear();
-                    }
+        //                expected = new float[linesCount - 1];
 
 
 
+        //                List<float> listLearnXses = new List<float>();
+        //                List<int> listNetStructure = new List<int>();
 
-                    for (int i = 0; i < learnXses.Length; i++)
-                    {
-                        for (int j = 0; j < learnXses[i].Length; j++)
-                        {
-                            Console.Write(learnXses[i][j] + ", ");
-                        }
-                        Console.WriteLine("");
-                    }
-                    Console.WriteLine("");
-                    for (int i = 0; i < netStructure.Length; i++)
-                    {
-                        for (int j = 0; j < netStructure[i].Length; j++)
-                        {
-                            Console.Write(netStructure[i][j] + ", ");
-                        }
-                        Console.WriteLine("");
-                    }
+        //                for (int i = 0; i < ileWarstw; i++)
+        //                {
+        //                    netStructureLine = sr1.ReadLine();
 
+        //                    netStructureLine.Trim();
 
-                }
-            }
-            catch (IOException e)
-            {
-                Console.WriteLine("Nie można odczytać");
-                Console.WriteLine(e.Message);
-            }
+        //                    netStructureLine += ' ';
+        //                    for (int j = 0; j < netStructureLine.Length; j++)
+        //                    {
+        //                        if (netStructureLine[j] != ' ')
+        //                        {
+        //                            expectedString += netStructureLine[j];
+        //                        }
+        //                        else if (netStructureLine[j] == ' ')
+        //                        {
+        //                            if (expectedString == "/") { break; }
+        //                            listNetStructure.Add(int.Parse(expectedString));
+        //                            expectedString = "";
+        //                        }
+        //                    }
+        //                    netStructure[i] = new int[listNetStructure.Count];
 
 
-        }
+        //                    for (int l = 0; l < netStructure[i].Length; l++)
+        //                    {
+        //                        netStructure[i][l] = listNetStructure[l];
+        //                    }
+        //                    listNetStructure.Clear();
+        //                }
+        //                Console.WriteLine(linesCount - ileWarstw);
+
+        //                for (int i = 0; i < linesCount - ileWarstw - 1; i++)
+        //                {
+        //                    xsesLine = sr1.ReadLine();
+        //                    Console.WriteLine(xsesLine);
+        //                    xsesLine.Trim();
+        //                    xsesLine += ' ';
+        //                    for (int j = 0; j < xsesLine.Length; j++)
+        //                    {
+        //                        if (xsesLine[j] != 'e' && xsesLine[j] != ' ')
+        //                        {
+        //                            expectedString += xsesLine[j];
+        //                        }
+        //                        else if (xsesLine[j] == 'e')
+        //                        {
+        //                            expected[i] = float.Parse(expectedString, System.Globalization.CultureInfo.InvariantCulture);
+        //                            expectedString = "";
+        //                        }
+        //                        else if (xsesLine[j] == ' ')
+        //                        {
+        //                            if (expectedString != "/")
+        //                            {
+        //                                listLearnXses.Add(float.Parse(expectedString, System.Globalization.CultureInfo.InvariantCulture));
+        //                            }
+        //                            expectedString = "";
+        //                        }
+        //                    }
+        //                    learnXses[i] = new float[listLearnXses.Count];
+        //                    Console.WriteLine(listLearnXses.Count);
+        //                    for (int l = 0; l < listLearnXses.Count; l++)
+        //                    {
+        //                        learnXses[i][l] = listLearnXses[l];
+        //                    }
+        //                    listLearnXses.Clear();
+        //                }
+
+
+
+
+        //                for (int i = 0; i < learnXses.Length; i++)
+        //                {
+        //                    for (int j = 0; j < learnXses[i].Length; j++)
+        //                    {
+        //                        Console.Write(learnXses[i][j] + ", ");
+        //                    }
+        //                    Console.WriteLine("");
+        //                }
+        //                Console.WriteLine("");
+        //                for (int i = 0; i < netStructure.Length; i++)
+        //                {
+        //                    for (int j = 0; j < netStructure[i].Length; j++)
+        //                    {
+        //                        Console.Write(netStructure[i][j] + ", ");
+        //                    }
+        //                    Console.WriteLine("");
+        //                }
+
+
+        //            }
+        //        }
+        //        catch (IOException e)
+        //        {
+        //            Console.WriteLine("Nie można odczytać");
+        //            Console.WriteLine(e.Message);
+        //        }
+
+
+        //    }
     }
 }
