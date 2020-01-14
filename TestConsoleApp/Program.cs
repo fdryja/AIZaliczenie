@@ -2,19 +2,44 @@
 using AiZaliczenie;
 using System.Collections.Generic;
 using System.IO;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace AiZaliczenie
 {
-    class Program
+    class Program : System.Windows.Forms.Form
     {
+        public Program() 
+        {
+           
+            InitializeComponent();
+            //start();
+        }
+
         static int wyborMetody;
         static float[] expected, tab;
         static int[] layers;
         static string[] layerActivations;
         static void Main(string[] args)
         {
-            start();
-            Console.ReadKey();
+            Application.EnableVisualStyles();
+            Application.Run(new Program());
+
+        }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // Program
+            // 
+            this.ClientSize = new System.Drawing.Size(1469, 672);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.Name = "Program";
+            this.Text = "Program do badania sieci neuronowych jednokierunkowych i wielowarstwowych ze sprz" +
+    "ężeniem zwrotnym";
+            this.ResumeLayout(false);
 
         }
 
