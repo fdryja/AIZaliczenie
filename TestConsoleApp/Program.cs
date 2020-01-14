@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace AiZaliczenie
 {
@@ -276,9 +277,8 @@ namespace AiZaliczenie
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        public void Wczytaj()
         {
-            
             wynik.Text = string.Empty;
             NeuralNet.Read();
             textBoxLayers.Text = NeuralNet.layersString;
@@ -289,14 +289,14 @@ namespace AiZaliczenie
             layers = NeuralNet.layersRead;
             layerActivations = NeuralNet.activationFunctions;
             tab = NeuralNet.inputs;
-            wynik.Text += "WARSTWY:"+newLine;
+            wynik.Text += "WARSTWY:" + newLine;
             Console.WriteLine("WARSTWY");
             for (int i = 0; i < layers.Length; i++)
             {
                 wynik.Text += layers[i] + ", ";
                 Console.Write(layers[i] + ", ");
             }
-            wynik.Text += newLine+ "FUNKCJE AKTYWACJI:" + newLine;
+            wynik.Text += newLine + "FUNKCJE AKTYWACJI:" + newLine;
             Console.WriteLine("\nFUNKCJE AKTYWACJI");
             for (int i = 0; i < layerActivations.Length; i++)
             {
@@ -327,7 +327,7 @@ namespace AiZaliczenie
 
                 for (int i = 0; i < layers.Length; i++)
                 {
-                    wynik.Text +=  "Liczba neuronów, wastwa " + (i + 1) + "||" + layers[i]+ newLine ;
+                    wynik.Text += "Liczba neuronów, wastwa " + (i + 1) + "||" + layers[i] + newLine;
                     Console.WriteLine("Liczba neuronów, wastwa " + (i + 1) + "||" + layers[i]);
                 }
 
@@ -364,6 +364,11 @@ namespace AiZaliczenie
         Error:;
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Wczytaj(); 
+        }
+
         private void button5_Click(object sender, EventArgs e)
         {
             wynik.Text = newLine + newLine + newLine + newLine + newLine + newLine + "Wynik";
@@ -375,20 +380,34 @@ namespace AiZaliczenie
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Uruchom();
+            if (textBoxLayers.Text == "" || textBoxActivation.Text == "" || textBoxInputs.Text == "")
+            {
+                wynik.Text = "Jedno z pól tekstowych zostało puste.";
+            }
+            else
+            {
+                Uruchom();
+            }
         }
 
-        private void Uruchom()
+        static bool success;
+
+        public void Uruchom()
         {
+            success = false;
             bool expectedBool = false;
             string layersString = textBoxLayers.Text.Trim();
-            layersString += ' ';
+            layersString = System.Text.RegularExpressions.Regex.Replace(layersString, @"\s+", " ");
             string activateString = textBoxActivation.Text.Trim();
-            activateString += ' ';
+            activateString = System.Text.RegularExpressions.Regex.Replace(activateString, @"\s+", " ");
             string inputsString = textBoxInputs.Text.Trim();
-            inputsString += ' ';
+            inputsString = System.Text.RegularExpressions.Regex.Replace(inputsString, @"\s+", " ");
             string expectedString = textBoxExpected.Text;
+            expectedString = System.Text.RegularExpressions.Regex.Replace(expectedString, @"\s+", " ");
             if (expectedString != null) expectedString.Trim();
+            layersString += ' ';
+            activateString += ' ';
+            inputsString += ' ';
             expectedString += ' ';
 
             if (expectedString[0] == ' ')
@@ -404,42 +423,60 @@ namespace AiZaliczenie
                 for (int i = 0; i < layersString.Length; i++)
                 {
 
-                    if (layersString[i] != ' ')
+                    if (layersString[i] != ' '&& Char.IsDigit(layersString[i]))
                     {
                         layersValue += layersString[i];
                     }
                     else
                     {
-                        int layersElement = Int32.Parse(layersValue);
-                        layersList.Add(layersElement);
-                        layersValue = "";
+                        if(Regex.IsMatch(layersValue, @"^\d+$"))
+                        {
+                            int layersElement = Int32.Parse(layersValue);
+                            layersList.Add(layersElement);
+                            layersValue = "";
+                        }
+                        else
+                        {
+                            wynik.Text = "Błędny format warstw";
+                            goto Error;
+                        }
+                        
 
                     }
                 }
 
                 for (int i = 0; i < activateString.Length; i++)
                 {
-                    if (activateString[i] != ' ')
+                    if (activateString[i] != ' ' && Char.IsDigit(activateString[i]))
                     {
                         activateValue += activateString[i];
                     }
                     else
                     {
-                        switch (activateValue)
+                        if (activateValue == "1")
                         {
-                            case "1":
-                                activateValue = "sigmoid";
-                                break;
-                            case "2":
-                                activateValue = "tanh";
-                                break;
-                            case "3":
-                                activateValue = "relu";
-                                break;
-                            case "4":
-                                activateValue = "leakyrelu";
-                                break;
+                            activateValue = "sigmoid";
                         }
+                        else if(activateValue == "2")
+                        {
+                            activateValue = "tanh";
+
+                        }
+                        else if (activateValue == "3")
+                        {
+                            activateValue = "relu";
+
+                        }
+                        else if (activateValue == "4")
+                        {
+                            activateValue = "leakyrelu";
+                        }
+                        else
+                        {
+                            wynik.Text = "Podano błędną funkcję aktywacji";
+                            goto Error;
+                        }
+
                         activateList.Add(activateValue);
                         activateValue = "";
                     }
@@ -447,7 +484,7 @@ namespace AiZaliczenie
 
                 for (int i = 0; i < inputsString.Length; i++)
                 {
-                    if (inputsString[i] != ' ')
+                    if (inputsString[i] != ' ' || Char.IsDigit(inputsString[i]) || inputsString[i]==',')
                     {
                         inputsValue += inputsString[i];
                     }
@@ -514,8 +551,17 @@ namespace AiZaliczenie
                         }
                         else
                         {
-                            int layersElement = Int32.Parse(layersValue);
-                            layersList.Add(layersElement);
+                            if(Regex.IsMatch(layersValue, @"^\d+$"))
+                            {
+                                int layersElement = Int32.Parse(layersValue);
+                                layersList.Add(layersElement);
+                            }
+                            else
+                            {
+                                wynik.Text = "Błędny format warstw";
+                                goto Error;
+                            }
+                            
                         }
 
                         layersValue = "";
@@ -531,21 +577,30 @@ namespace AiZaliczenie
                     }
                     else
                     {
-                        switch (activateValue)
+                        if (activateValue == "1")
                         {
-                            case "1":
-                                activateValue = "sigmoid";
-                                break;
-                            case "2":
-                                activateValue = "tanh";
-                                break;
-                            case "3":
-                                activateValue = "relu";
-                                break;
-                            case "4":
-                                activateValue = "leakyrelu";
-                                break;
+                            activateValue = "sigmoid";
                         }
+                        else if (activateValue == "2")
+                        {
+                            activateValue = "tanh";
+
+                        }
+                        else if (activateValue == "3")
+                        {
+                            activateValue = "relu";
+
+                        }
+                        else if (activateValue == "4")
+                        {
+                            activateValue = "leakyrelu";
+                        }
+                        else
+                        {
+                            wynik.Text = "Podano błędną funkcję aktywacji";
+                            goto Error;
+                        }
+
                         activateList.Add(activateValue);
                         activateValue = "";
                     }
@@ -559,9 +614,19 @@ namespace AiZaliczenie
                     }
                     else
                     {
-                        float inputsElement = float.Parse(inputsValue, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-                        inputsList.Add(inputsElement);
-                        inputsValue = "";
+                        if (Regex.IsMatch(inputsValue, @"^\d+$"))
+                        {
+                            float inputsElement = float.Parse(inputsValue, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+                            inputsList.Add(inputsElement);
+                            inputsValue = "";
+                        }
+                        else
+                        {
+                            wynik.Text = "Błędny format wejść";
+                            goto Error;
+                        }
+
+                        
 
                     }
                 }
@@ -580,9 +645,17 @@ namespace AiZaliczenie
                         }
                         else
                         {
-                            float expectedElement = float.Parse(expectedValue, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-                            expectedList.Add(expectedElement);
 
+                            if (Regex.IsMatch(expectedValue, @"^\d+$"))
+                            {
+                                float expectedElement = float.Parse(expectedValue, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+                                expectedList.Add(expectedElement);
+                            }
+                            else
+                            {
+                                wynik.Text = "Błędny format wartości oczekiwanych";
+                                goto Error;
+                            }
                         }
 
                         expectedValue = "";
@@ -591,7 +664,6 @@ namespace AiZaliczenie
 
                 if ((layersList.Count + 2) != activateList.Count)
                 {
-                    //error = true;
                     wynik.Text = "Liczba warstw i funkcji aktywacji jest różna" + newLine + "Liczba warstw: " + (layersList.Count + 2) + newLine + "Liczba funkcji aktywacji: " + activateList.Count;
                     Console.WriteLine("Liczba warstw i funkcji aktywacji jest różna\nLiczba warstw: " + (layersList.Count + 2) + "\nLiczba funkcji aktywacji: " + activateList.Count);
                     goto Exit;
@@ -704,7 +776,9 @@ namespace AiZaliczenie
                     wynik.Text += "Element zwróconej tablicy numer " + (i + 1) + " " + neuralNet.FeedForward(tab)[i] + newLine;
                     Console.WriteLine("Element zwróconej tablicy numer " + (i + 1) + " " + neuralNet.FeedForward(tab)[i]);
                 }
+                
             }
+            success = true;
         Error:;
         Exit:;
 
@@ -713,18 +787,36 @@ namespace AiZaliczenie
 
         private void button3_Click(object sender, EventArgs e)
         {
-            string expectedText = textBoxExpected.Text;
-            expectedText.Trim();
-            if (expectedText.Length>=1)
+            if(textBoxLayers.Text == "" || textBoxActivation.Text == "" || textBoxInputs.Text == "")
             {
-                NeuralNet.WriteBack(layers, layerActivations, tab, expected);
-                wynik.Text = newLine + newLine + newLine + newLine + newLine + newLine + "Zapisano";
+                wynik.Text = "Jedno z pól tekstowych zostało puste lub jest źle uzupełnione.";
             }
             else
             {
-                NeuralNet.Write(layers, layerActivations, tab);
-                wynik.Text = newLine + newLine + newLine + newLine + newLine + newLine + "Zapisano";
+                Uruchom();
+                Console.WriteLine(success);
+                if (success.Equals(true))
+                {
+                    string expectedText = textBoxExpected.Text;
+                    expectedText.Trim();
+                    if (expectedText.Length >= 1)
+                    {
+                        NeuralNet.WriteBack(layers, layerActivations, tab, expected);
+                        wynik.Text = newLine + newLine + newLine + newLine + newLine + newLine + "Zapisano";
+                    }
+                    else
+                    {
+                        NeuralNet.Write(layers, layerActivations, tab);
+                        wynik.Text = newLine + newLine + newLine + newLine + newLine + newLine + "Zapisano";
+                    }
+                }
+                else
+                {
+                    wynik.Text = "Jedno z pól tekstowych zostało źle uzupełnione.";
+                }
             }
+            
+            
         }
 
         private void button4_Click(object sender, EventArgs e)
