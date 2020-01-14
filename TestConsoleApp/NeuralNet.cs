@@ -59,8 +59,6 @@ namespace AiZaliczenie
             InitBiases();
             InitWeights();
         }
-
-
         private void InitNeurons()//tworzymy puste miejsce na neurony w naszej sieci
         {
             List<float[]> neuronsList = new List<float[]>();
@@ -73,8 +71,6 @@ namespace AiZaliczenie
 
         private void InitBiases()//stworzenie losowych biasów
         {
-
-
             List<float[]> biasList = new List<float[]>();
             for (int i = 1; i < layers.Length; i++)
             {
