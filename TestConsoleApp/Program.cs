@@ -242,26 +242,27 @@ namespace TestConsoleApp
                 Console.WriteLine("WARSTWY");
                 for (int i = 0; i < layers.Length; i++)
                 {
-                    Console.WriteLine(layers[i]);
+                    Console.Write(layers[i]+", ");
                 }
-                Console.WriteLine("FUNKCJE");
+                Console.WriteLine("\nFUNKCJE AKTYWACJI");
                 for (int i = 0; i < layerActivations.Length; i++)
                 {
-                    Console.WriteLine(layerActivations[i]);
+                    Console.Write(layerActivations[i] + ", ");
                 }
-                Console.WriteLine("INPUTY");
+                Console.WriteLine("\nINPUTY");
                 for (int i = 0; i < tab.Length; i++)
                 {
-                    Console.WriteLine(tab[i]);
+                    Console.Write(tab[i] + ", ");
                 }
                 if (NeuralNet.expectedBool.Equals(true))
                 {
-                    Console.WriteLine("EXPECTED");
+                    Console.WriteLine("\nEXPECTED");
                     expected = NeuralNet.expected;
                     for (int i = 0; i < expected.Length; i++)
                     {
-                        Console.WriteLine(expected[i]);
+                        Console.Write(expected[i] + ", ");
                     }
+                    Console.WriteLine("");
                     //Sprzężenie zwrotne
                     NeuralNet neuralNet = new NeuralNet(layers, layerActivations);
 
