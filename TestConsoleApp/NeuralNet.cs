@@ -325,20 +325,25 @@ namespace AiZaliczenie
         public static float[] expected;
         public static int linesCount;
 
+        public static string layersString;
+        public static string activateString;
+        public static string inputsString;
+        public static string expectedString;
+
         public static void Read()//odczyt warstw, neuronów, funkcji aktywacji wejść i (jeżeli istnieją) wyjść z pliku
         {
             StreamReader sr = new StreamReader(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\data.txt");
             linesCount = File.ReadAllLines(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\data.txt").Length;
-            string layersString = sr.ReadLine().Trim();
+            layersString = sr.ReadLine().Trim();
             layersString += ' ';
-            string activateString = sr.ReadLine().Trim();
+            activateString = sr.ReadLine().Trim();
             activateString += ' ';
-            string inputsString = sr.ReadLine().Trim();
+            inputsString = sr.ReadLine().Trim();
             inputsString += ' ';
-            string expectedString = sr.ReadLine();
+            expectedString = sr.ReadLine();
             if (expectedString != null) expectedString.Trim();
             expectedString += ' ';
-
+            sr.Close();
             if (expectedString[0] == ' ')
             {
                 List<int> layersList = new List<int>();
@@ -573,10 +578,7 @@ namespace AiZaliczenie
             }
         Exit:;
         }
-        public static string layersString;
-        public static string activateString;
-        public static string inputsString;
-        public static string expectedString;
+        
         public static void ReadSaved()//odczyt warstw, neuronów, funkcji aktywacji wejść i (jeżeli istnieją) wyjść z pliku
         {
             StreamReader sr = new StreamReader(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\saved.txt");
@@ -588,6 +590,7 @@ namespace AiZaliczenie
             inputsString = sr.ReadLine().Trim();
             inputsString += ' ';
             expectedString = sr.ReadLine();
+            sr.Close();
             if (expectedString != null) expectedString.Trim();
             expectedString += ' ';
 
@@ -829,7 +832,6 @@ namespace AiZaliczenie
         public static void WriteBack(int[]layers, string[]activation, float[]inputs, float[]expected)//zapis warstw, neuronów, funkcji aktywacji, wejść i wyjść do pliku
         {
             File.WriteAllText(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\saved.txt", string.Empty);
-            
             StreamWriter writer = new StreamWriter(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\saved.txt");
 
             string layersString="";
@@ -879,7 +881,7 @@ namespace AiZaliczenie
 
         public static void Write(int[] layers, string[] activation, float[] inputs)//zapis warstw, neuronów, funkcji aktywacji i wejść do pliku
         {
-            System.IO.File.WriteAllText(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\saved.txt", string.Empty);
+            File.WriteAllText(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\saved.txt", string.Empty);
             StreamWriter writer = new StreamWriter(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\saved.txt");
 
             string layersString = "";

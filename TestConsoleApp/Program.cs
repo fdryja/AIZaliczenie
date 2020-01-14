@@ -281,6 +281,10 @@ namespace AiZaliczenie
             
             wynik.Text = string.Empty;
             NeuralNet.Read();
+            textBoxLayers.Text = NeuralNet.layersString;
+            textBoxActivation.Text = NeuralNet.activateString;
+            textBoxInputs.Text = NeuralNet.inputsString;
+            if (NeuralNet.expectedString != " ") textBoxExpected.Text = NeuralNet.expectedString;
             if (NeuralNet.error == true) goto Error;
             layers = NeuralNet.layersRead;
             layerActivations = NeuralNet.activationFunctions;
@@ -377,7 +381,7 @@ namespace AiZaliczenie
         private void Uruchom()
         {
             bool expectedBool = false;
-            string layersString = textBoxLayers.Text;
+            string layersString = textBoxLayers.Text.Trim();
             layersString += ' ';
             string activateString = textBoxActivation.Text.Trim();
             activateString += ' ';
