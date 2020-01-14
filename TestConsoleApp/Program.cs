@@ -3,8 +3,6 @@ using TestConsoleApp;
 using System.Collections.Generic;
 using System.IO;
 
-
-
 namespace TestConsoleApp
 {
     class Program

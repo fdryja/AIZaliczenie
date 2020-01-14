@@ -9,8 +9,6 @@ namespace TestConsoleApp
     {
         Random rand = new Random();
 
-
-
         //podstawowa struktura 
         private int[] layers;//warstwy
         private float[][] neurons;//neurony
