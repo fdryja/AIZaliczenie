@@ -7,13 +7,14 @@ namespace AiZaliczenie
 {
     class Program
     {
+        static int wyborMetody;
+        static float[] expected, tab;
+        static int[] layers;
+        static string[] layerActivations;
         static void Main(string[] args)
         {
             //NeuralNet.Write();
-            int wyborMetody;
-            float[] expected, tab;
-            int[] layers;
-            string[] layerActivations;
+            
 
             Console.WriteLine("Wybierz metodę wprowadzania danych:\n1 - ręcznie\n2 - odczyt z pliku");
             wyborMetody = Convert.ToInt16(Console.ReadLine());
@@ -246,7 +247,7 @@ namespace AiZaliczenie
                         Console.WriteLine("Nie ma takiego numeru");
                     }
                     BrakZapisu:
-                    neuralNet.Save(Path.Combine(Environment.CurrentDirectory, @"Data\weightsAndBiases.txt"));
+                    neuralNet.Save(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\weightsAndBiases.txt");
                 }
                 else
                 {

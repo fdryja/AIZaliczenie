@@ -480,8 +480,16 @@ namespace AiZaliczenie
                     }
                     else
                     {
-                        int layersElement = Int32.Parse(layersValue);
-                        layersList.Add(layersElement);
+                        if (layersValue.Equals(""))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            int layersElement = Int32.Parse(layersValue);
+                            layersList.Add(layersElement);
+                        }
+                        
                         layersValue = "";
 
                     }
@@ -538,10 +546,18 @@ namespace AiZaliczenie
                     }
                     else
                     {
-                        float expectedElement = float.Parse(expectedValue, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-                        expectedList.Add(expectedElement);
-                        expectedValue = "";
+                        if (expectedValue.Equals(""))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            float expectedElement = float.Parse(expectedValue, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+                            expectedList.Add(expectedElement);
+                            
+                        }
 
+                        expectedValue = "";
                     }
                 }
 
