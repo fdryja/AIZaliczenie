@@ -2,9 +2,9 @@
 using System;
 using System.IO;
 
-namespace TestConsoleApp
+namespace AiZaliczenie
 {
-    //Trzeba pozmieniać nazwy (zrobione?)
+
     public class NeuralNet
     {
         Random rand = new Random();

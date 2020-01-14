@@ -1,9 +1,9 @@
 ﻿using System;
-using TestConsoleApp;
+using AiZaliczenie;
 using System.Collections.Generic;
 using System.IO;
 
-namespace TestConsoleApp
+namespace AiZaliczenie
 {
     class Program
     {
