@@ -585,7 +585,7 @@ namespace TestConsoleApp
         Exit:;
         }
 
-        public static void Write()////zapis warstw, neuronów, funkcji aktywacji wejść i (jeżeli istnieją) wyjść do pliku
+        public static void Write()//zapis warstw, neuronów, funkcji aktywacji wejść i (jeżeli istnieją) wyjść do pliku
         {
 
         }
