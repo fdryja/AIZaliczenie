@@ -317,7 +317,7 @@ namespace AiZaliczenie
             {
                 Console.WriteLine("Nie ma takiego numeru");
             }
-        Error:;
+            Error:;
         }
     }
 }
