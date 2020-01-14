@@ -11,15 +11,13 @@ namespace TestConsoleApp
 
 
 
-        //fundamental 
-        private int[] layers;//layers
-        private float[][] neurons;//neurons
-        private float[][] biases;//biasses
-        private float[][][] weights;//weights
-        private int[] activations;//layers
+        //podstawowa struktura 
+        private int[] layers;//warstwy
+        private float[][] neurons;//neurony
+        private float[][] biases;//biasy
+        private float[][][] weights;//wagi
+        private int[] activations;//funkcje aktywacji
 
-        //genetic
-        public float fitness = 0;//fitness
 
         //backprop
         public float learningRate = 0.01f;//learning rate
@@ -65,7 +63,7 @@ namespace TestConsoleApp
         }
 
 
-        private void InitNeurons()//create empty storage array for the neurons in the network.
+        private void InitNeurons()//tworzymy puste miejsce na neurony w naszej sieci
         {
             List<float[]> neuronsList = new List<float[]>();
             for (int i = 0; i < layers.Length; i++)
@@ -75,7 +73,7 @@ namespace TestConsoleApp
             neurons = neuronsList.ToArray();
         }
 
-        private void InitBiases()//initializes random array for the biases being held within the network.
+        private void InitBiases()//stworzenie losowych biasów
         {
 
 
@@ -85,7 +83,6 @@ namespace TestConsoleApp
                 float[] bias = new float[layers[i]];
                 for (int j = 0; j < layers[i]; j++)
                 {
-                    //bias[j] = UnityEngine.Random.Range(-0.5f, 0.5f);
                     bias[j] = (float)rand.NextDouble() - 0.5f;
                 }
                 biasList.Add(bias);
@@ -93,7 +90,7 @@ namespace TestConsoleApp
             biases = biasList.ToArray();
         }
 
-        private void InitWeights()//initializes random array for the weights being held in the network.
+        private void InitWeights()//stworzenie losowych wag
         {
             List<float[][]> weightsList = new List<float[][]>();
             for (int i = 1; i < layers.Length; i++)
@@ -114,7 +111,7 @@ namespace TestConsoleApp
             weights = weightsList.ToArray();
         }
 
-        public float[] FeedForward(float[] inputs)//feed forward, inputs >==> outputs.
+        public float[] FeedForward(float[] inputs)//jednokierunkowa
         {
             for (int i = 0; i < inputs.Length; i++)
             {
@@ -135,8 +132,7 @@ namespace TestConsoleApp
             }
             return neurons[layers.Length - 1];
         }
-        //Backpropagation implemtation down until mutation.
-        public float activate(float value, int layer)//all activation functions
+        public float activate(float value, int layer)//funkcje aktywacji
         {
             switch (activations[layer])
             {
@@ -152,7 +148,7 @@ namespace TestConsoleApp
                     return relu(value);
             }
         }
-        public float activateDer(float value, int layer)//all activation function derivatives
+        public float activateDer(float value, int layer)//pochodne funkcji aktywacji
         {
             switch (activations[layer])
             {
@@ -169,7 +165,7 @@ namespace TestConsoleApp
             }
         }
 
-        public float sigmoid(float x)//activation functions and their corrosponding derivatives
+        public float sigmoid(float x)//funkcje aktywacji i ich pochodne
         {
             double cuni = 1 / (1 + Math.Pow(Math.E, -x));
             return (float)cuni;
@@ -209,13 +205,13 @@ namespace TestConsoleApp
             return (0 >= x) ? 0.01f : 1;
         }
 
-        public void BackPropagate(float[] inputs, float[] expected)//backpropogation;
+        public void BackPropagate(float[] inputs, float[] expected)//propagacja wsteczna;
         {
-            float[] output = FeedForward(inputs);//runs feed forward to ensure neurons are populated correctly
+            float[] output = FeedForward(inputs);//odpalenie jednokierunkowej sieci
 
             cost = 0;
-            for (int i = 0; i < output.Length; i++) cost += (float)Math.Pow(output[i] - expected[i], 2);//calculated cost of network
-            cost = cost / 2;//this value is not used in calculions, rather used to identify the performance of the network
+            for (int i = 0; i < output.Length; i++) cost += (float)Math.Pow(output[i] - expected[i], 2);//obliczenie kosztu sieci
+            cost = cost / 2;//ustalenie jak dobra jest nasza sieć
 
             float[][] gamma;
 
@@ -225,103 +221,69 @@ namespace TestConsoleApp
             {
                 gammaList.Add(new float[layers[i]]);
             }
-            gamma = gammaList.ToArray();//gamma initialization
+            gamma = gammaList.ToArray();//tworzenie gamma
 
             int layer = layers.Length - 2;
-            for (int i = 0; i < output.Length; i++) gamma[layers.Length - 1][i] = (output[i] - expected[i]) * activateDer(output[i], layer);//Gamma calculation
-            for (int i = 0; i < layers[layers.Length - 1]; i++)//calculates the w' and b' for the last layer in the network
+            for (int i = 0; i < output.Length; i++) gamma[layers.Length - 1][i] = (output[i] - expected[i]) * activateDer(output[i], layer);//obliczanie gamma
+            for (int i = 0; i < layers[layers.Length - 1]; i++)//obliczanie w' i b' dla ostatniej warstwy sieci
             {
                 biases[layers.Length - 2][i] -= gamma[layers.Length - 1][i] * learningRate;
                 for (int j = 0; j < layers[layers.Length - 2]; j++)
                 {
 
-                    weights[layers.Length - 2][i][j] -= gamma[layers.Length - 1][i] * neurons[layers.Length - 2][j] * learningRate;//*learning 
+                    weights[layers.Length - 2][i][j] -= gamma[layers.Length - 1][i] * neurons[layers.Length - 2][j] * learningRate;//uczenie 
                 }
             }
 
-            for (int i = layers.Length - 2; i > 0; i--)//runs on all hidden layers
+            for (int i = layers.Length - 2; i > 0; i--)//działa na wszystkich warstwach ukrytych
             {
                 layer = i - 1;
-                for (int j = 0; j < layers[i]; j++)//outputs
+                for (int j = 0; j < layers[i]; j++)//wyjścia
                 {
                     gamma[i][j] = 0;
                     for (int k = 0; k < gamma[i + 1].Length; k++)
                     {
                         gamma[i][j] = gamma[i + 1][k] * weights[i][k][j];
                     }
-                    gamma[i][j] *= activateDer(neurons[i][j], layer);//calculate gamma
+                    gamma[i][j] *= activateDer(neurons[i][j], layer);//obliczanie gamma
                 }
-                for (int j = 0; j < layers[i]; j++)//itterate over outputs of layer
+                for (int j = 0; j < layers[i]; j++)//iteracja przez wyjścia warstwy
                 {
-                    biases[i - 1][j] -= gamma[i][j] * learningRate;//modify biases of network
-                    for (int k = 0; k < layers[i - 1]; k++)//itterate over inputs to layer
+                    biases[i - 1][j] -= gamma[i][j] * learningRate;//zmiana biasów
+                    for (int k = 0; k < layers[i - 1]; k++)//iteracja przez wejścia do warstwy
                     {
-                        weights[i - 1][j][k] -= gamma[i][j] * neurons[i - 1][k] * learningRate;//modify weights of network
+                        weights[i - 1][j][k] -= gamma[i][j] * neurons[i - 1][k] * learningRate;//zmiana wag
                     }
                 }
             }
         }
 
-        //Genetic implementations down onwards until save.
 
-        //public void Mutate(int high, float val)//used as a simple mutation function for any genetic implementations.
+
+        //public NeuralNet copy(NeuralNet nn) //For creatinga deep copy, to ensure arrays are serialzed.
         //{
         //    for (int i = 0; i < biases.Length; i++)
         //    {
         //        for (int j = 0; j < biases[i].Length; j++)
         //        {
-        //            biases[i][j] = (rand.NextDouble()*(0 - high) + 0 <= 2) ? biases[i][j] += rand.NextDouble() * (-val - val) -val : biases[i][j];
+        //            nn.biases[i][j] = biases[i][j];
         //        }
         //    }
-
         //    for (int i = 0; i < weights.Length; i++)
         //    {
         //        for (int j = 0; j < weights[i].Length; j++)
         //        {
         //            for (int k = 0; k < weights[i][j].Length; k++)
         //            {
-        //                weights[i][j][k] = (UnityEngine.Random.Range(0f, high) <= 2) ? weights[i][j][k] += UnityEngine.Random.Range(-val, val) : weights[i][j][k];
+        //                nn.weights[i][j][k] = weights[i][j][k];
         //            }
         //        }
         //    }
+        //    return nn;
         //}
 
-        public int CompareTo(NeuralNet other) //Comparing For Genetic implementations. Used for sorting based on the fitness of the network
-        {
-            if (other == null) return 1;
-
-            if (fitness > other.fitness)
-                return 1;
-            else if (fitness < other.fitness)
-                return -1;
-            else
-                return 0;
-        }
-
-        public NeuralNet copy(NeuralNet nn) //For creatinga deep copy, to ensure arrays are serialzed.
-        {
-            for (int i = 0; i < biases.Length; i++)
-            {
-                for (int j = 0; j < biases[i].Length; j++)
-                {
-                    nn.biases[i][j] = biases[i][j];
-                }
-            }
-            for (int i = 0; i < weights.Length; i++)
-            {
-                for (int j = 0; j < weights[i].Length; j++)
-                {
-                    for (int k = 0; k < weights[i][j].Length; k++)
-                    {
-                        nn.weights[i][j][k] = weights[i][j][k];
-                    }
-                }
-            }
-            return nn;
-        }
-
-        //save and load functions
-        public void Load(string path)//this loads the biases and weights from within a file into the neural network.
+        //zapis i odczyt wag+biasy
+        public void Load(string path)//ładowanie wag i biasów z pliku tekstowego
         {
             TextReader tr = new StreamReader(path);
             int NumberOfLines = (int)new FileInfo(path).Length;
@@ -356,7 +318,7 @@ namespace TestConsoleApp
                 }
             }
         }
-        public void Save(string path)//this is used for saving the biases and weights within the network to a file.
+        public void Save(string path)//zapisywanie wag i biasów do pliku tekstowego
         {
             File.Create(path).Close();
             StreamWriter writer = new StreamWriter(path, true);
@@ -382,78 +344,6 @@ namespace TestConsoleApp
             writer.Close();
         }
 
-
-        //public static int[] ReadLayers()
-        //{
-        //    int[] layers;
-        //    StreamReader sr = new StreamReader(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\layers.txt");
-        //    int linesCount = File.ReadAllLines(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\layers.txt").Length;
-        //    layers = new int[linesCount + 1];
-        //    for (int i = 1; i < layers.Length; i++)
-        //    {
-        //        int value = 0;
-        //        value += Int32.Parse(sr.ReadLine());
-        //        layers[i] = value;
-        //    }
-        //    return layers;
-        //}
-        //public static int[] ReadLayersBack()
-        //{
-        //    int[] layers;
-        //    StreamReader sr = new StreamReader(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\layers.txt");
-        //    int linesCount = File.ReadAllLines(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\layers.txt").Length;
-        //    layers = new int[linesCount + 2];
-        //    for (int i = 1; i < layers.Length - 1; i++)
-        //    {
-        //        int value = 0;
-        //        value += Int32.Parse(sr.ReadLine());
-        //        layers[i] = value;
-        //    }
-        //    return layers;
-        //}
-        //public static string[] ReadActivation()
-        //{
-        //    string[] activation;
-        //    StreamReader sr = new StreamReader(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\activation.txt");
-        //    int linesCount = File.ReadAllLines(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\activation.txt").Length;
-        //    activation = new string[linesCount];
-        //    for (int i = 0; i < activation.Length; i++)
-        //    {
-        //        string value = "";
-        //        value = sr.ReadLine().Trim();
-        //        activation[i] = value;
-        //    }
-        //    return activation;
-        //}
-        //public static float[] ReadInputs()
-        //{
-        //    float[] inputs;
-        //    StreamReader sr = new StreamReader(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\inputs.txt");
-        //    int linesCount = File.ReadAllLines(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\inputs.txt").Length;
-        //    inputs = new float[linesCount];
-        //    for (int i = 0; i < inputs.Length; i++)
-        //    {
-        //        float value;
-        //        value = float.Parse(sr.ReadLine(), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-        //        inputs[i] = value;
-        //    }
-        //    return inputs;
-        //}
-        //public static float[] ReadExpected()
-        //{
-        //    float[] expected;
-        //    StreamReader sr = new StreamReader(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\expected.txt");
-        //    int linesCount = File.ReadAllLines(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\expected.txt").Length;
-        //    expected = new float[linesCount];
-        //    for (int i = 0; i < expected.Length; i++)
-        //    {
-        //        float value;
-        //        value = float.Parse(sr.ReadLine(), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-        //        expected[i] = value;
-        //    }
-        //    return expected;
-        //}
-
         public static bool error = false;
         public static bool expectedBool = false;
         public static int[] layersRead;
@@ -462,12 +352,10 @@ namespace TestConsoleApp
         public static float[] expected;
         public static int linesCount;
 
-        public static void Read()
+        public static void Read()//odczyt warstw, neuronów, funkcji aktywacji wejść i (jeżeli istnieją) wyjść z pliku
         {
-
             StreamReader sr = new StreamReader(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\data.txt");
             linesCount = File.ReadAllLines(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\data.txt").Length;
-            Console.WriteLine("LINES COUNT" + linesCount);
             string layersString = sr.ReadLine().Trim();
             layersString += ' ';
             string activateString = sr.ReadLine().Trim();
@@ -475,16 +363,14 @@ namespace TestConsoleApp
             string inputsString = sr.ReadLine().Trim();
             inputsString += ' ';
             string expectedString = sr.ReadLine();
-            if (expectedString!= null) expectedString.Trim();
+            if (expectedString != null) expectedString.Trim();
             expectedString += ' ';
-            
+
             if (expectedString[0] == ' ')
             {
                 List<int> layersList = new List<int>();
                 List<string> activateList = new List<string>();
                 List<float> inputsList = new List<float>();
-
-               
 
                 string layersValue = "";
                 string activateValue = "";
@@ -548,7 +434,7 @@ namespace TestConsoleApp
 
                     }
                 }
-                
+
                 if ((layersList.Count + 1) != activateList.Count)
                 {
                     error = true;
@@ -560,9 +446,9 @@ namespace TestConsoleApp
                 activationFunctions = new string[activateList.Count];
                 inputs = new float[inputsList.Count];
 
-                for (int i = 1; i < layersList.Count+1; i++)
+                for (int i = 1; i < layersList.Count + 1; i++)
                 {
-                    layersRead[i] = layersList[i-1];
+                    layersRead[i] = layersList[i - 1];
                 }
                 for (int i = 0; i < activateList.Count; i++)
                 {
@@ -574,18 +460,13 @@ namespace TestConsoleApp
                 }
                 layersRead[0] = inputs.Length;
             }
-            else if (expectedString[0]!=' ')
+            else if (expectedString[0] != ' ')
             {
                 expectedBool = true;
                 List<int> layersList = new List<int>();
                 List<string> activateList = new List<string>();
                 List<float> inputsList = new List<float>();
                 List<float> expectedList = new List<float>();
-
-
-                
-
-                
 
                 string layersValue = "";
                 string activateValue = "";
@@ -650,7 +531,7 @@ namespace TestConsoleApp
 
                     }
                 }
-                
+
                 for (int i = 0; i < expectedString.Length; i++)
                 {
                     if (expectedString[i] != ' ')
@@ -665,7 +546,7 @@ namespace TestConsoleApp
 
                     }
                 }
-                
+
                 if ((layersList.Count + 2) != activateList.Count)
                 {
                     error = true;
@@ -701,152 +582,14 @@ namespace TestConsoleApp
             {
                 Console.WriteLine("Błąd w pliku.\nPowinny być 3 lub 4 linijki a znajduje się " + linesCount + " linijek");
             }
-
-
-            Exit:;
-            
+        Exit:;
         }
 
+        public static void Write()////zapis warstw, neuronów, funkcji aktywacji wejść i (jeżeli istnieją) wyjść do pliku
+        {
 
-
-        //    public static void ReadToLearn()
-        //    {
-        //        int linesCount = 0;
-
-        //        String netStructureLine, xsesLine, expectedString;
-        //        expectedString = "";
-        //        netStructureLine = "";
-        //        try
-        //        {
-        //            using (StreamReader sr = new StreamReader(@"Data\data.txt"))
-        //            {
-        //                //policzenie linii w tekście
-
-        //                linesCount = File.ReadAllLines(@"Data\data.txt").Length;
-
-        //                int ileWarstw = 0;
-        //                String useless = "";
-
-        //                for (int i = 0; i < linesCount; i++)
-        //                {
-        //                    useless = sr.ReadLine();
-        //                    if (useless.Equals("/") == false) { ileWarstw++; } else { break; }
-
-        //                }
-        //                sr.DiscardBufferedData();
-
-        //                StreamReader sr1 = new StreamReader(@"Data\data.txt");
-
-
-        //                netStructure = new int[ileWarstw];
-
-        //                //XSES
-        //                learnXses = new float[linesCount - ileWarstw - 1][];
-
-        //                expected = new float[linesCount - 1];
-
-
-
-        //                List<float> listLearnXses = new List<float>();
-        //                List<int> listNetStructure = new List<int>();
-
-        //                for (int i = 0; i < ileWarstw; i++)
-        //                {
-        //                    netStructureLine = sr1.ReadLine();
-
-        //                    netStructureLine.Trim();
-
-        //                    netStructureLine += ' ';
-        //                    for (int j = 0; j < netStructureLine.Length; j++)
-        //                    {
-        //                        if (netStructureLine[j] != ' ')
-        //                        {
-        //                            expectedString += netStructureLine[j];
-        //                        }
-        //                        else if (netStructureLine[j] == ' ')
-        //                        {
-        //                            if (expectedString == "/") { break; }
-        //                            listNetStructure.Add(int.Parse(expectedString));
-        //                            expectedString = "";
-        //                        }
-        //                    }
-        //                    netStructure[i] = new int[listNetStructure.Count];
-
-
-        //                    for (int l = 0; l < netStructure[i].Length; l++)
-        //                    {
-        //                        netStructure[i][l] = listNetStructure[l];
-        //                    }
-        //                    listNetStructure.Clear();
-        //                }
-        //                Console.WriteLine(linesCount - ileWarstw);
-
-        //                for (int i = 0; i < linesCount - ileWarstw - 1; i++)
-        //                {
-        //                    xsesLine = sr1.ReadLine();
-        //                    Console.WriteLine(xsesLine);
-        //                    xsesLine.Trim();
-        //                    xsesLine += ' ';
-        //                    for (int j = 0; j < xsesLine.Length; j++)
-        //                    {
-        //                        if (xsesLine[j] != 'e' && xsesLine[j] != ' ')
-        //                        {
-        //                            expectedString += xsesLine[j];
-        //                        }
-        //                        else if (xsesLine[j] == 'e')
-        //                        {
-        //                            expected[i] = float.Parse(expectedString, System.Globalization.CultureInfo.InvariantCulture);
-        //                            expectedString = "";
-        //                        }
-        //                        else if (xsesLine[j] == ' ')
-        //                        {
-        //                            if (expectedString != "/")
-        //                            {
-        //                                listLearnXses.Add(float.Parse(expectedString, System.Globalization.CultureInfo.InvariantCulture));
-        //                            }
-        //                            expectedString = "";
-        //                        }
-        //                    }
-        //                    learnXses[i] = new float[listLearnXses.Count];
-        //                    Console.WriteLine(listLearnXses.Count);
-        //                    for (int l = 0; l < listLearnXses.Count; l++)
-        //                    {
-        //                        learnXses[i][l] = listLearnXses[l];
-        //                    }
-        //                    listLearnXses.Clear();
-        //                }
-
-
-
-
-        //                for (int i = 0; i < learnXses.Length; i++)
-        //                {
-        //                    for (int j = 0; j < learnXses[i].Length; j++)
-        //                    {
-        //                        Console.Write(learnXses[i][j] + ", ");
-        //                    }
-        //                    Console.WriteLine("");
-        //                }
-        //                Console.WriteLine("");
-        //                for (int i = 0; i < netStructure.Length; i++)
-        //                {
-        //                    for (int j = 0; j < netStructure[i].Length; j++)
-        //                    {
-        //                        Console.Write(netStructure[i][j] + ", ");
-        //                    }
-        //                    Console.WriteLine("");
-        //                }
-
-
-        //            }
-        //        }
-        //        catch (IOException e)
-        //        {
-        //            Console.WriteLine("Nie można odczytać");
-        //            Console.WriteLine(e.Message);
-        //        }
-
+        }
 
     }
-}
 
+}
