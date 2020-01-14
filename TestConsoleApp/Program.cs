@@ -13,15 +13,17 @@ namespace AiZaliczenie
         static string[] layerActivations;
         static void Main(string[] args)
         {
-            //NeuralNet.Write();
-            
+            start();
+            Console.ReadKey();
 
+        }
+
+        public static void start()
+        {
             Console.WriteLine("Wybierz metodę wprowadzania danych:\n1 - ręcznie\n2 - odczyt z pliku");
             wyborMetody = Convert.ToInt16(Console.ReadLine());
-
             if (wyborMetody == 1)
             {
-
                 int wyborTypu;
                 Console.WriteLine("Wybierz typ działania programu:\n1 - jednokierunkowe\n2 - ze sprzężeniem zwrotnym");
                 wyborTypu = Convert.ToInt16(Console.ReadLine());
@@ -38,32 +40,25 @@ namespace AiZaliczenie
                         float input = (float)Convert.ToDouble(Console.ReadLine());
                         tab[i] = input;
                     }
-
                     Console.WriteLine("Podaj liczbę warstw");
                     int layersCount = Convert.ToInt32(Console.ReadLine());
-
                     layers = new int[layersCount];
                     layerActivations = new string[layersCount];
                     layers[0] = tab.Length;
-
                     for (int i = 1; i < layers.Length; i++)
                     {
                         int neurones;
                         if (i == layers.Length - 1)
                         {
-
                             Console.WriteLine("Podaj liczbę neuronów dla warstwy wyjściowej");
                             neurones = Convert.ToInt32(Console.ReadLine());
                             layers[i] = neurones;
                             break;
                         }
-
-
                         Console.WriteLine("Podaj liczbę neuronów dla warstwy " + (i + 1) + " z " + (layersCount - 1));
                         neurones = Convert.ToInt32(Console.ReadLine());
                         layers[i] = neurones;
                     }
-
                     for (int i = 0; i < layersCount; i++)
                     {
                     OnceAgain:
@@ -73,7 +68,6 @@ namespace AiZaliczenie
                         {
                             layerActivations[i] = "sigmoid";
                             Console.WriteLine("Funkcja aktywacji dla warstwy " + (i + 1) + " ustawiona na sigmoidalną!");
-
                         }
                         else if (wybor == 2)
                         {
@@ -96,20 +90,15 @@ namespace AiZaliczenie
                             Console.WriteLine("nie ma takiego numeru");
                             goto OnceAgain;
                         }
-
                     }
-
-
                     for (int i = 0; i < layers.Length; i++)
                     {
                         Console.WriteLine("Liczba neuronów, wastwa " + (i + 1) + "||" + layers[i]);
                     }
-
                     for (int i = 0; i < layers.Length; i++)
                     {
                         Console.WriteLine("Nazwa funckcji, wastwa " + (i + 1) + "||" + layerActivations[i]);
                     }
-
                     NeuralNet neuralNet = new NeuralNet(layers, layerActivations);
                     for (int i = 0; i < neuralNet.FeedForward(tab).Length; i++)
                     {
@@ -126,8 +115,9 @@ namespace AiZaliczenie
                     {
                         goto BrakZapisu;
                     }
-                    neuralNet.Save(Path.Combine(Environment.CurrentDirectory, @"Data\weightsAndBiases.txt"));
                     BrakZapisu:;
+                    neuralNet.Save(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\weightsAndBiases.txt");
+                    
                 }
                 else if (wyborTypu == 2)
                 {
@@ -234,11 +224,12 @@ namespace AiZaliczenie
                     }
                     Console.WriteLine("Czy chcesz zapisać strukturę sieci?\n1 - Tak\n2 - Nie");
                     int wyborZapis = Convert.ToInt16(Console.ReadLine());
-                    if(wyborZapis == 1)
+                    if (wyborZapis == 1)
                     {
                         NeuralNet.WriteBack(layers, layerActivations, tab, expected);
                         Console.WriteLine("Zapisano");
-                    }else if (wyborZapis == 2)
+                    }
+                    else if (wyborZapis == 2)
                     {
                         goto BrakZapisu;
                     }
@@ -253,20 +244,18 @@ namespace AiZaliczenie
                 {
                     Console.WriteLine("Nie ma takiego numeru");
                 }
-                }else if(wyborMetody == 2)
-                {
+            }
+            else if (wyborMetody == 2)
+            {
                 NeuralNet.Read();
                 if (NeuralNet.error == true) goto Error;
                 layers = NeuralNet.layersRead;
                 layerActivations = NeuralNet.activationFunctions;
                 tab = NeuralNet.inputs;
-
-
-
                 Console.WriteLine("WARSTWY");
                 for (int i = 0; i < layers.Length; i++)
                 {
-                    Console.Write(layers[i]+", ");
+                    Console.Write(layers[i] + ", ");
                 }
                 Console.WriteLine("\nFUNKCJE AKTYWACJI");
                 for (int i = 0; i < layerActivations.Length; i++)
@@ -305,7 +294,6 @@ namespace AiZaliczenie
                         neuralNet.BackPropagate(tab, expected);
                         Console.WriteLine("Element zwróconej tablicy numer " + (i + 1) + " " + neuralNet.FeedForward(tab)[i]);
                     }
-
                 }
                 else
                 {
@@ -315,25 +303,21 @@ namespace AiZaliczenie
                     {
                         Console.WriteLine("Liczba neuronów, wastwa " + (i + 1) + "||" + layers[i]);
                     }
-
                     for (int i = 0; i < layers.Length; i++)
                     {
                         Console.WriteLine("Nazwa funckcji, wastwa " + (i + 1) + "||" + layerActivations[i]);
                     }
-
                     for (int i = 0; i < neuralNet.FeedForward(tab).Length; i++)
                     {
                         Console.WriteLine("Element zwróconej tablicy numer " + (i + 1) + " " + neuralNet.FeedForward(tab)[i]);
                     }
-
-                    }
                 }
+            }
             else
             {
                 Console.WriteLine("Nie ma takiego numeru");
             }
-            Error:
-            Console.ReadKey();
+        Error:;
         }
     }
 }

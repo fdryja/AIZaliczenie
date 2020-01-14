@@ -255,31 +255,6 @@ namespace AiZaliczenie
                 }
             }
         }
-
-
-
-        //public NeuralNet copy(NeuralNet nn) //For creatinga deep copy, to ensure arrays are serialzed.
-        //{
-        //    for (int i = 0; i < biases.Length; i++)
-        //    {
-        //        for (int j = 0; j < biases[i].Length; j++)
-        //        {
-        //            nn.biases[i][j] = biases[i][j];
-        //        }
-        //    }
-        //    for (int i = 0; i < weights.Length; i++)
-        //    {
-        //        for (int j = 0; j < weights[i].Length; j++)
-        //        {
-        //            for (int k = 0; k < weights[i][j].Length; k++)
-        //            {
-        //                nn.weights[i][j][k] = weights[i][j][k];
-        //            }
-        //        }
-        //    }
-        //    return nn;
-        //}
-
         //zapis i odczyt wag+biasy
         public void Load(string path)//ładowanie wag i biasów z pliku tekstowego
         {
