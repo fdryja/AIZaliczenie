@@ -17,12 +17,12 @@ namespace TestConsoleApp
         private int[] activations;//funkcje aktywacji
 
 
-        //backprop
-        public float learningRate = 0.01f;//learning rate
+        //propagacja wsteczna
+        public float learningRate = 0.01f;//szybkość uczenia
         public float cost = 0;
 
-        private float[][] deltaBiases;//biasses
-        private float[][][] deltaWeights;//weights
+        private float[][] deltaBiases;//biasy
+        private float[][][] deltaWeights;//wagi
         private int deltaCount;
 
         public NeuralNet(int[] layers, string[] layerActivations)
