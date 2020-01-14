@@ -11,7 +11,7 @@ namespace TestConsoleApp
     {
         static void Main(string[] args)
         {
-            
+            //NeuralNet.Write();
             int wyborMetody;
             float[] expected, tab;
             int[] layers;
@@ -28,6 +28,7 @@ namespace TestConsoleApp
                 wyborTypu = Convert.ToInt16(Console.ReadLine());
                 if (wyborTypu == 1)
                 {
+                    //jednokierunkowe
                     Console.WriteLine("Podaj liczbę wejść");
                     int inputsCount = Convert.ToInt32(Console.ReadLine());
                     tab = new float[inputsCount];
@@ -115,13 +116,23 @@ namespace TestConsoleApp
                     {
                         Console.WriteLine("Element zwróconej tablicy numer " + (i + 1) + " " + neuralNet.FeedForward(tab)[i]);
                     }
-
+                    Console.WriteLine("Czy chcesz zapisać strukturę sieci?\n1 - Tak\n2 - Nie");
+                    int wyborZapis = Convert.ToInt16(Console.ReadLine());
+                    if (wyborZapis == 1)
+                    {
+                        NeuralNet.Write(layers, layerActivations, tab);
+                        Console.WriteLine("Zapisano");
+                    }
+                    else if (wyborZapis == 2)
+                    {
+                        goto BrakZapisu;
+                    }
                     neuralNet.Save(Path.Combine(Environment.CurrentDirectory, @"Data\weightsAndBiases.txt"));
-
+                    BrakZapisu:;
                 }
                 else if (wyborTypu == 2)
                 {
-
+                    //ze sprzężeniem zwrotnym
                     Console.WriteLine("Podaj liczbę wejść");
                     int inputsCount = Convert.ToInt32(Console.ReadLine());
                     tab = new float[inputsCount];
@@ -222,13 +233,27 @@ namespace TestConsoleApp
                         neuralNet.BackPropagate(tab, expected);
                         Console.WriteLine("Element zwróconej tablicy numer " + (i + 1) + " " + neuralNet.FeedForward(tab)[i]);
                     }
-
-                    neuralNet.Save(Path.Combine(Environment.CurrentDirectory, @"Data\weightsAndBiases.txt"));
-                }
+                    Console.WriteLine("Czy chcesz zapisać strukturę sieci?\n1 - Tak\n2 - Nie");
+                    int wyborZapis = Convert.ToInt16(Console.ReadLine());
+                    if(wyborZapis == 1)
+                    {
+                        NeuralNet.WriteBack(layers, layerActivations, tab, expected);
+                        Console.WriteLine("Zapisano");
+                    }else if (wyborZapis == 2)
+                    {
+                        goto BrakZapisu;
+                    }
                     else
                     {
                         Console.WriteLine("Nie ma takiego numeru");
                     }
+                    BrakZapisu:
+                    neuralNet.Save(Path.Combine(Environment.CurrentDirectory, @"Data\weightsAndBiases.txt"));
+                }
+                else
+                {
+                    Console.WriteLine("Nie ma takiego numeru");
+                }
                 }else if(wyborMetody == 2)
                 {
                 NeuralNet.Read();
@@ -303,8 +328,6 @@ namespace TestConsoleApp
                     }
 
                     }
-
-
                 }
             else
             {
@@ -312,7 +335,6 @@ namespace TestConsoleApp
             }
             Error:
             Console.ReadKey();
-
         }
     }
 }

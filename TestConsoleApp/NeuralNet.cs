@@ -585,9 +585,97 @@ namespace TestConsoleApp
         Exit:;
         }
 
-        public static void Write()//zapis warstw, neuronów, funkcji aktywacji wejść i (jeżeli istnieją) wyjść do pliku
+        public static void WriteBack(int[]layers, string[]activation, float[]inputs, float[]expected)//zapis warstw, neuronów, funkcji aktywacji, wejść i wyjść do pliku
         {
+            System.IO.File.WriteAllText(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\saved.txt", string.Empty);
+            StreamWriter writer = new StreamWriter(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\saved.txt");
 
+            string layersString="";
+            string activationsString="";
+            string inputString="";
+            string expectedString="";
+
+            for (int i = 1; i < layers.Length-1; i++)
+            {
+                layersString += layers[i];
+                layersString += ' ';
+            }
+            writer.WriteLine(layersString);
+            for (int i = 0; i < activation.Length; i++)
+            {
+                switch (activation[i])
+                {
+                    case "sigmoid":
+                        activationsString += "1 ";
+                        break;
+                    case "tanh":
+                        activationsString += "2 ";
+                        break;
+                    case "relu":
+                        activationsString += "3 ";
+                        break;
+                    case "leakyrelu":
+                        activationsString += "4 ";
+                        break;
+                }
+            }
+            writer.WriteLine(activationsString);
+            for (int i = 0; i < inputs.Length; i++)
+            {
+                inputString += inputs[i];
+                inputString += ' ';
+            }
+            writer.WriteLine(inputString);
+            for (int i = 0; i < expected.Length; i++)
+            {
+                expectedString += expected[i];
+                expectedString += ' ';
+            }
+            writer.WriteLine(expectedString);
+            writer.Close();
+        }
+
+        public static void Write(int[] layers, string[] activation, float[] inputs)//zapis warstw, neuronów, funkcji aktywacji i wejść do pliku
+        {
+            System.IO.File.WriteAllText(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\saved.txt", string.Empty);
+            StreamWriter writer = new StreamWriter(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\saved.txt");
+
+            string layersString = "";
+            string activationsString = "";
+            string inputString = "";
+
+            for (int i = 1; i < layers.Length; i++)
+            {
+                layersString += layers[i];
+                layersString += ' ';
+            }
+            writer.WriteLine(layersString);
+            for (int i = 0; i < activation.Length; i++)
+            {
+                switch (activation[i])
+                {
+                    case "sigmoid":
+                        activationsString += "1 ";
+                        break;
+                    case "tanh":
+                        activationsString += "2 ";
+                        break;
+                    case "relu":
+                        activationsString += "3 ";
+                        break;
+                    case "leakyrelu":
+                        activationsString += "4 ";
+                        break;
+                }
+            }
+            writer.WriteLine(activationsString);
+            for (int i = 0; i < inputs.Length; i++)
+            {
+                inputString += inputs[i];
+                inputString += ' ';
+            }
+            writer.WriteLine(inputString);
+            writer.Close();
         }
 
     }
