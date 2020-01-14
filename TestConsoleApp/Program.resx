@@ -117,4 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="label7.Text" xml:space="preserve">
+    <value>Warstwy: podajemy liczby oddzielone spacją,
+ilość liczb to ilość naszych warstw, wartości liczb
+to ilość neuronów w poszczególnych warstwach.
+W przypadku jednokierunkowej pomijamy neurony
+w pierwszej warstwie; ze sprzężeniem zwrotnym - w
+pierwszej i ostatniej warstwie.
+
+Funkcje aktywacji: wprowadzamy cyfry od 1 do 4,
+oddzielone spacją. 
+Każda cyfra to funkcja aktywacji dla danej warstwy.
+1-Sigmoidalna
+2-Tangens Hiperboliczny
+3-ReLU
+4-Leaky ReLU
+
+Wejścia: wpowadzamy liczby oddzielone spacją, 
+każda liczba to jedno wejście, wartości liczb to 
+wartości wejść.
+
+Wartości oczekiwane: zostawiamy puste jeśli 
+wybraliśmy rodzaj działania jednokierunkowy,
+wprowadzamy liczby oddzielone spacją, każda 
+liczba to jedna wartość
+oczekiwana, wartość liczby to wartość wartości 
+oczekiwanej.
+
+
+</value>
+  </data>
 </root>

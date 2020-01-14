@@ -19,28 +19,799 @@ namespace AiZaliczenie
         static int wyborMetody;
         static float[] expected, tab;
         static int[] layers;
+        private Button button1;
+        private Button button2;
+        private TextBox textBoxLayers;
+        private Label label2;
+        private Label label3;
+        private TextBox textBoxActivation;
+        private Label label4;
+        private TextBox textBoxInputs;
+        private Label label5;
+        private TextBox textBoxExpected;
+        private Label label6;
+        private Label label7;
+        private TextBox wynik;
+        private Button button3;
+        private Button button4;
+        private Button button5;
+        static string newLine = Environment.NewLine;
         static string[] layerActivations;
         static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             Application.Run(new Program());
-
         }
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Program));
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.textBoxLayers = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBoxActivation = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textBoxInputs = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textBoxExpected = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.wynik = new System.Windows.Forms.TextBox();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
             this.SuspendLayout();
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button1.Location = new System.Drawing.Point(1153, 166);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(281, 97);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Uruchom";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button2.Location = new System.Drawing.Point(1153, 44);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(281, 97);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "Wczytaj z pliku";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // textBoxLayers
+            // 
+            this.textBoxLayers.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.textBoxLayers.Location = new System.Drawing.Point(499, 42);
+            this.textBoxLayers.Name = "textBoxLayers";
+            this.textBoxLayers.Size = new System.Drawing.Size(556, 32);
+            this.textBoxLayers.TabIndex = 4;
+            this.textBoxLayers.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label2.Location = new System.Drawing.Point(733, 15);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(80, 24);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Warstwy";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label3.Location = new System.Drawing.Point(696, 77);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(157, 24);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Funkcje aktywacji";
+            // 
+            // textBoxActivation
+            // 
+            this.textBoxActivation.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.textBoxActivation.Location = new System.Drawing.Point(499, 104);
+            this.textBoxActivation.Name = "textBoxActivation";
+            this.textBoxActivation.Size = new System.Drawing.Size(556, 32);
+            this.textBoxActivation.TabIndex = 6;
+            this.textBoxActivation.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label4.Location = new System.Drawing.Point(733, 139);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(76, 24);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Wejścia";
+            // 
+            // textBoxInputs
+            // 
+            this.textBoxInputs.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.textBoxInputs.Location = new System.Drawing.Point(499, 166);
+            this.textBoxInputs.Name = "textBoxInputs";
+            this.textBoxInputs.Size = new System.Drawing.Size(556, 32);
+            this.textBoxInputs.TabIndex = 8;
+            this.textBoxInputs.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label5.Location = new System.Drawing.Point(683, 201);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(187, 24);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Wartości oczekiwane";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
+            // 
+            // textBoxExpected
+            // 
+            this.textBoxExpected.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.textBoxExpected.Location = new System.Drawing.Point(499, 228);
+            this.textBoxExpected.Name = "textBoxExpected";
+            this.textBoxExpected.Size = new System.Drawing.Size(556, 32);
+            this.textBoxExpected.TabIndex = 10;
+            this.textBoxExpected.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxExpected.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label6.Location = new System.Drawing.Point(84, 13);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(202, 24);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "Jak wprowadzać dane:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label7.Location = new System.Drawing.Point(28, 53);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(368, 540);
+            this.label7.TabIndex = 13;
+            this.label7.Text = resources.GetString("label7.Text");
+            // 
+            // wynik
+            // 
+            this.wynik.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.wynik.Location = new System.Drawing.Point(432, 312);
+            this.wynik.Multiline = true;
+            this.wynik.Name = "wynik";
+            this.wynik.ReadOnly = true;
+            this.wynik.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.wynik.Size = new System.Drawing.Size(715, 261);
+            this.wynik.TabIndex = 14;
+            this.wynik.Text = "\r\n\r\n\r\n\r\n\r\n\r\nWynik\r\n";
+            this.wynik.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.wynik.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
+            // 
+            // button3
+            // 
+            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button3.Location = new System.Drawing.Point(1153, 295);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(281, 97);
+            this.button3.TabIndex = 15;
+            this.button3.Text = "Zapisz";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button4
+            // 
+            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button4.Location = new System.Drawing.Point(1153, 421);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(281, 97);
+            this.button4.TabIndex = 16;
+            this.button4.Text = "Wprowadź zapisane";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button5
+            // 
+            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button5.Location = new System.Drawing.Point(432, 592);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(715, 47);
+            this.button5.TabIndex = 17;
+            this.button5.Text = "Wyczyść";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // Program
             // 
             this.ClientSize = new System.Drawing.Size(1469, 672);
+            this.Controls.Add(this.button5);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.wynik);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.textBoxExpected);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.textBoxInputs);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.textBoxActivation);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.textBoxLayers);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Program";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Program do badania sieci neuronowych jednokierunkowych i wielowarstwowych ze sprz" +
     "ężeniem zwrotnym";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox5_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            
+            wynik.Text = string.Empty;
+            NeuralNet.Read();
+            if (NeuralNet.error == true) goto Error;
+            layers = NeuralNet.layersRead;
+            layerActivations = NeuralNet.activationFunctions;
+            tab = NeuralNet.inputs;
+            wynik.Text += "WARSTWY:"+newLine;
+            Console.WriteLine("WARSTWY");
+            for (int i = 0; i < layers.Length; i++)
+            {
+                wynik.Text += layers[i] + ", ";
+                Console.Write(layers[i] + ", ");
+            }
+            wynik.Text += newLine+ "FUNKCJE AKTYWACJI:" + newLine;
+            Console.WriteLine("\nFUNKCJE AKTYWACJI");
+            for (int i = 0; i < layerActivations.Length; i++)
+            {
+                wynik.Text += layerActivations[i] + ", ";
+                Console.Write(layerActivations[i] + ", ");
+            }
+            wynik.Text += newLine + "WEJŚCIA:" + newLine;
+            Console.WriteLine("\nINPUTY");
+            for (int i = 0; i < tab.Length; i++)
+            {
+                wynik.Text += tab[i] + ", ";
+                Console.Write(tab[i] + ", ");
+            }
+            if (NeuralNet.expectedBool.Equals(true))
+            {
+                wynik.Text += newLine + "WARTOŚCI OCZEKIWANE:" + newLine;
+                Console.WriteLine("\nEXPECTED");
+                expected = NeuralNet.expected;
+                for (int i = 0; i < expected.Length; i++)
+                {
+                    wynik.Text += expected[i] + ", ";
+                    Console.Write(expected[i] + ", ");
+                }
+                Console.WriteLine("");
+                wynik.Text += newLine;
+                //Sprzężenie zwrotne
+                NeuralNet neuralNet = new NeuralNet(layers, layerActivations);
+
+                for (int i = 0; i < layers.Length; i++)
+                {
+                    wynik.Text +=  "Liczba neuronów, wastwa " + (i + 1) + "||" + layers[i]+ newLine ;
+                    Console.WriteLine("Liczba neuronów, wastwa " + (i + 1) + "||" + layers[i]);
+                }
+
+                for (int i = 0; i < layers.Length; i++)
+                {
+                    wynik.Text += "Nazwa funckcji, wastwa " + (i + 1) + "||" + layerActivations[i] + newLine;
+                    Console.WriteLine("Nazwa funckcji, wastwa " + (i + 1) + "||" + layerActivations[i]);
+                }
+
+                for (int i = 0; i < neuralNet.FeedForward(tab).Length; i++)
+                {
+                    neuralNet.BackPropagate(tab, expected);
+                    wynik.Text += "Element zwróconej tablicy numer " + (i + 1) + " " + neuralNet.FeedForward(tab)[i] + newLine;
+                    Console.WriteLine("Element zwróconej tablicy numer " + (i + 1) + " " + neuralNet.FeedForward(tab)[i]);
+                }
+            }
+            else
+            {
+                //Jednokierunkowa
+                NeuralNet neuralNet = new NeuralNet(layers, layerActivations);
+                for (int i = 0; i < layers.Length; i++)
+                {
+                    Console.WriteLine("Liczba neuronów, wastwa " + (i + 1) + "||" + layers[i]);
+                }
+                for (int i = 0; i < layers.Length; i++)
+                {
+                    Console.WriteLine("Nazwa funckcji, wastwa " + (i + 1) + "||" + layerActivations[i]);
+                }
+                for (int i = 0; i < neuralNet.FeedForward(tab).Length; i++)
+                {
+                    Console.WriteLine("Element zwróconej tablicy numer " + (i + 1) + " " + neuralNet.FeedForward(tab)[i]);
+                }
+            }
+        Error:;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            wynik.Text = newLine + newLine + newLine + newLine + newLine + newLine + "Wynik";
+            textBoxLayers.Text = "";
+            textBoxInputs.Text = "";
+            textBoxActivation.Text = "";
+            textBoxExpected.Text = "";
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Uruchom();
+        }
+
+        private void Uruchom()
+        {
+            bool expectedBool = false;
+            string layersString = textBoxLayers.Text;
+            layersString += ' ';
+            string activateString = textBoxActivation.Text.Trim();
+            activateString += ' ';
+            string inputsString = textBoxInputs.Text.Trim();
+            inputsString += ' ';
+            string expectedString = textBoxExpected.Text;
+            if (expectedString != null) expectedString.Trim();
+            expectedString += ' ';
+
+            if (expectedString[0] == ' ')
+            {
+                List<int> layersList = new List<int>();
+                List<string> activateList = new List<string>();
+                List<float> inputsList = new List<float>();
+
+                string layersValue = "";
+                string activateValue = "";
+                string inputsValue = "";
+
+                for (int i = 0; i < layersString.Length; i++)
+                {
+
+                    if (layersString[i] != ' ')
+                    {
+                        layersValue += layersString[i];
+                    }
+                    else
+                    {
+                        int layersElement = Int32.Parse(layersValue);
+                        layersList.Add(layersElement);
+                        layersValue = "";
+
+                    }
+                }
+
+                for (int i = 0; i < activateString.Length; i++)
+                {
+                    if (activateString[i] != ' ')
+                    {
+                        activateValue += activateString[i];
+                    }
+                    else
+                    {
+                        switch (activateValue)
+                        {
+                            case "1":
+                                activateValue = "sigmoid";
+                                break;
+                            case "2":
+                                activateValue = "tanh";
+                                break;
+                            case "3":
+                                activateValue = "relu";
+                                break;
+                            case "4":
+                                activateValue = "leakyrelu";
+                                break;
+                        }
+                        activateList.Add(activateValue);
+                        activateValue = "";
+                    }
+                }
+
+                for (int i = 0; i < inputsString.Length; i++)
+                {
+                    if (inputsString[i] != ' ')
+                    {
+                        inputsValue += inputsString[i];
+                    }
+                    else
+                    {
+                        float inputsElement = float.Parse(inputsValue, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+                        inputsList.Add(inputsElement);
+                        inputsValue = "";
+
+                    }
+                }
+
+                if ((layersList.Count + 1) != activateList.Count)
+                {
+                    wynik.Text = "Liczba warstw i funkcji aktywacji jest różna" + newLine + "Liczba warstw: " + (layersList.Count + 1) + newLine + "Liczba funkcji aktywacji: " + activateList.Count;
+
+                    Console.WriteLine("Liczba warstw i funkcji aktywacji jest różna" + newLine + "Liczba warstw: " + (layersList.Count + 1) + "\nLiczba funkcji aktywacji: " + activateList.Count);
+                    goto Exit;
+                }
+
+                layers = new int[layersList.Count + 1];
+                layerActivations = new string[activateList.Count];
+                tab = new float[inputsList.Count];
+
+                for (int i = 1; i < layersList.Count + 1; i++)
+                {
+                    layers[i] = layersList[i - 1];
+                }
+                for (int i = 0; i < activateList.Count; i++)
+                {
+                    layerActivations[i] = activateList[i];
+                }
+                for (int i = 0; i < inputsList.Count; i++)
+                {
+                    tab[i] = inputsList[i];
+                }
+                layers[0] = tab.Length;
+            }
+            else if (expectedString[0] != ' ')
+            {
+                expectedBool = true;
+                List<int> layersList = new List<int>();
+                List<string> activateList = new List<string>();
+                List<float> inputsList = new List<float>();
+                List<float> expectedList = new List<float>();
+
+                string layersValue = "";
+                string activateValue = "";
+                string inputsValue = "";
+                string expectedValue = "";
+
+                for (int i = 0; i < layersString.Length; i++)
+                {
+
+                    if (layersString[i] != ' ')
+                    {
+                        layersValue += layersString[i];
+                    }
+                    else
+                    {
+                        if (layersValue.Equals(""))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            int layersElement = Int32.Parse(layersValue);
+                            layersList.Add(layersElement);
+                        }
+
+                        layersValue = "";
+
+                    }
+                }
+
+                for (int i = 0; i < activateString.Length; i++)
+                {
+                    if (activateString[i] != ' ')
+                    {
+                        activateValue += activateString[i];
+                    }
+                    else
+                    {
+                        switch (activateValue)
+                        {
+                            case "1":
+                                activateValue = "sigmoid";
+                                break;
+                            case "2":
+                                activateValue = "tanh";
+                                break;
+                            case "3":
+                                activateValue = "relu";
+                                break;
+                            case "4":
+                                activateValue = "leakyrelu";
+                                break;
+                        }
+                        activateList.Add(activateValue);
+                        activateValue = "";
+                    }
+                }
+
+                for (int i = 0; i < inputsString.Length; i++)
+                {
+                    if (inputsString[i] != ' ')
+                    {
+                        inputsValue += inputsString[i];
+                    }
+                    else
+                    {
+                        float inputsElement = float.Parse(inputsValue, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+                        inputsList.Add(inputsElement);
+                        inputsValue = "";
+
+                    }
+                }
+
+                for (int i = 0; i < expectedString.Length; i++)
+                {
+                    if (expectedString[i] != ' ')
+                    {
+                        expectedValue += expectedString[i];
+                    }
+                    else
+                    {
+                        if (expectedValue.Equals(""))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            float expectedElement = float.Parse(expectedValue, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+                            expectedList.Add(expectedElement);
+
+                        }
+
+                        expectedValue = "";
+                    }
+                }
+
+                if ((layersList.Count + 2) != activateList.Count)
+                {
+                    //error = true;
+                    wynik.Text = "Liczba warstw i funkcji aktywacji jest różna" + newLine + "Liczba warstw: " + (layersList.Count + 2) + newLine + "Liczba funkcji aktywacji: " + activateList.Count;
+                    Console.WriteLine("Liczba warstw i funkcji aktywacji jest różna\nLiczba warstw: " + (layersList.Count + 2) + "\nLiczba funkcji aktywacji: " + activateList.Count);
+                    goto Exit;
+                }
+
+                layers = new int[layersList.Count + 2];
+                layerActivations = new string[activateList.Count];
+                tab = new float[inputsList.Count];
+                expected = new float[expectedList.Count];
+
+                for (int i = 1; i < layersList.Count + 1; i++)
+                {
+                    layers[i] = layersList[i - 1];
+                }
+                for (int i = 0; i < activateList.Count; i++)
+                {
+                    layerActivations[i] = activateList[i];
+                }
+                for (int i = 0; i < inputsList.Count; i++)
+                {
+                    tab[i] = inputsList[i];
+                }
+                for (int i = 0; i < expectedList.Count; i++)
+                {
+                    expected[i] = expectedList[i];
+                }
+                layers[0] = tab.Length;
+                layers[layers.Length - 1] = expected.Length;
+            }
+            else
+            {
+                //Console.WriteLine("Błąd w pliku.\nPowinny być 3 lub 4 linijki a znajduje się " + linesCount + " linijek");
+            }
+
+            wynik.Text = string.Empty;
+
+            wynik.Text += "WARSTWY:" + newLine;
+            Console.WriteLine("WARSTWY");
+            for (int i = 0; i < layers.Length; i++)
+            {
+                wynik.Text += layers[i] + ", ";
+                Console.Write(layers[i] + ", ");
+            }
+            wynik.Text += newLine + "FUNKCJE AKTYWACJI:" + newLine;
+            Console.WriteLine("\nFUNKCJE AKTYWACJI");
+            for (int i = 0; i < layerActivations.Length; i++)
+            {
+                wynik.Text += layerActivations[i] + ", ";
+                Console.Write(layerActivations[i] + ", ");
+            }
+            wynik.Text += newLine + "WEJŚCIA:" + newLine;
+            Console.WriteLine("\nINPUTY");
+            for (int i = 0; i < tab.Length; i++)
+            {
+                wynik.Text += tab[i] + ", ";
+                Console.Write(tab[i] + ", ");
+            }
+            if (expectedBool.Equals(true))
+            {
+                wynik.Text += newLine + "WARTOŚCI OCZEKIWANE:" + newLine;
+                Console.WriteLine("\nEXPECTED");
+
+                for (int i = 0; i < expected.Length; i++)
+                {
+                    wynik.Text += expected[i] + ", ";
+                    Console.Write(expected[i] + ", ");
+                }
+                Console.WriteLine("");
+                wynik.Text += newLine;
+                //Sprzężenie zwrotne
+                NeuralNet neuralNet = new NeuralNet(layers, layerActivations);
+
+                for (int i = 0; i < layers.Length; i++)
+                {
+                    wynik.Text += "Liczba neuronów, wastwa " + (i + 1) + "||" + layers[i] + newLine;
+                    Console.WriteLine("Liczba neuronów, wastwa " + (i + 1) + "||" + layers[i]);
+                }
+
+                for (int i = 0; i < layers.Length; i++)
+                {
+                    wynik.Text += "Nazwa funckcji, wastwa " + (i + 1) + "||" + layerActivations[i] + newLine;
+                    Console.WriteLine("Nazwa funckcji, wastwa " + (i + 1) + "||" + layerActivations[i]);
+                }
+
+                for (int i = 0; i < neuralNet.FeedForward(tab).Length; i++)
+                {
+                    neuralNet.BackPropagate(tab, expected);
+                    wynik.Text += "Element zwróconej tablicy numer " + (i + 1) + " " + neuralNet.FeedForward(tab)[i] + newLine;
+                    Console.WriteLine("Element zwróconej tablicy numer " + (i + 1) + " " + neuralNet.FeedForward(tab)[i]);
+                }
+            }
+            else
+            {
+                //Jednokierunkowa
+                NeuralNet neuralNet = new NeuralNet(layers, layerActivations);
+                wynik.Text += newLine;
+
+                for (int i = 0; i < layers.Length; i++)
+                {
+                    wynik.Text += "Liczba neuronów, wastwa " + (i + 1) + "||" + layers[i] + newLine;
+                    Console.WriteLine("Liczba neuronów, wastwa " + (i + 1) + "||" + layers[i]);
+                }
+                for (int i = 0; i < layers.Length; i++)
+                {
+                    wynik.Text += "Nazwa funckcji, wastwa " + (i + 1) + "||" + layerActivations[i] + newLine;
+                    Console.WriteLine("Nazwa funckcji, wastwa " + (i + 1) + "||" + layerActivations[i]);
+                }
+                for (int i = 0; i < neuralNet.FeedForward(tab).Length; i++)
+                {
+                    wynik.Text += "Element zwróconej tablicy numer " + (i + 1) + " " + neuralNet.FeedForward(tab)[i] + newLine;
+                    Console.WriteLine("Element zwróconej tablicy numer " + (i + 1) + " " + neuralNet.FeedForward(tab)[i]);
+                }
+            }
+        Error:;
+        Exit:;
+
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string expectedText = textBoxExpected.Text;
+            expectedText.Trim();
+            if (expectedText.Length>=1)
+            {
+                NeuralNet.WriteBack(layers, layerActivations, tab, expected);
+                wynik.Text = newLine + newLine + newLine + newLine + newLine + newLine + "Zapisano";
+            }
+            else
+            {
+                NeuralNet.Write(layers, layerActivations, tab);
+                wynik.Text = newLine + newLine + newLine + newLine + newLine + newLine + "Zapisano";
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            wynik.Text = string.Empty;
+            NeuralNet.ReadSaved();
+            if (NeuralNet.error == true) goto Error;
+            layers = NeuralNet.layersRead;
+            textBoxLayers.Text = NeuralNet.layersString;
+            layerActivations = NeuralNet.activationFunctions;
+            textBoxActivation.Text = NeuralNet.activateString;
+            textBoxInputs.Text = NeuralNet.inputsString;
+            if(NeuralNet.expectedString!=" ") textBoxExpected.Text = NeuralNet.expectedString;
+
+
+
+
+            tab = NeuralNet.inputs;
+            wynik.Text += "WARSTWY:" + newLine;
+            Console.WriteLine("WARSTWY");
+            for (int i = 0; i < layers.Length; i++)
+            {
+                wynik.Text += layers[i] + ", ";
+                Console.Write(layers[i] + ", ");
+            }
+            wynik.Text += newLine + "FUNKCJE AKTYWACJI:" + newLine;
+            Console.WriteLine("\nFUNKCJE AKTYWACJI");
+            for (int i = 0; i < layerActivations.Length; i++)
+            {
+                wynik.Text += layerActivations[i] + ", ";
+                Console.Write(layerActivations[i] + ", ");
+            }
+            wynik.Text += newLine + "WEJŚCIA:" + newLine;
+            Console.WriteLine("\nINPUTY");
+            for (int i = 0; i < tab.Length; i++)
+            {
+                wynik.Text += tab[i] + ", ";
+                Console.Write(tab[i] + ", ");
+            }
+            if (NeuralNet.expectedBool.Equals(true))
+            {
+                wynik.Text += newLine + "WARTOŚCI OCZEKIWANE:" + newLine;
+                Console.WriteLine("\nEXPECTED");
+                expected = NeuralNet.expected;
+                for (int i = 0; i < expected.Length; i++)
+                {
+                    wynik.Text += expected[i] + ", ";
+                    Console.Write(expected[i] + ", ");
+                }
+                Console.WriteLine("");
+                wynik.Text += newLine;
+                //Sprzężenie zwrotne
+                NeuralNet neuralNet = new NeuralNet(layers, layerActivations);
+
+                for (int i = 0; i < layers.Length; i++)
+                {
+                    wynik.Text += "Liczba neuronów, wastwa " + (i + 1) + "||" + layers[i] + newLine;
+                    Console.WriteLine("Liczba neuronów, wastwa " + (i + 1) + "||" + layers[i]);
+                }
+
+                for (int i = 0; i < layers.Length; i++)
+                {
+                    wynik.Text += "Nazwa funckcji, wastwa " + (i + 1) + "||" + layerActivations[i] + newLine;
+                    Console.WriteLine("Nazwa funckcji, wastwa " + (i + 1) + "||" + layerActivations[i]);
+                }
+
+                for (int i = 0; i < neuralNet.FeedForward(tab).Length; i++)
+                {
+                    neuralNet.BackPropagate(tab, expected);
+                    wynik.Text += "Element zwróconej tablicy numer " + (i + 1) + " " + neuralNet.FeedForward(tab)[i] + newLine;
+                    Console.WriteLine("Element zwróconej tablicy numer " + (i + 1) + " " + neuralNet.FeedForward(tab)[i]);
+                }
+            }
+            else
+            {
+                //Jednokierunkowa
+                NeuralNet neuralNet = new NeuralNet(layers, layerActivations);
+                for (int i = 0; i < layers.Length; i++)
+                {
+                    Console.WriteLine("Liczba neuronów, wastwa " + (i + 1) + "||" + layers[i]);
+                }
+                for (int i = 0; i < layers.Length; i++)
+                {
+                    Console.WriteLine("Nazwa funckcji, wastwa " + (i + 1) + "||" + layerActivations[i]);
+                }
+                for (int i = 0; i < neuralNet.FeedForward(tab).Length; i++)
+                {
+                    Console.WriteLine("Element zwróconej tablicy numer " + (i + 1) + " " + neuralNet.FeedForward(tab)[i]);
+                }
+            }
+        Error:;
         }
 
         public static void start()
