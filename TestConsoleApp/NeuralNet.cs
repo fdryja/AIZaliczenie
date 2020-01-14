@@ -383,82 +383,332 @@ namespace TestConsoleApp
         }
 
 
-        public static int[] ReadLayers()
+        //public static int[] ReadLayers()
+        //{
+        //    int[] layers;
+        //    StreamReader sr = new StreamReader(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\layers.txt");
+        //    int linesCount = File.ReadAllLines(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\layers.txt").Length;
+        //    layers = new int[linesCount + 1];
+        //    for (int i = 1; i < layers.Length; i++)
+        //    {
+        //        int value = 0;
+        //        value += Int32.Parse(sr.ReadLine());
+        //        layers[i] = value;
+        //    }
+        //    return layers;
+        //}
+        //public static int[] ReadLayersBack()
+        //{
+        //    int[] layers;
+        //    StreamReader sr = new StreamReader(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\layers.txt");
+        //    int linesCount = File.ReadAllLines(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\layers.txt").Length;
+        //    layers = new int[linesCount + 2];
+        //    for (int i = 1; i < layers.Length - 1; i++)
+        //    {
+        //        int value = 0;
+        //        value += Int32.Parse(sr.ReadLine());
+        //        layers[i] = value;
+        //    }
+        //    return layers;
+        //}
+        //public static string[] ReadActivation()
+        //{
+        //    string[] activation;
+        //    StreamReader sr = new StreamReader(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\activation.txt");
+        //    int linesCount = File.ReadAllLines(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\activation.txt").Length;
+        //    activation = new string[linesCount];
+        //    for (int i = 0; i < activation.Length; i++)
+        //    {
+        //        string value = "";
+        //        value = sr.ReadLine().Trim();
+        //        activation[i] = value;
+        //    }
+        //    return activation;
+        //}
+        //public static float[] ReadInputs()
+        //{
+        //    float[] inputs;
+        //    StreamReader sr = new StreamReader(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\inputs.txt");
+        //    int linesCount = File.ReadAllLines(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\inputs.txt").Length;
+        //    inputs = new float[linesCount];
+        //    for (int i = 0; i < inputs.Length; i++)
+        //    {
+        //        float value;
+        //        value = float.Parse(sr.ReadLine(), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+        //        inputs[i] = value;
+        //    }
+        //    return inputs;
+        //}
+        //public static float[] ReadExpected()
+        //{
+        //    float[] expected;
+        //    StreamReader sr = new StreamReader(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\expected.txt");
+        //    int linesCount = File.ReadAllLines(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\expected.txt").Length;
+        //    expected = new float[linesCount];
+        //    for (int i = 0; i < expected.Length; i++)
+        //    {
+        //        float value;
+        //        value = float.Parse(sr.ReadLine(), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+        //        expected[i] = value;
+        //    }
+        //    return expected;
+        //}
+
+        public static bool error = false;
+        public static bool expectedBool = false;
+        public static int[] layersRead;
+        public static string[] activationFunctions;
+        public static float[] inputs;
+        public static float[] expected;
+        public static int linesCount;
+
+        public static void Read()
         {
-            int[] layers;
-            StreamReader sr = new StreamReader(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\layers.txt");
-            int linesCount = File.ReadAllLines(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\layers.txt").Length;
-            layers = new int[linesCount+1];
-            for (int i = 1; i < layers.Length; i++)
+
+            StreamReader sr = new StreamReader(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\data.txt");
+            linesCount = File.ReadAllLines(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\data.txt").Length;
+            Console.WriteLine("LINES COUNT" + linesCount);
+            string layersString = sr.ReadLine().Trim();
+            layersString += ' ';
+            string activateString = sr.ReadLine().Trim();
+            activateString += ' ';
+            string inputsString = sr.ReadLine().Trim();
+            inputsString += ' ';
+            string expectedString = sr.ReadLine();
+            if (expectedString!= null) expectedString.Trim();
+            expectedString += ' ';
+            
+            if (expectedString[0] == ' ')
             {
-                int value = 0;
-                value+= Int32.Parse(sr.ReadLine());
-                layers[i] = value;
+                List<int> layersList = new List<int>();
+                List<string> activateList = new List<string>();
+                List<float> inputsList = new List<float>();
+
+               
+
+                string layersValue = "";
+                string activateValue = "";
+                string inputsValue = "";
+
+                for (int i = 0; i < layersString.Length; i++)
+                {
+
+                    if (layersString[i] != ' ')
+                    {
+                        layersValue += layersString[i];
+                    }
+                    else
+                    {
+                        int layersElement = Int32.Parse(layersValue);
+                        layersList.Add(layersElement);
+                        layersValue = "";
+
+                    }
+                }
+
+                for (int i = 0; i < activateString.Length; i++)
+                {
+                    if (activateString[i] != ' ')
+                    {
+                        activateValue += activateString[i];
+                    }
+                    else
+                    {
+                        switch (activateValue)
+                        {
+                            case "1":
+                                activateValue = "sigmoid";
+                                break;
+                            case "2":
+                                activateValue = "tanh";
+                                break;
+                            case "3":
+                                activateValue = "relu";
+                                break;
+                            case "4":
+                                activateValue = "leakyrelu";
+                                break;
+                        }
+                        activateList.Add(activateValue);
+                        activateValue = "";
+                    }
+                }
+
+                for (int i = 0; i < inputsString.Length; i++)
+                {
+                    if (inputsString[i] != ' ')
+                    {
+                        inputsValue += inputsString[i];
+                    }
+                    else
+                    {
+                        float inputsElement = float.Parse(inputsValue, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+                        inputsList.Add(inputsElement);
+                        inputsValue = "";
+
+                    }
+                }
+                
+                if ((layersList.Count + 1) != activateList.Count)
+                {
+                    error = true;
+                    Console.WriteLine("Liczba warstw i funkcji aktywacyji jest różna\nLiczba warstw: " + (layersList.Count + 1) + "\nLiczba funkcji aktywacji: " + activateList.Count);
+                    goto Exit;
+                }
+
+                layersRead = new int[layersList.Count + 1];
+                activationFunctions = new string[activateList.Count];
+                inputs = new float[inputsList.Count];
+
+                for (int i = 1; i < layersList.Count+1; i++)
+                {
+                    layersRead[i] = layersList[i-1];
+                }
+                for (int i = 0; i < activateList.Count; i++)
+                {
+                    activationFunctions[i] = activateList[i];
+                }
+                for (int i = 0; i < inputsList.Count; i++)
+                {
+                    inputs[i] = inputsList[i];
+                }
+                layersRead[0] = inputs.Length;
             }
-            return layers;
-        }
-        public static int[] ReadLayersBack()
-        {
-            int[] layers;
-            StreamReader sr = new StreamReader(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\layers.txt");
-            int linesCount = File.ReadAllLines(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\layers.txt").Length;
-            layers = new int[linesCount + 2];
-            for (int i = 1; i < layers.Length-1; i++)
+            else if (expectedString[0]!=' ')
             {
-                int value = 0;
-                value += Int32.Parse(sr.ReadLine());
-                layers[i] = value;
+                expectedBool = true;
+                List<int> layersList = new List<int>();
+                List<string> activateList = new List<string>();
+                List<float> inputsList = new List<float>();
+                List<float> expectedList = new List<float>();
+
+
+                
+
+                
+
+                string layersValue = "";
+                string activateValue = "";
+                string inputsValue = "";
+                string expectedValue = "";
+
+                for (int i = 0; i < layersString.Length; i++)
+                {
+
+                    if (layersString[i] != ' ')
+                    {
+                        layersValue += layersString[i];
+                    }
+                    else
+                    {
+                        int layersElement = Int32.Parse(layersValue);
+                        layersList.Add(layersElement);
+                        layersValue = "";
+
+                    }
+                }
+
+                for (int i = 0; i < activateString.Length; i++)
+                {
+                    if (activateString[i] != ' ')
+                    {
+                        activateValue += activateString[i];
+                    }
+                    else
+                    {
+                        switch (activateValue)
+                        {
+                            case "1":
+                                activateValue = "sigmoid";
+                                break;
+                            case "2":
+                                activateValue = "tanh";
+                                break;
+                            case "3":
+                                activateValue = "relu";
+                                break;
+                            case "4":
+                                activateValue = "leakyrelu";
+                                break;
+                        }
+                        activateList.Add(activateValue);
+                        activateValue = "";
+                    }
+                }
+
+                for (int i = 0; i < inputsString.Length; i++)
+                {
+                    if (inputsString[i] != ' ')
+                    {
+                        inputsValue += inputsString[i];
+                    }
+                    else
+                    {
+                        float inputsElement = float.Parse(inputsValue, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+                        inputsList.Add(inputsElement);
+                        inputsValue = "";
+
+                    }
+                }
+                
+                for (int i = 0; i < expectedString.Length; i++)
+                {
+                    if (expectedString[i] != ' ')
+                    {
+                        expectedValue += expectedString[i];
+                    }
+                    else
+                    {
+                        float expectedElement = float.Parse(expectedValue, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+                        expectedList.Add(expectedElement);
+                        expectedValue = "";
+
+                    }
+                }
+                
+                if ((layersList.Count + 2) != activateList.Count)
+                {
+                    error = true;
+                    Console.WriteLine("Liczba warstw i funkcji aktywacyji jest różna\nLiczba warstw: " + (layersList.Count + 2) + "\nLiczba funkcji aktywacji: " + activateList.Count);
+                    goto Exit;
+                }
+
+                layersRead = new int[layersList.Count + 2];
+                activationFunctions = new string[activateList.Count];
+                inputs = new float[inputsList.Count];
+                expected = new float[expectedList.Count];
+
+                for (int i = 1; i < layersList.Count + 1; i++)
+                {
+                    layersRead[i] = layersList[i - 1];
+                }
+                for (int i = 0; i < activateList.Count; i++)
+                {
+                    activationFunctions[i] = activateList[i];
+                }
+                for (int i = 0; i < inputsList.Count; i++)
+                {
+                    inputs[i] = inputsList[i];
+                }
+                for (int i = 0; i < expectedList.Count; i++)
+                {
+                    expected[i] = expectedList[i];
+                }
+                layersRead[0] = inputs.Length;
+                layersRead[layersRead.Length - 1] = expected.Length;
             }
-            return layers;
-        }
-        public static string[] ReadActivation()
-        {
-            string[] activation;
-            StreamReader sr = new StreamReader(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\activation.txt");
-            int linesCount = File.ReadAllLines(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\activation.txt").Length;
-            activation = new string[linesCount];
-            for (int i = 0; i < activation.Length; i++)
+            else
             {
-                string value = "";
-                value = sr.ReadLine().Trim();
-                activation[i] = value;
+                Console.WriteLine("Błąd w pliku.\nPowinny być 3 lub 4 linijki a znajduje się " + linesCount + " linijek");
             }
-            return activation;
-        }
-        public static float[] ReadInputs()
-        {
-            float[] inputs;
-            StreamReader sr = new StreamReader(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\inputs.txt");
-            int linesCount = File.ReadAllLines(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\inputs.txt").Length;
-            inputs = new float[linesCount];
-            for (int i = 0; i < inputs.Length; i++)
-            {
-                float value;
-                value = float.Parse(sr.ReadLine(), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-                inputs[i] = value;
-            }
-            return inputs;
-        }
-        public static float[] ReadExpected()
-        {
-            float[] expected;
-            StreamReader sr = new StreamReader(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\expected.txt");
-            int linesCount = File.ReadAllLines(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\expected.txt").Length;
-            expected = new float[linesCount];
-            for (int i = 0; i < expected.Length; i++)
-            {
-                float value;
-                value = float.Parse(sr.ReadLine(), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-                expected[i] = value;
-            }
-            return expected;
+
+
+            Exit:;
+            
         }
 
 
-        //    public static int[] netStructure;
-        //    public static int[] activationFunctions;
-        //    public static float[][] learnXses;
-        //    public static float[] expected;
+
         //    public static void ReadToLearn()
         //    {
         //        int linesCount = 0;
@@ -597,6 +847,6 @@ namespace TestConsoleApp
         //        }
 
 
-        //    }
     }
 }
+

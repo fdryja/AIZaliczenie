@@ -1,0 +1,7 @@
+﻿Dane na temat warstw, funkcji aktywacji, wejść i wartości oczekiwanych są przechowywane w pliku "data.txt".
+
+Pierwsza lnijka pliku to warstwy, każda liczba jest warstwą a wartość tej liczby to neurony w danej warstwie.
+Druga linijka to funckje aktywacji: 1 - sigmoidalna, 2 - tangens hiperboliczny, 3 - ReLU, 4 - Leaky ReLU.
+Trzecia linijka to wejścia, każda liczba to jedno wejście, wartość tej liczby to wartość poszczególnych wejść.
+Cztwarta linijka to wartości oczekiwane, każda liczba to jedna wartość oczekiwana. 
+Jeżeli czwarta linijka pozostanie pusta lub nie będzie zawierała żadnego tekstu to program wykona tylko operację jednokierunkową.

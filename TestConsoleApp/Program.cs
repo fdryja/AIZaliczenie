@@ -11,6 +11,7 @@ namespace TestConsoleApp
     {
         static void Main(string[] args)
         {
+            
             int wyborMetody;
             float[] expected, tab;
             int[] layers;
@@ -224,60 +225,44 @@ namespace TestConsoleApp
 
                     neuralNet.Save(Path.Combine(Environment.CurrentDirectory, @"Data\weightsAndBiases.txt"));
                 }
-                else
+                    else
+                    {
+                        Console.WriteLine("Nie ma takiego numeru");
+                    }
+                }else if(wyborMetody == 2)
                 {
-                    Console.WriteLine("Nie ma takiego numeru");
+                NeuralNet.Read();
+                if (NeuralNet.error == true) goto Error;
+                layers = NeuralNet.layersRead;
+                layerActivations = NeuralNet.activationFunctions;
+                tab = NeuralNet.inputs;
+
+
+
+                Console.WriteLine("WARSTWY");
+                for (int i = 0; i < layers.Length; i++)
+                {
+                    Console.WriteLine(layers[i]);
                 }
-
-            } else if (wyborMetody == 2)
-            {
-                //ODCZYT Z PLIKU
-                int wyborTypu;
-                Console.WriteLine("Wybierz typ działania programu:\n1 - jednokierunkowe\n2 - ze sprzężeniem zwrotnym");
-                wyborTypu = Convert.ToInt16(Console.ReadLine());
-                if (wyborTypu == 1)
+                Console.WriteLine("FUNKCJE");
+                for (int i = 0; i < layerActivations.Length; i++)
                 {
-                    //Jednokierunkowa
-                    layers = NeuralNet.ReadLayers();
-                    layerActivations = NeuralNet.ReadActivation();
-                    tab = NeuralNet.ReadInputs();
-                    layers[0] = tab.Length;
-                    
-                    if (layers.Length != layerActivations.Length)
-                    {
-                        Console.WriteLine("Liczba warstw jest różna od ilości funkcji aktywacji!\nLiczba warstw: "+layers.Length+"\nLiczba funkcji aktywacji: "+layerActivations.Length);
-                        goto Error;                        
-                    }
-                    NeuralNet neuralNet = new NeuralNet(layers, layerActivations);
-                    for (int i = 0; i < layers.Length; i++)
-                    {
-                        Console.WriteLine("Liczba neuronów, wastwa " + (i + 1) + "||" + layers[i]);
-                    }
-
-                    for (int i = 0; i < layers.Length; i++)
-                    {
-                        Console.WriteLine("Nazwa funckcji, wastwa " + (i + 1) + "||" + layerActivations[i]);
-                    }
-
-                    for (int i = 0; i < neuralNet.FeedForward(tab).Length; i++)
-                    {
-                        Console.WriteLine("Element zwróconej tablicy numer " + (i + 1) + " " + neuralNet.FeedForward(tab)[i]);
-                    }
+                    Console.WriteLine(layerActivations[i]);
                 }
-                else if (wyborTypu == 2)
+                Console.WriteLine("INPUTY");
+                for (int i = 0; i < tab.Length; i++)
                 {
+                    Console.WriteLine(tab[i]);
+                }
+                if (NeuralNet.expectedBool.Equals(true))
+                {
+                    Console.WriteLine("EXPECTED");
+                    expected = NeuralNet.expected;
+                    for (int i = 0; i < expected.Length; i++)
+                    {
+                        Console.WriteLine(expected[i]);
+                    }
                     //Sprzężenie zwrotne
-                    layers = NeuralNet.ReadLayersBack();
-                    layerActivations = NeuralNet.ReadActivation();
-                    tab = NeuralNet.ReadInputs();
-                    expected = NeuralNet.ReadExpected();
-                    layers[0] = tab.Length;
-                    layers[layers.Length - 1] = expected.Length;
-                    if (layers.Length != layerActivations.Length)
-                    {
-                        Console.WriteLine("Liczba warstw jest różna od ilości funkcji aktywacji!\nLiczba warstw: " + layers.Length + "\nLiczba funkcji aktywacji: " + layerActivations.Length);
-                        goto Error;
-                    }
                     NeuralNet neuralNet = new NeuralNet(layers, layerActivations);
 
                     for (int i = 0; i < layers.Length; i++)
@@ -295,18 +280,38 @@ namespace TestConsoleApp
                         neuralNet.BackPropagate(tab, expected);
                         Console.WriteLine("Element zwróconej tablicy numer " + (i + 1) + " " + neuralNet.FeedForward(tab)[i]);
                     }
+
                 }
                 else
                 {
-                    Console.WriteLine("Nie ma takiego numeru");
+                    //Jednokierunkowa
+                    NeuralNet neuralNet = new NeuralNet(layers, layerActivations);
+                    for (int i = 0; i < layers.Length; i++)
+                    {
+                        Console.WriteLine("Liczba neuronów, wastwa " + (i + 1) + "||" + layers[i]);
+                    }
+
+                    for (int i = 0; i < layers.Length; i++)
+                    {
+                        Console.WriteLine("Nazwa funckcji, wastwa " + (i + 1) + "||" + layerActivations[i]);
+                    }
+
+                    for (int i = 0; i < neuralNet.FeedForward(tab).Length; i++)
+                    {
+                        Console.WriteLine("Element zwróconej tablicy numer " + (i + 1) + " " + neuralNet.FeedForward(tab)[i]);
+                    }
+
+                    }
+
+
                 }
-            }
             else
             {
                 Console.WriteLine("Nie ma takiego numeru");
             }
             Error:
             Console.ReadKey();
+
         }
     }
 }
