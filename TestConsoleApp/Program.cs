@@ -800,14 +800,17 @@ namespace AiZaliczenie
                 NeuralNet neuralNet = new NeuralNet(layers, layerActivations);
                 for (int i = 0; i < layers.Length; i++)
                 {
+                    wynik.Text += "Liczba neuronów, wastwa " + (i + 1) + "||" + layers[i] + newLine;
                     Console.WriteLine("Liczba neuronów, wastwa " + (i + 1) + "||" + layers[i]);
                 }
                 for (int i = 0; i < layers.Length; i++)
                 {
+                    wynik.Text += "Nazwa funckcji, wastwa " + (i + 1) + "||" + layerActivations[i] + newLine;
                     Console.WriteLine("Nazwa funckcji, wastwa " + (i + 1) + "||" + layerActivations[i]);
                 }
                 for (int i = 0; i < neuralNet.FeedForward(tab).Length; i++)
                 {
+                    wynik.Text += "Element zwróconej tablicy numer " + (i + 1) + " " + neuralNet.FeedForward(tab)[i] + newLine;
                     Console.WriteLine("Element zwróconej tablicy numer " + (i + 1) + " " + neuralNet.FeedForward(tab)[i]);
                 }
             }
