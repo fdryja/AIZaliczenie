@@ -21,9 +21,6 @@ namespace AiZaliczenie
         public float learningRate = 0.01f;//szybkość uczenia
         public float cost = 0;
 
-        private float[][] deltaBiases;//biasy
-        private float[][][] deltaWeights;//wagi
-        private int deltaCount;
 
         public NeuralNet(int[] layers, string[] layerActivations)
         {
