@@ -915,7 +915,7 @@ namespace AiZaliczenie
         Error:;
         }
 
-        public static void start()
+        public static void start()//stara metoda, która działa(częściowo) z wersją konsolową. Praktycznie bezużyteczna w przypadku GUI
         {
             Console.WriteLine("Wybierz metodę wprowadzania danych:\n1 - ręcznie\n2 - odczyt z pliku");
             wyborMetody = Convert.ToInt16(Console.ReadLine());
