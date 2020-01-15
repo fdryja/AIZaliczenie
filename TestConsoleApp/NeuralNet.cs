@@ -865,12 +865,14 @@ namespace AiZaliczenie
                 inputString += inputs[i];
                 inputString += ' ';
             }
+            inputString = inputString.Replace(',', '.');
             writer.WriteLine(inputString);
             for (int i = 0; i < expected.Length; i++)
             {
                 expectedString += expected[i];
                 expectedString += ' ';
             }
+            expectedString = expectedString.Replace(',', '.');
             writer.WriteLine(expectedString);
             writer.Close();
         }
@@ -914,6 +916,7 @@ namespace AiZaliczenie
                 inputString += inputs[i];
                 inputString += ' ';
             }
+            inputString = inputString.Replace(',', '.');
             writer.WriteLine(inputString);
             writer.Close();
         }

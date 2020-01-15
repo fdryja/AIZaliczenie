@@ -614,7 +614,8 @@ namespace AiZaliczenie
                     }
                     else
                     {
-                        if (Regex.IsMatch(inputsValue, @"^\d+$"))
+                        float f;
+                        if (float.TryParse(inputsValue, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture,out f))
                         {
                             float inputsElement = float.Parse(inputsValue, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                             inputsList.Add(inputsElement);
@@ -645,8 +646,8 @@ namespace AiZaliczenie
                         }
                         else
                         {
-
-                            if (Regex.IsMatch(expectedValue, @"^\d+$"))
+                            float f;
+                            if (float.TryParse(expectedValue, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out f))
                             {
                                 float expectedElement = float.Parse(expectedValue, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                                 expectedList.Add(expectedElement);
@@ -695,6 +696,7 @@ namespace AiZaliczenie
             }
             else
             {
+                wynik.Text = "Błąd w pliku." + newLine + "Powinny być 3 lub 4 linijki a znajduje się " + NeuralNet.linesCount + " linijek";
                 //Console.WriteLine("Błąd w pliku.\nPowinny być 3 lub 4 linijki a znajduje się " + linesCount + " linijek");
             }
 
